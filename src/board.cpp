@@ -167,8 +167,10 @@ int main(){
 
         sf::Sprite mainBoard(boardTexture);
 
+
+        //highlighting the square, we use this piece of code
         sf::RectangleShape pieceSquare(sf::Vector2f(72.f, 72.f));
-        pieceSquare.setPosition({76.f, 76.f});
+        pieceSquare.setPosition({297.f, 77.f}); //the difference will always be the starting point where to draw the square
         pieceSquare.setOutlineColor(sf::Color::Red);
         pieceSquare.setOutlineThickness(4.f);
 
@@ -203,6 +205,8 @@ int main(){
 
                 piece.pawn(window, 0);
                 piece.pawn(window, 1);
+
+                window.draw(pieceSquare);
                 
 
                 window.display();
