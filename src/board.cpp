@@ -24,7 +24,7 @@ class Pieces{
         void king(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture king;
                 if(color == 0){
-                        if(!king.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/kingB.png")){
+                        if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/kingB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite kingB(king);
@@ -32,7 +32,7 @@ class Pieces{
 
                         window.draw(kingB);
                 }else if(color == 1){
-                        if(!king.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png")){
+                        if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite kingW(king);
@@ -46,7 +46,7 @@ class Pieces{
         void queen(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture queen;
                 if(color == 0){
-                        if(!queen.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/queenB.png")){
+                        if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/queenB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite queenB(queen);
@@ -54,7 +54,7 @@ class Pieces{
 
                         window.draw(queenB);
                 }else if(color == 1){
-                        if(!queen.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/queenW.png")){
+                        if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/queenW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite queenW(queen);
@@ -68,19 +68,19 @@ class Pieces{
         void knight(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture knight;
                 if(color == 0){
-                        if(!knight.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/knightB.png")){
+                        if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/knightB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite knightB(knight);
-                        knightB.setPosition({300.f, 80.f});
+                        knightB.setPosition({524.f, 80.f});
 
                         window.draw(knightB);
                 }else if(color == 1){
-                        if(!knight.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/knightW.png")){
+                        if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/knightW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite knightW(knight);
-                        knightW.setPosition({300.f, 600.f});
+                        knightW.setPosition({520.f, 597.f});
 
                         window.draw(knightW);
                 }
@@ -90,19 +90,19 @@ class Pieces{
         void rook(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture rook;
                 if(color == 0){
-                        if(!rook.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/rookB.png")){
+                        if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/rookB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite rookB(rook);
-                        rookB.setPosition({300.f, 80.f});
+                        rookB.setPosition({597.f, 80.f});
 
                         window.draw(rookB);
                 }else if(color == 1){
-                        if(!rook.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/rookW.png")){
+                        if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/rookW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite rookW(rook);
-                        rookW.setPosition({300.f, 600.f});
+                        rookW.setPosition({593.f, 597.f});
 
                         window.draw(rookW);
                 }
@@ -112,19 +112,19 @@ class Pieces{
         void bishop(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture bishop;
                 if(color == 0){
-                        if(!bishop.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/bishopB.png")){
+                        if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/bishopB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite bishopB(bishop);
-                        bishopB.setPosition({300.f, 80.f});
+                        bishopB.setPosition({451.f, 80.f});
 
                         window.draw(bishopB);
                 }else if(color == 1){
-                        if(!bishop.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/bishopW.png")){
+                        if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/bishopW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite bishopW(bishop);
-                        bishopW.setPosition({300.f, 600.f});
+                        bishopW.setPosition({447.f, 597.f});
 
                         window.draw(bishopW);
                 }
@@ -134,7 +134,7 @@ class Pieces{
         void pawn(sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture pawn;
                 if(color == 0){
-                        if(!pawn.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/black_pieces/pawnB.png")){
+                        if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/pawnB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite pawnB(pawn);
@@ -142,7 +142,7 @@ class Pieces{
 
                         window.draw(pawnB);
                 }else if(color == 1){
-                        if(!pawn.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/white_pieces/pawnW.png")){
+                        if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/pawnW.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite pawnW(pawn);
@@ -161,7 +161,7 @@ int main(){
         window.setPosition(sf::Vector2i({400, 200}));
 
         sf::Texture boardTexture;
-        if(!boardTexture.loadFromFile("/home/martxrrr/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
+        if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
                 return -1;
         }
 
@@ -170,6 +170,7 @@ int main(){
 
         //highlighting the square, we use this piece of code
         sf::RectangleShape pieceSquare(sf::Vector2f(72.f, 72.f));
+        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
         pieceSquare.setPosition({297.f, 77.f}); //the difference will always be the starting point where to draw the square
         pieceSquare.setOutlineColor(sf::Color::Red);
         pieceSquare.setOutlineThickness(4.f);
@@ -205,6 +206,15 @@ int main(){
 
                 piece.pawn(window, 0);
                 piece.pawn(window, 1);
+
+                piece.bishop(window, 0);
+                piece.bishop(window, 1);
+
+                piece.knight(window, 0);
+                piece.knight(window, 1);
+
+                piece.rook(window, 0);
+                piece.rook(window, 1);
 
                 window.draw(pieceSquare);
                 
