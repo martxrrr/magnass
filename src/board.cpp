@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstdint>
 #include <typeinfo>
-#include <initializer_list>
 
 void  Click(sf::RenderWindow &window, const sf::Event &event){
     if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
@@ -19,7 +18,7 @@ void  Click(sf::RenderWindow &window, const sf::Event &event){
     }
 }
 
-struct position{
+struct Positions{
         sf::Vector2f A1 = { 81.f, 597.f };
         sf::Vector2f A2 = { 81.f, 523.f };
         sf::Vector2f A3 = { 81.f, 450.f };
@@ -90,21 +89,20 @@ struct position{
         sf::Vector2f H5 = { 593.f, 304.f };
         sf::Vector2f H6 = { 593.f, 231.f };
         sf::Vector2f H7 = { 593.f, 153.f };
-        sf::Vector2f H8 = { 597.f, 80.f   };
+        sf::Vector2f H8 = { 597.f, 80.f  };
 };
 
 class Pieces{
         public:
 
-        void king(sf::RenderWindow& window, const uint8_t& color){
+        void king(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture king;
                 if(color == 0){
                         if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/kingB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite kingB(king);
-                        sf::Vector2f pos = {374.f, 77.f};
-                        kingB.setPosition(pos);
+                        kingB.setPosition(position);
 
                         window.draw(kingB);
                 }else if(color == 1){
@@ -112,21 +110,21 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite kingW(king);
-                        kingW.setPosition({374.f, 597.f});
+                        kingW.setPosition({position});
 
                         window.draw(kingW);
                 }
 
         }
 
-        void queen(sf::RenderWindow& window, const uint8_t& color){
+        void queen(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture queen;
                 if(color == 0){
                         if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/queenB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite queenB(queen);
-                        queenB.setPosition({300.f, 80.f});
+                        queenB.setPosition({position});
 
                         window.draw(queenB);
                 }else if(color == 1){
@@ -134,21 +132,21 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite queenW(queen);
-                        queenW.setPosition({300.f, 600.f});
+                        queenW.setPosition({position});
 
                         window.draw(queenW);
                 }
 
         }
 
-        void knight(sf::RenderWindow& window, const uint8_t& color){
+        void knight(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture knight;
                 if(color == 0){
                         if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/knightB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite knightB(knight);
-                        knightB.setPosition({524.f, 80.f});
+                        knightB.setPosition({position});
 
                         window.draw(knightB);
                 }else if(color == 1){
@@ -156,21 +154,21 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite knightW(knight);
-                        knightW.setPosition({520.f, 597.f});
+                        knightW.setPosition({position});
 
                         window.draw(knightW);
                 }
 
         }
 
-        void rook(sf::RenderWindow& window, const uint8_t& color){
+        void rook(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture rook;
                 if(color == 0){
                         if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/rookB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite rookB(rook);
-                        rookB.setPosition({597.f, 80.f});
+                        rookB.setPosition({position});
 
                         window.draw(rookB);
                 }else if(color == 1){
@@ -178,21 +176,21 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite rookW(rook);
-                        rookW.setPosition({593.f, 597.f});
+                        rookW.setPosition({position});
 
                         window.draw(rookW);
                 }
 
         }
 
-        void bishop(sf::RenderWindow& window, const uint8_t& color){
+        void bishop(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture bishop;
                 if(color == 0){
                         if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/bishopB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite bishopB(bishop);
-                        bishopB.setPosition({451.f, 80.f});
+                        bishopB.setPosition({position});
 
                         window.draw(bishopB);
                 }else if(color == 1){
@@ -200,21 +198,21 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite bishopW(bishop);
-                        bishopW.setPosition({447.f, 597.f});
+                        bishopW.setPosition({position});
 
                         window.draw(bishopW);
                 }
 
         }
 
-        void pawn(sf::RenderWindow& window, const uint8_t& color){
+        void pawn(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture pawn;
                 if(color == 0){
                         if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/pawnB.png")){
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite pawnB(pawn);
-                        pawnB.setPosition({300.f, 153.f});
+                        pawnB.setPosition({position});
 
                         window.draw(pawnB);
                 }else if(color == 1){
@@ -222,7 +220,7 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite pawnW(pawn);
-                        pawnW.setPosition({300.f, 523.f});
+                        pawnW.setPosition({position});
 
                         window.draw(pawnW);
                 }
@@ -252,6 +250,7 @@ int main(){
         pieceSquare.setOutlineThickness(4.f);
 
         Pieces piece;
+        Positions position;
 
 
         while(window.isOpen()){
@@ -274,23 +273,51 @@ int main(){
 
                 window.draw(mainBoard);
 
-                piece.king(window, 0);
-                piece.king(window, 1);
+                //KING
+                piece.king( position.E8, window, 0 );
+                piece.king( position.E1, window, 1 );
 
-                piece.queen(window, 0);
-                piece.queen(window, 1);
+                //QUEEN
+                piece.queen( position.D8, window, 0);
+                piece.queen( position.D1, window, 1);
 
-                piece.pawn(window, 0);
-                piece.pawn(window, 1);
+                //PAWN
+                piece.pawn( position.A2, window, 1);
+                piece.pawn( position.B2, window, 1);
+                piece.pawn( position.C2, window, 1);
+                piece.pawn( position.D2, window, 1);
+                piece.pawn( position.E2, window, 1);
+                piece.pawn( position.F2, window, 1);
+                piece.pawn( position.G2, window, 1);
+                piece.pawn( position.H2, window, 1);
 
-                piece.bishop(window, 0);
-                piece.bishop(window, 1);
+                piece.pawn( position.A7, window, 0);
+                piece.pawn( position.B7, window, 0);
+                piece.pawn( position.C7, window, 0);
+                piece.pawn( position.D7, window, 0);
+                piece.pawn( position.E7, window, 0);
+                piece.pawn( position.F7, window, 0);
+                piece.pawn( position.G7, window, 0);
+                piece.pawn( position.H7, window, 0);
 
-                piece.knight(window, 0);
-                piece.knight(window, 1);
+                //BISHOP
+                piece.bishop( position.F8, window, 0);
+                piece.bishop( position.C8, window, 0);
+                piece.bishop( position.C1, window, 1);
+                piece.bishop( position.F1, window, 1);
 
-                piece.rook(window, 0);
-                piece.rook(window, 1);
+                
+                //KNIGHT
+                piece.knight( position.G8, window, 0);
+                piece.knight( position.B8, window, 0);
+                piece.knight( position.G1, window, 1);
+                piece.knight( position.B1, window, 1);
+
+                //ROOK
+                piece.rook( position.A8, window, 0);
+                piece.rook( position.H8, window, 0);
+                piece.rook( position.A1, window, 1);
+                piece.rook( position.H1, window, 1);
 
                 window.draw(pieceSquare);
                 
@@ -300,7 +327,5 @@ int main(){
         }
 
         
-        
-
         return 0;
 }
