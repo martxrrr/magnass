@@ -102,7 +102,7 @@ class Pieces{
                                 std::cout << "Error loading the image file! " << "\n";
                         }
                         sf::Sprite kingB(king);
-                        kingB.setPosition(position);
+                        kingB.setPosition({position});
 
                         window.draw(kingB);
                 }else if(color == 1){
@@ -232,7 +232,7 @@ class Pieces{
 int main(){
 
         sf::RenderWindow window(sf::VideoMode({740, 733}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
-        window.setPosition(sf::Vector2i({400, 200}));
+        window.setPosition(sf::Vector2i({50, 50}));
 
         sf::Texture boardTexture;
         if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
