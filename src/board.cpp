@@ -18,6 +18,17 @@ void  Click(sf::RenderWindow &window, const sf::Event &event){
     }
 }
 
+
+void getSquare(sf::RenderWindow &window, const sf::Event &event, std::vector<sf::Vector2f> &positions){
+        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
+                if(mouseClick->button == sf::Mouse::Button::Left){
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        int mouseX = pos.x;
+                        int mouseY = pos.y;
+                }
+        }
+}
+
 struct Positions{
         sf::Vector2f A1 = { 81.f, 597.f };
         sf::Vector2f A2 = { 81.f, 523.f };
@@ -231,8 +242,14 @@ class Pieces{
 
 int main(){
 
-        sf::RenderWindow window(sf::VideoMode({740, 733}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
-        window.setPosition(sf::Vector2i({50, 50}));
+        constexpr int width { 740 };
+        constexpr int height { 733 };
+
+        constexpr int x { 500 };
+        constexpr int y { 50 };
+
+        sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
+        window.setPosition(sf::Vector2i({x, y}));
 
         sf::Texture boardTexture;
         if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
