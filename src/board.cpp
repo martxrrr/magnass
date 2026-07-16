@@ -1,9 +1,9 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <optional>
 #include <iostream>
 #include <cstdint>
 #include <typeinfo>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 class Pieces;
 
