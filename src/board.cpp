@@ -5,29 +5,7 @@
 #include <cstdint>
 #include <typeinfo>
 
-void  Click(sf::RenderWindow &window, const sf::Event &event){
-    if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
-        if(mouseClick->button == sf::Mouse::Button::Left){
-            sf::Vector2i pos = sf::Mouse::getPosition(window);
-            int mouse_x = pos.x;
-            int mouse_y = pos.y;
 
-            std::cout << "(" << mouse_x << "," << mouse_y << ")" << std::endl;
-
-        }
-    }
-}
-
-
-void getSquare(sf::RenderWindow &window, const sf::Event &event, std::vector<sf::Vector2f> &positions){
-        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
-                if(mouseClick->button == sf::Mouse::Button::Left){
-                        sf::Vector2i pos = sf::Mouse::getPosition(window);
-                        int mouseX = pos.x;
-                        int mouseY = pos.y;
-                }
-        }
-}
 
 struct Positions{
         sf::Vector2f A1 = { 81.f, 597.f };
@@ -102,6 +80,100 @@ struct Positions{
         sf::Vector2f H7 = { 593.f, 153.f };
         sf::Vector2f H8 = { 597.f, 80.f  };
 };
+
+
+void getSquare(sf::RenderWindow &window, const sf::Event &event){
+        Positions position;
+        const std::vector<sf::Vector2f> positions = {   
+                                                           position.A1, position.A2, position.A3, position.A4,
+                                                           position.A5, position.A6, position.A7, position.A8,
+                                                           position.B1, position.B2, position.B3, position.B4,
+                                                           position.B5, position.B6, position.B7, position.B8,
+                                                           position.C1, position.C2, position.C3, position.C4,
+                                                           position.C5, position.C6, position.C7, position.C8,
+                                                           position.D1, position.D2, position.D3, position.D4,
+                                                           position.D5, position.D6, position.D7, position.D8,
+                                                           position.E1, position.E2, position.E3, position.E4,
+                                                           position.E5, position.E6, position.E7, position.E8,
+                                                           position.F1, position.F2, position.F3, position.F4,
+                                                           position.F5, position.F6, position.F7, position.F8,
+                                                           position.G1, position.G2, position.G3, position.G4,
+                                                           position.G5, position.G6, position.G7, position.G8,
+                                                           position.H1, position.H2, position.H3, position.H4,
+                                                           position.H5, position.H6, position.H7, position.H8,
+                                                    };
+        
+        sf::Vector2f clickPosition;
+        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
+                if(mouseClick->button == sf::Mouse::Button::Left){
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        float mouseX = static_cast<float>(pos.x);
+                        float mouseY = static_cast<float>(pos.y);
+
+                        sf::Vector2f click_position = {mouseX, mouseY};
+                        clickPosition = click_position;
+                }
+        }
+        float diffX{};
+        float diffY{};
+
+        std::array<double, 4> euclideans;
+        sf::Vector2f closest = { };
+  
+        for(auto position{ 0 }; position < 4; position++){
+                diffX = pow((positions[position].x - clickPosition.x), 2);
+                diffY = pow((positions[position].y - clickPosition.y), 2);
+                double sum { diffX + diffY };
+
+                double euclidean { sqrt(sum) };
+                euclideans[position] = euclidean;
+
+                std::cout << "(" << diffX << " , " <<  diffY << ")\n"; //  << " mean: " << euclidean << "\n";
+        }
+
+        double close { };
+        {
+                std::array<double, 4> virtualEuclideans;
+                virtualEuclideans = euclideans;
+                
+                for(auto i { 1 }; i < virtualEuclideans.size(); i++){
+                        for(auto j { 0 }; j < virtualEuclideans.size() - 1; j++){
+                                if(virtualEuclideans[j] > virtualEuclideans[j + 1]){
+                                        double temp = virtualEuclideans[j + 1];
+                                        virtualEuclideans[j + 1] = virtualEuclideans[j];
+                                        virtualEuclideans[j] = temp;
+                                }
+                        }
+                }
+                for(auto k { 0 }; k < virtualEuclideans.size(); k++){
+                        std::cout << virtualEuclideans[k] << "\n";
+                }
+
+                std::cout << std::endl;
+                for(auto l { 0 }; l < euclideans.size(); l++){
+                        std::cout << euclideans[l] << "\n";
+                }
+
+                close = virtualEuclideans[0];
+        }
+
+        int index;
+
+        for(int j { 0 }; j < euclideans.size(); j++){
+                int idx;
+                if(euclideans[j] == close){
+                        idx = j;
+                        // std::cout << "Found it at index: " << idx << "\n";
+                }else{
+                        continue;
+                }
+        index = idx;
+        }
+        std::cout << std::endl;
+        closest = {positions[index].x, positions[index].y};
+
+        std::cout << "(" << closest.x << ", " << closest.y << ")" << "\n";
+}
 
 class Pieces{
         public:
@@ -257,11 +329,9 @@ int main(){
         }
 
         sf::Sprite mainBoard(boardTexture);
-
-
         //highlighting the square, we use this piece of code
-        sf::RectangleShape pieceSquare(sf::Vector2f(72.f, 72.f));
-        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
+        sf::RectangleShape pieceSquare(sf::Vector2f({223.f, 294.f}));
+        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0)); //make it see-through/transparent
         pieceSquare.setPosition({297.f, 77.f}); //the difference will always be the starting point where to draw the square
         pieceSquare.setOutlineColor(sf::Color::Red);
         pieceSquare.setOutlineThickness(4.f);
@@ -283,7 +353,7 @@ int main(){
                         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
                                 window.close();
                         }
-                        Click(window, *event);
+                        getSquare(window, *event);
                 }
 
                 window.clear(sf::Color::Black);
