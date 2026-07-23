@@ -7,8 +7,10 @@
 
 #include "board.hpp"
 
-sf::Vector2f getSquare(sf::RenderWindow &window, const sf::Event &event);
+sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
+sf::Vector2f getClick(sf::RenderWindow &window, const sf::Event &event);
+
 
 int main(){
 
@@ -33,6 +35,7 @@ int main(){
 
 
         while(window.isOpen()){
+                sf::Vector2f mouse;
                 while(const std::optional event = window.pollEvent()){
                         if(event->is<sf::Event::Closed>()){
                                 window.close();
@@ -45,8 +48,9 @@ int main(){
                         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
                                 window.close();
                         }
-                        sf::Vector2f coord = getSquare(window, *event);
-                        highlightSquare(window, coord);
+                        sf::Vector2f mousePos = getClick(window, *event);
+                        mouse = mousePos;
+                        
                 }
 
                 window.clear(sf::Color::Black);
@@ -98,6 +102,10 @@ int main(){
                 piece.rook( position.H8, window, 0);
                 piece.rook( position.A1, window, 1);
                 piece.rook( position.H1, window, 1);
+
+                sf::Vector2f coord = getSquare(mouse);
+                highlightSquare(window, coord);
+
                 
 
                 window.display();
@@ -107,9 +115,21 @@ int main(){
         
         return 0;
 }
+sf::Vector2f getClick(sf::RenderWindow &window, const sf::Event &event){
+        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
+                if(mouseClick->button == sf::Mouse::Button::Left){
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        float mouseX = static_cast<float>(pos.x);
+                        float mouseY = static_cast<float>(pos.y);
 
+                        sf::Vector2f click_position = {mouseX, mouseY};
 
-sf::Vector2f getSquare(sf::RenderWindow &window, const sf::Event &event){
+                        return click_position;
+                }
+        }
+}
+
+sf::Vector2f getSquare(sf::Vector2f &mouseClick){
         Positions position;
         const std::vector<sf::Vector2f> positions = {   
                                                            position.A1, position.A2, position.A3, position.A4,
@@ -130,17 +150,7 @@ sf::Vector2f getSquare(sf::RenderWindow &window, const sf::Event &event){
                                                            position.H5, position.H6, position.H7, position.H8,
                                                     };
         
-        sf::Vector2f clickPosition;
-        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
-                if(mouseClick->button == sf::Mouse::Button::Left){
-                        sf::Vector2i pos = sf::Mouse::getPosition(window);
-                        float mouseX = static_cast<float>(pos.x);
-                        float mouseY = static_cast<float>(pos.y);
-
-                        sf::Vector2f click_position = {mouseX, mouseY};
-                        clickPosition = click_position;
-                }
-        }
+        
         float diffX{};
         float diffY{};
 
@@ -149,8 +159,8 @@ sf::Vector2f getSquare(sf::RenderWindow &window, const sf::Event &event){
         
         //calculate the euclidean distances and append them in an std::array
         for(auto position{ 0 }; position < 4; position++){
-                diffX = pow((positions[position].x - clickPosition.x), 2);
-                diffY = pow((positions[position].y - clickPosition.y), 2);
+                diffX = pow((positions[position].x - mouseClick.x), 2);
+                diffY = pow((positions[position].y - mouseClick.y), 2);
                 double sum { diffX + diffY };
 
                 double euclidean { sqrt(sum) };
@@ -202,6 +212,8 @@ sf::Vector2f getSquare(sf::RenderWindow &window, const sf::Event &event){
 
         //now here we have the cordinate of the closest render point from the mouse click point
         closest = {positions[index].x, positions[index].y}; //this is an sf::Vector2f object
+
+        std::cout << closest.x << " " << closest.y << "\n";
 
         return closest;
 
