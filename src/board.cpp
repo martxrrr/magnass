@@ -1,4 +1,3 @@
-#include <iostream>
 #include <optional>
 #include <cstdint>
 #include <typeinfo>
@@ -9,15 +8,13 @@
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
-sf::Vector2f getClick(sf::RenderWindow &window, const sf::Event &event);
-
 
 int main(){
 
         constexpr int width { 740 };
         constexpr int height { 733 };
 
-        constexpr int x { 50 };
+        constexpr int x { 600 };
         constexpr int y { 50 };
 
         sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
@@ -32,10 +29,10 @@ int main(){
 
         Pieces piece;
         Positions position;
+        sf::Vector2f coord;
 
 
         while(window.isOpen()){
-                sf::Vector2f mouse;
                 while(const std::optional event = window.pollEvent()){
                         if(event->is<sf::Event::Closed>()){
                                 window.close();
@@ -48,8 +45,20 @@ int main(){
                         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
                                 window.close();
                         }
-                        sf::Vector2f mousePos = getClick(window, *event);
-                        mouse = mousePos;
+
+                        if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
+                                if(mouseClick->button == sf::Mouse::Button::Left){
+                                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                                        float mouseX = static_cast<float>(pos.x);
+                                        float mouseY = static_cast<float>(pos.y);
+
+                                        sf::Vector2f click_position = {mouseX, mouseY};
+
+                                        coord = getSquare(click_position);
+
+                                }
+                        }
+                        
                         
                 }
 
@@ -103,10 +112,7 @@ int main(){
                 piece.rook( position.A1, window, 1);
                 piece.rook( position.H1, window, 1);
 
-                sf::Vector2f coord = getSquare(mouse);
                 highlightSquare(window, coord);
-
-                
 
                 window.display();
                 
@@ -114,19 +120,6 @@ int main(){
 
         
         return 0;
-}
-sf::Vector2f getClick(sf::RenderWindow &window, const sf::Event &event){
-        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
-                if(mouseClick->button == sf::Mouse::Button::Left){
-                        sf::Vector2i pos = sf::Mouse::getPosition(window);
-                        float mouseX = static_cast<float>(pos.x);
-                        float mouseY = static_cast<float>(pos.y);
-
-                        sf::Vector2f click_position = {mouseX, mouseY};
-
-                        return click_position;
-                }
-        }
 }
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick){
@@ -154,23 +147,25 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
         float diffX{};
         float diffY{};
 
-        std::array<double, 4> euclideans;
+        std::array<double, 63> euclideans;
         sf::Vector2f closest = { };
         
+        //loop through the std::vector of positions,
         //calculate the euclidean distances and append them in an std::array
-        for(auto position{ 0 }; position < 4; position++){
-                diffX = pow((positions[position].x - mouseClick.x), 2);
-                diffY = pow((positions[position].y - mouseClick.y), 2);
+        for(auto pos{ 0 }; pos < positions.size() - 1; pos++){
+                diffX = pow((positions[pos].x - mouseClick.x), 2);
+                diffY = pow((positions[pos].y - mouseClick.y), 2);
                 double sum { diffX + diffY };
 
                 double euclidean { sqrt(sum) };
-                euclideans[position] = euclidean;
+                euclideans[pos] = euclidean;
         }
+
 
         //sort the array and get the smallest euclidean distance
         double close { };
         {
-                std::array<double, 4> virtualEuclideans;
+                std::array<double, 63> virtualEuclideans;
                 virtualEuclideans = euclideans;
                 
                 for(auto i { 1 }; i < virtualEuclideans.size(); i++){
@@ -183,18 +178,6 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
                         }
                 }
 
-                // //print out the sorted euclideans
-                // for(auto k { 0 }; k < virtualEuclideans.size(); k++){
-                //         std::cout << virtualEuclideans[k] << "\n";
-                // }
-
-                // //print out the unsorted euclideans
-                // std::cout << std::endl;
-                // for(auto l { 0 }; l < euclideans.size(); l++){
-                //         std::cout << euclideans[l] << "\n";
-                // }
-
-                //pick out the smallest euclidean distance value
                 close = virtualEuclideans[0];
         }
 
@@ -211,20 +194,18 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
         }
 
         //now here we have the cordinate of the closest render point from the mouse click point
-        closest = {positions[index].x, positions[index].y}; //this is an sf::Vector2f object
-
-        std::cout << closest.x << " " << closest.y << "\n";
+        closest = {positions[index].x, positions[index].y};
 
         return closest;
 
 }
 
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
-        //highlighting the square, we use this piece of code
-        sf::RectangleShape pieceSquare(sf::Vector2f({71.f, 71.f}));
-        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0)); //make it see-through/transparent
-        pieceSquare.setPosition(cordinate); //the difference will always be the starting point where to draw the square
-        pieceSquare.setOutlineColor(sf::Color::Red);
+        sf::Vector2f coordinate = cordinate;
+        sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
+        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));          //make it see-through/transparent
+        pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});                             //the difference will always be the starting point where to draw the square
+        pieceSquare.setOutlineColor(sf::Color::Blue);
         pieceSquare.setOutlineThickness(4.f);
 
         window.draw(pieceSquare);
