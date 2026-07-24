@@ -31,6 +31,8 @@ int main(){
         Positions position;
         sf::Vector2f coord;
 
+        bool clicked = false;
+
 
         while(window.isOpen()){
                 while(const std::optional event = window.pollEvent()){
@@ -48,6 +50,7 @@ int main(){
 
                         if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
                                 if(mouseClick->button == sf::Mouse::Button::Left){
+                                        clicked = true;
                                         sf::Vector2i pos = sf::Mouse::getPosition(window);
                                         float mouseX = static_cast<float>(pos.x);
                                         float mouseY = static_cast<float>(pos.y);
@@ -112,7 +115,9 @@ int main(){
                 piece.rook( position.A1, window, 1);
                 piece.rook( position.H1, window, 1);
 
-                highlightSquare(window, coord);
+                if(clicked){
+                        highlightSquare(window, coord);
+                }
 
                 window.display();
                 
