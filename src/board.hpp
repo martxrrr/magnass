@@ -6,6 +6,8 @@
 
 class King{
         public:
+        sf::Sprite Bking;
+        sf::Sprite Wking;
         King(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
                 sf::Texture king;
                 if(color == 0){
@@ -15,6 +17,8 @@ class King{
                         sf::Sprite kingB(king);
                         kingB.setPosition({position});
 
+                        Bking = kingB;
+
                         window.draw(kingB);
                 }else if(color == 1){
                         if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png")){
@@ -23,7 +27,21 @@ class King{
                         sf::Sprite kingW(king);
                         kingW.setPosition({position});
 
+                        Wking = kingW;
+
                         window.draw(kingW);
+                }
+        }
+        
+        void getClick(const sf::Event &event, sf::RenderWindow &window){
+                if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
+                        if(mouseClick->button == sf::Mouse::Button::Right){
+                                sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
+                                sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel);
+                                if(Wking.getGlobalBounds().contains(mouseWorld)){
+                                        printf("Sprite Clicked!");
+                                }
+                        }
                 }
         }
 };
@@ -154,7 +172,7 @@ class Pawn{
 };
 
 
-
+//coordinates where to render
 struct Positions{
         sf::Vector2f A1 = { 81.f, 597.f };
         sf::Vector2f A2 = { 81.f, 523.f };
