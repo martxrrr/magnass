@@ -26,8 +26,6 @@ int main(){
         }
 
         sf::Sprite mainBoard(boardTexture);
-
-        Pieces piece;
         Positions position;
         sf::Vector2f coord;
 
@@ -70,50 +68,50 @@ int main(){
                 window.draw(mainBoard);
 
                 //KING
-                piece.king( position.E8, window, 0 );
-                piece.king( position.E1, window, 1 );
+                King Bking( position.E8, window, 0 );
+                King Wking( position.E1, window, 1 );
 
                 //QUEEN
-                piece.queen( position.D8, window, 0);
-                piece.queen( position.D1, window, 1);
+                Queen Bqueen( position.D8, window, 0);
+                Queen Wqueen( position.D1, window, 1);
 
                 //PAWN
-                piece.pawn( position.A2, window, 1);
-                piece.pawn( position.B2, window, 1);
-                piece.pawn( position.C2, window, 1);
-                piece.pawn( position.D2, window, 1);
-                piece.pawn( position.E2, window, 1);
-                piece.pawn( position.F2, window, 1);
-                piece.pawn( position.G2, window, 1);
-                piece.pawn( position.H2, window, 1);
+                Pawn Wpawn1( position.A2, window, 1);
+                Pawn Wpawn2( position.B2, window, 1);
+                Pawn Wpawn3( position.C2, window, 1);
+                Pawn Wpawn4( position.D2, window, 1);
+                Pawn Wpawn5( position.E2, window, 1);
+                Pawn Wpawn6( position.F2, window, 1);
+                Pawn Wpawn7( position.G2, window, 1);
+                Pawn Wpawn8( position.H2, window, 1);
 
-                piece.pawn( position.A7, window, 0);
-                piece.pawn( position.B7, window, 0);
-                piece.pawn( position.C7, window, 0);
-                piece.pawn( position.D7, window, 0);
-                piece.pawn( position.E7, window, 0);
-                piece.pawn( position.F7, window, 0);
-                piece.pawn( position.G7, window, 0);
-                piece.pawn( position.H7, window, 0);
+                Pawn Bpawn1( position.A7, window, 0);
+                Pawn Bpawn2( position.B7, window, 0);
+                Pawn Bpawn3( position.C7, window, 0);
+                Pawn Bpawn4( position.D7, window, 0);
+                Pawn Bpawn5( position.E7, window, 0);
+                Pawn Bpawn6( position.F7, window, 0);
+                Pawn Bpawn7( position.G7, window, 0);
+                Pawn Bpawn8( position.H7, window, 0);
 
                 //BISHOP
-                piece.bishop( position.F8, window, 0);
-                piece.bishop( position.C8, window, 0);
-                piece.bishop( position.C1, window, 1);
-                piece.bishop( position.F1, window, 1);
+                Bishop Bbishop1( position.F8, window, 0);
+                Bishop Bbishop2( position.C8, window, 0);
+                Bishop Wbishop1( position.C1, window, 1);
+                Bishop Wbishop2( position.F1, window, 1);
 
                 
                 //KNIGHT
-                piece.knight( position.G8, window, 0);
-                piece.knight( position.B8, window, 0);
-                piece.knight( position.G1, window, 1);
-                piece.knight( position.B1, window, 1);
+                Knight Bknight1( position.G8, window, 0);
+                Knight Bknight2( position.B8, window, 0);
+                Knight Wknight1( position.G1, window, 1);
+                Knight Wknight2( position.B1, window, 1);
 
                 //ROOK
-                piece.rook( position.A8, window, 0);
-                piece.rook( position.H8, window, 0);
-                piece.rook( position.A1, window, 1);
-                piece.rook( position.H1, window, 1);
+                Rook Brook1( position.A8, window, 0);
+                Rook Brook2( position.H8, window, 0);
+                Rook Wrook1( position.A1, window, 1);
+                Rook Wrook2( position.H1, window, 1);
 
                 if(clicked){
                         highlightSquare(window, coord);
