@@ -69,7 +69,7 @@ int main(){
 
                 window.draw(mainBoard);
 
-                renderPieces(position, window);
+                // renderPieces(position, window, *event);
 
                 if(clicked){
                         highlightSquare(window, coord);
@@ -176,9 +176,10 @@ void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
 
 void renderPieces(Positions &position, sf::RenderWindow &window){
 
-        //KING
+                // //KING
                 King Bking( position.E8, window, 0 );
                 King Wking( position.E1, window, 1 );
+
 
                 //QUEEN
                 Queen Bqueen( position.D8, window, 0);
@@ -222,4 +223,23 @@ void renderPieces(Positions &position, sf::RenderWindow &window){
                 Rook Wrook1( position.A1, window, 1);
                 Rook Wrook2( position.H1, window, 1);
 
+}
+
+void getClick(Positions &position, const sf::Event &event, sf::RenderWindow &window, King &king){
+        if(const auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()){
+                if(mouseClick->button == sf::Mouse::Button::Right){
+                        sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
+                        sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel);
+
+                        sf::Sprite Wking = king.retKing( position.E8, window, 0 );
+                        if(Wking.getGlobalBounds().contains(mouseWorld)){
+                                std::cout << "White King Clicked!\n";
+                        }
+                        sf::Sprite Bking = king.retKing( position.E8, window, 1 );
+
+                        if(Bking.getGlobalBounds().contains(mouseWorld)){
+                                std::cout << "Black King Clicked!\n";
+                        }
+                }
+        }
 }
