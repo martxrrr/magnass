@@ -4,7 +4,7 @@
 #include <bitset>
 
 
-enum Square : int {
+enum class Square : int {
         SQ_A1 = 0,  SQ_B1 = 1,  SQ_C1 = 2,  SQ_D1 = 3,  SQ_E1 = 4,  SQ_F1 = 5,  SQ_G1 = 6,  SQ_H1 = 7,
         SQ_A2 = 8,  SQ_B2 = 9,  SQ_C2 = 10, SQ_D2 = 11, SQ_E2 = 12, SQ_F2 = 13, SQ_G2 = 14, SQ_H2 = 15,
         SQ_A3 = 16, SQ_B3 = 17, SQ_C3 = 18, SQ_D3 = 19, SQ_E3 = 20, SQ_F3 = 21, SQ_G3 = 22, SQ_H3 = 23,
@@ -20,7 +20,7 @@ enum Square : int {
 /*  HELPER FUNCTIONS  */
 
 constexpr uint64_t square_bb(Square sq){ 
-        return 1ULL << sq;          
+        return 1ULL << static_cast<unsigned>(sq);          
 }
 constexpr void set_bit(uint64_t &bb, Square sq){
         bb |= square_bb(sq);        
@@ -32,7 +32,7 @@ constexpr void toggle_bit(uint64_t &bb, Square sq) {
         bb ^= square_bb(sq);        
 }
 constexpr bool test_bit(uint64_t &bb, Square sq){ 
-        return ( bb >> sq ) & 1ULL; 
+        return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
 }
 
 
@@ -53,15 +53,15 @@ inline Square pop_lsb(uint64_t &bb){
         return sq;
 }
 //WHITE
-uint64_t whitePawns = square_bb(SQ_A2) | square_bb(SQ_B2) | square_bb(SQ_C2) | 
-                      square_bb(SQ_D2) | square_bb(SQ_E2) | square_bb(SQ_F2) | 
-                      square_bb(SQ_G2) | square_bb(SQ_H2) ;
+uint64_t whitePawns = square_bb(Square::SQ_A2) | square_bb(Square::SQ_B2) | square_bb(Square::SQ_C2) | 
+                      square_bb(Square::SQ_D2) | square_bb(Square::SQ_E2) | square_bb(Square::SQ_F2) | 
+                      square_bb(Square::SQ_G2) | square_bb(Square::SQ_H2) ;
 
-uint64_t whiteKnights = square_bb(SQ_B1) | square_bb(SQ_G1);
-uint64_t whiteRooks   = square_bb(SQ_A1) | square_bb(SQ_H1);
-uint64_t whiteBishops = square_bb(SQ_C1) | square_bb(SQ_F1);
-uint64_t whiteQueen   = square_bb(SQ_D1);
-uint64_t whiteKing    = square_bb(SQ_E1);
+uint64_t whiteKnights = square_bb(Square::SQ_B1) | square_bb(Square::SQ_G1);
+uint64_t whiteRooks   = square_bb(Square::SQ_A1) | square_bb(Square::SQ_H1);
+uint64_t whiteBishops = square_bb(Square::SQ_C1) | square_bb(Square::SQ_F1);
+uint64_t whiteQueen   = square_bb(Square::SQ_D1);
+uint64_t whiteKing    = square_bb(Square::SQ_E1);
 
 uint64_t whitePieces = whitePawns   |
                        whiteBishops |
@@ -71,36 +71,64 @@ uint64_t whitePieces = whitePawns   |
                        whiteKing;
 
 //BLACK
-uint64_t blackPawns =   square_bb(SQ_A7) | square_bb(SQ_B7) | square_bb(SQ_C7) | 
-                        square_bb(SQ_D7) | square_bb(SQ_E7) | square_bb(SQ_F7) | 
-                        square_bb(SQ_G7) | square_bb(SQ_H7) ;
+uint64_t blackPawns =   square_bb(Square::SQ_A7) | square_bb(Square::SQ_B7) | square_bb(Square::SQ_C7) | 
+                        square_bb(Square::SQ_D7) | square_bb(Square::SQ_E7) | square_bb(Square::SQ_F7) | 
+                        square_bb(Square::SQ_G7) | square_bb(Square::SQ_H7) ;
 
-uint64_t blackKnights = square_bb(SQ_B8) | square_bb(SQ_G8);
-uint64_t blackRooks   = square_bb(SQ_A8) | square_bb(SQ_H8);
-uint64_t blackBishops = square_bb(SQ_C8) | square_bb(SQ_F8);
-uint64_t blackQueen   = square_bb(SQ_D8);
-uint64_t blackKing    = square_bb(SQ_E8);
+uint64_t blackKnights = square_bb(Square::SQ_B8) | square_bb(Square::SQ_G8);
+uint64_t blackRooks   = square_bb(Square::SQ_A8) | square_bb(Square::SQ_H8);
+uint64_t blackBishops = square_bb(Square::SQ_C8) | square_bb(Square::SQ_F8);
+uint64_t blackQueen   = square_bb(Square::SQ_D8);
+uint64_t blackKing    = square_bb(Square::SQ_E8);
 
 uint64_t blackPieces = blackPawns   |
                        blackBishops |
                        blackKnights | 
                        blackRooks   |
                        blackQueen   |
-                       blackKing
+                       blackKing;
+void movePiece(uint64_t &type, Square src, Square dst){
+	set_bit(type, dst);
+	clear_bit(type, src);
+}
+
+std::istream& operator >> (std::istream& input, Square& sq){
+	std::string userInput;
+	input >> userInput;
+
+	if(userInput == "SQ_E2"){
+		sq = Square::SQ_E2;
+	}
+	else if(userInput == "SQ_E4"){
+		sq = Square::SQ_E4;
+	}
+	else if(userInput == "SQ_A8"){
+		sq = Square::SQ_A8;
+	}
+	else if(userInput == "SQ_A6"){
+		sq = Square::SQ_A6;
+	}
+	else{
+		input.setstate(std::ios::failbit);
+	}
+	return input;
+
+}
+
 
 int main(){
-        std::cout << "white piecess before Opening\n" << std::bitset<64>(whitePieces) << "\n";
+	std::cout << "white piecess before Opening\n" << std::bitset<64>(whitePieces) << "\n";
     
     uint64_t d1 = square_bb(SQ_D1);
 
-    //checking for a specific piece on a specific square
+    //CHECKING FOR A SPECIFIC PIECE ON A SPECIFIC SQUARE
     if(whiteQueen & d1){
-        std::cout << "There is a queen on c2\n\n";
+        std::cout << "There is a queen on d1\n\n";
     }else{
-        std::cout << "There is no queen on c3\n\n";
+        std::cout << "There is no queen on d1\n\n";
     }
 
-    //occupied 
+    //OCCUPIED
     uint64_t occupied = whitePieces | blackPieces ;
     std::cout << "Occupied Pieces :\n" << std::bitset<64>(occupied) << "\n";
 
@@ -108,7 +136,7 @@ int main(){
     std::cout << "Empty Squares :\n" << std::bitset<64>(empty_squares) << "\n";
 
     
-    //checking if a move is legal (just learning basics)
+    //CHECKING IF A MOVE IF LEGAL (just learning basics)
     //move a queen from d1 -> d2
     whitePawns = whitePawns << 8;
     whitePieces =      whitePawns   |
@@ -133,8 +161,44 @@ int main(){
                        whiteQueen   |
                        whiteKing;
 
+
+	//SIMULATING MOVEMENT OF PIECES
     std::cout << "white pieces after Opening\n" << std::bitset<64>(whitePieces) << "\n";
-        
+
+    std::cout << "White Pawns before : \n" << std::bitset<64>(whitePawns) << "\n";
+	
+	std::cout << "Black Rooks Before \n" << std::bitset<64>(blackRooks) << "\n";
+	uint64_t e2 = square_bb(SQ_E2);
+
+	std::cout << "E2 pawn mask \n" << std::bitset<64>(e2) << "\n";
+	if(whitePawns & e2){
+		std::cout << "There is a piece on e2 \n";
+	}
+
+	//moving a piece -> clear the source and set the destination
+
+	Square pawn_src;
+	Square pawn_dst;
+	Square rook_src;
+	Square rook_dst;
+
+	std::cout << "Pawn (from) : ";
+	std::cin >> pawn_src;
+	std::cout << "Pawn (to) : ";
+	std::cin >> pawn_dst;
+
+
+	std::cout << "Rook (from) : ";
+	std::cin >> rook_src;
+	std::cout << "Rook (to) : ";
+	std::cin >> rook_dst;
+
+	movePiece(whitePawns, pawn_src, pawn_dst);
+	movePiece(blackRooks, rook_src, rook_dst);
+
+	std::cout << "White Pawns After \n" << std::bitset<64>(whitePawns) << "\n";
+	std::cout << "Black Rooks After \n" << std::bitset<64>(blackRooks) << "\n";
+	
 
     return 0;
 }
