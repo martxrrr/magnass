@@ -53,8 +53,9 @@ inline Square pop_lsb(uint64_t &bb){
         return sq;
 }
 //WHITE
-uint64_t whitePawns = square_bb(Square::SQ_A2) | square_bb(Square::SQ_B2) | square_bb(Square::SQ_C2) | 
-                      square_bb(Square::SQ_D2) | square_bb(Square::SQ_E2) | square_bb(Square::SQ_F2) | 
+uint64_t whitePawns = square_bb(Square::SQ_A2) | square_bb(Square::SQ_B2) |
+					  square_bb(Square::SQ_C2) | square_bb(Square::SQ_D2) |
+                      square_bb(Square::SQ_E2) | square_bb(Square::SQ_F2) | 
                       square_bb(Square::SQ_G2) | square_bb(Square::SQ_H2) ;
 
 uint64_t whiteKnights = square_bb(Square::SQ_B1) | square_bb(Square::SQ_G1);
@@ -71,8 +72,9 @@ uint64_t whitePieces = whitePawns   |
                        whiteKing;
 
 //BLACK
-uint64_t blackPawns =   square_bb(Square::SQ_A7) | square_bb(Square::SQ_B7) | square_bb(Square::SQ_C7) | 
-                        square_bb(Square::SQ_D7) | square_bb(Square::SQ_E7) | square_bb(Square::SQ_F7) | 
+uint64_t blackPawns =   square_bb(Square::SQ_A7) | square_bb(Square::SQ_B7) |
+					    square_bb(Square::SQ_C7) | square_bb(Square::SQ_D7) |
+                        square_bb(Square::SQ_E7) | square_bb(Square::SQ_F7) | 
                         square_bb(Square::SQ_G7) | square_bb(Square::SQ_H7) ;
 
 uint64_t blackKnights = square_bb(Square::SQ_B8) | square_bb(Square::SQ_G8);
@@ -87,6 +89,7 @@ uint64_t blackPieces = blackPawns   |
                        blackRooks   |
                        blackQueen   |
                        blackKing;
+					   
 void movePiece(uint64_t &type, Square src, Square dst){
 	set_bit(type, dst);
 	clear_bit(type, src);
@@ -96,18 +99,41 @@ std::istream& operator >> (std::istream& input, Square& sq){
 	std::string userInput;
 	input >> userInput;
 
-	if(userInput == "SQ_E2"){
-		sq = Square::SQ_E2;
-	}
-	else if(userInput == "SQ_E4"){
-		sq = Square::SQ_E4;
-	}
-	else if(userInput == "SQ_A8"){
-		sq = Square::SQ_A8;
-	}
-	else if(userInput == "SQ_A6"){
-		sq = Square::SQ_A6;
-	}
+	if(userInput == "SQ_A1") sq = Square::SQ_A1;             else if(userInput == "SQ_H1") sq = Square::SQ_H1;
+	else if(userInput == "SQ_A2") sq = Square::SQ_A2;	     else if(userInput == "SQ_H2") sq = Square::SQ_H2;
+	else if(userInput == "SQ_A3") sq = Square::SQ_A3;	     else if(userInput == "SQ_H3") sq = Square::SQ_H3;
+	else if(userInput == "SQ_A4") sq = Square::SQ_A4;        else if(userInput == "SQ_H4") sq = Square::SQ_H4;
+	else if(userInput == "SQ_A5") sq = Square::SQ_A5;        else if(userInput == "SQ_H5") sq = Square::SQ_H5;
+	else if(userInput == "SQ_A6") sq = Square::SQ_A6;        else if(userInput == "SQ_H6") sq = Square::SQ_H6;
+	else if(userInput == "SQ_A7") sq = Square::SQ_A7;        else if(userInput == "SQ_H7") sq = Square::SQ_H7;
+	else if(userInput == "SQ_A8") sq = Square::SQ_A8;        else if(userInput == "SQ_H8") sq = Square::SQ_H8;
+
+    else if(userInput == "SQ_B1") sq = Square::SQ_B1;        else if(userInput == "SQ_C1") sq = Square::SQ_C1;
+	else if(userInput == "SQ_B2") sq = Square::SQ_B2;	     else if(userInput == "SQ_C2") sq = Square::SQ_C2;
+	else if(userInput == "SQ_B3") sq = Square::SQ_B3;	     else if(userInput == "SQ_C3") sq = Square::SQ_C3;
+    else if(userInput == "SQ_B4") sq = Square::SQ_B4;        else if(userInput == "SQ_C4") sq = Square::SQ_C4;
+    else if(userInput == "SQ_B5") sq = Square::SQ_B5;        else if(userInput == "SQ_C5") sq = Square::SQ_C5;
+    else if(userInput == "SQ_B6") sq = Square::SQ_B6;        else if(userInput == "SQ_C6") sq = Square::SQ_C6;
+    else if(userInput == "SQ_B7") sq = Square::SQ_B7;        else if(userInput == "SQ_C7") sq = Square::SQ_C7;
+    else if(userInput == "SQ_B8") sq = Square::SQ_B8;        else if(userInput == "SQ_C8") sq = Square::SQ_C8;
+
+    else if(userInput == "SQ_D1") sq = Square::SQ_D1;        else if(userInput == "SQ_E1") sq = Square::SQ_E1;
+	else if(userInput == "SQ_D2") sq = Square::SQ_D2;	     else if(userInput == "SQ_E2") sq = Square::SQ_E2;
+	else if(userInput == "SQ_D3") sq = Square::SQ_D3;	     else if(userInput == "SQ_E3") sq = Square::SQ_E3;
+    else if(userInput == "SQ_D4") sq = Square::SQ_D4;        else if(userInput == "SQ_E4") sq = Square::SQ_E4;
+    else if(userInput == "SQ_D5") sq = Square::SQ_D5;        else if(userInput == "SQ_E5") sq = Square::SQ_E5;
+    else if(userInput == "SQ_D6") sq = Square::SQ_D6;        else if(userInput == "SQ_E6") sq = Square::SQ_E6;
+    else if(userInput == "SQ_D7") sq = Square::SQ_D7;        else if(userInput == "SQ_E7") sq = Square::SQ_E7;
+    else if(userInput == "SQ_D8") sq = Square::SQ_D8;        else if(userInput == "SQ_E8") sq = Square::SQ_E8;
+
+    else if(userInput == "SQ_F1") sq = Square::SQ_F1;        else if(userInput == "SQ_G1") sq = Square::SQ_G1;
+	else if(userInput == "SQ_F2") sq = Square::SQ_F2;	     else if(userInput == "SQ_G2") sq = Square::SQ_G2;
+	else if(userInput == "SQ_F3") sq = Square::SQ_F3;	     else if(userInput == "SQ_G3") sq = Square::SQ_G3;
+    else if(userInput == "SQ_F4") sq = Square::SQ_F4;        else if(userInput == "SQ_G4") sq = Square::SQ_G4;
+    else if(userInput == "SQ_F5") sq = Square::SQ_F5;        else if(userInput == "SQ_G5") sq = Square::SQ_G5;
+    else if(userInput == "SQ_F6") sq = Square::SQ_F6;        else if(userInput == "SQ_G6") sq = Square::SQ_G6;
+    else if(userInput == "SQ_F7") sq = Square::SQ_F7;        else if(userInput == "SQ_G7") sq = Square::SQ_G7;
+    else if(userInput == "SQ_F8") sq = Square::SQ_F8;        else if(userInput == "SQ_G8") sq = Square::SQ_G8;
 	else{
 		input.setstate(std::ios::failbit);
 	}
@@ -172,7 +198,7 @@ int main(){
 
 	std::cout << "E2 pawn mask \n" << std::bitset<64>(e2) << "\n";
 	if(whitePawns & e2){
-		std::cout << "There is a piece on e2 \n";
+			std::cout << "There is a piece on e2 \n";
 	}
 
 	//moving a piece -> clear the source and set the destination
