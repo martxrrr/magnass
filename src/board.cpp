@@ -13,214 +13,214 @@ void renderPieces(Positions &position, sf::RenderWindow &window);
 
 int main(){
 
-        constexpr int width { 740 };
-        constexpr int height { 733 };
+	constexpr int width { 740 };
+	constexpr int height { 733 };
 
-        constexpr int x { 600 };
-        constexpr int y { 50 };
+	constexpr int x { 600 };
+	constexpr int y { 50 };
 
-        sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
-        window.setPosition(sf::Vector2i({x, y}));
+	sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
+	window.setPosition(sf::Vector2i({x, y}));
 
-        sf::Texture boardTexture;
-        if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
-                return -1;
-        }
+	sf::Texture boardTexture;
+	if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
+		return -1;
+	}
 
-        sf::Sprite mainBoard(boardTexture);
-        Positions position;
-        sf::Vector2f coord;
+	sf::Sprite mainBoard(boardTexture);
+	Positions position;
+	sf::Vector2f coord;
 
-        bool clicked = false;
+	bool clicked = false;
 
 
-        while(window.isOpen()){
-                while(const std::optional event = window.pollEvent()){
-                        if(event->is<sf::Event::Closed>()){
-                                window.close();
-                        }
-                        else if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
-                                if(keyPressed->scancode == sf::Keyboard::Scancode::Escape){
-                                        window.close();
-                                }
-                        }
-                        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
-                                window.close();
-                        }
+	while(window.isOpen()){
+		while(const std::optional event = window.pollEvent()){
+			if(event->is<sf::Event::Closed>()){
+				window.close();
+			}
+			else if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
+				if(keyPressed->scancode == sf::Keyboard::Scancode::Escape){
+					window.close();
+				}
+			}
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
+				window.close();
+			}
 
-                        if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
-                                if(mouseClick->button == sf::Mouse::Button::Left){
-                                        clicked = true;
-                                        sf::Vector2i pos = sf::Mouse::getPosition(window);
-                                        float mouseX = static_cast<float>(pos.x);
-                                        float mouseY = static_cast<float>(pos.y);
+			if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
+				if(mouseClick->button == sf::Mouse::Button::Left){
+					clicked = true;
+					sf::Vector2i pos = sf::Mouse::getPosition(window);
+					float mouseX = static_cast<float>(pos.x);
+					float mouseY = static_cast<float>(pos.y);
 
-                                        sf::Vector2f click_position = {mouseX, mouseY};
+					sf::Vector2f click_position = {mouseX, mouseY};
 
-                                        coord = getSquare(click_position);
+					coord = getSquare(click_position);
 
-                                }
-                        }
-                        
-                        
-                }
+				}
+			}
+			
+			
+		}
 
-                window.clear(sf::Color::Black);
+		window.clear(sf::Color::Black);
 
-                window.draw(mainBoard);
+		window.draw(mainBoard);
 
-                renderPieces(position, window);
+		renderPieces(position, window);
 
-                if(clicked){
-                        highlightSquare(window, coord);
-                }
+		if(clicked){
+			highlightSquare(window, coord);
+		}
 
-                window.display();
-                
-        }
+		window.display();
+		
+	}
 
-        
-        return 0;
+	
+	return 0;
 }
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick){
-        Positions position;
-        const std::vector<sf::Vector2f> positions = {   
-                                                           position.A1, position.A2, position.A3, position.A4,
-                                                           position.A5, position.A6, position.A7, position.A8,
-                                                           position.B1, position.B2, position.B3, position.B4,
-                                                           position.B5, position.B6, position.B7, position.B8,
-                                                           position.C1, position.C2, position.C3, position.C4,
-                                                           position.C5, position.C6, position.C7, position.C8,
-                                                           position.D1, position.D2, position.D3, position.D4,
-                                                           position.D5, position.D6, position.D7, position.D8,
-                                                           position.E1, position.E2, position.E3, position.E4,
-                                                           position.E5, position.E6, position.E7, position.E8,
-                                                           position.F1, position.F2, position.F3, position.F4,
-                                                           position.F5, position.F6, position.F7, position.F8,
-                                                           position.G1, position.G2, position.G3, position.G4,
-                                                           position.G5, position.G6, position.G7, position.G8,
-                                                           position.H1, position.H2, position.H3, position.H4,
-                                                           position.H5, position.H6, position.H7, position.H8,
-                                                    };
-        
-        
-        float diffX{};
-        float diffY{};
+	Positions position;
+	const std::vector<sf::Vector2f> positions = {   
+							   position.A1, position.A2, position.A3, position.A4,
+							   position.A5, position.A6, position.A7, position.A8,
+							   position.B1, position.B2, position.B3, position.B4,
+							   position.B5, position.B6, position.B7, position.B8,
+							   position.C1, position.C2, position.C3, position.C4,
+							   position.C5, position.C6, position.C7, position.C8,
+							   position.D1, position.D2, position.D3, position.D4,
+							   position.D5, position.D6, position.D7, position.D8,
+							   position.E1, position.E2, position.E3, position.E4,
+							   position.E5, position.E6, position.E7, position.E8,
+							   position.F1, position.F2, position.F3, position.F4,
+							   position.F5, position.F6, position.F7, position.F8,
+							   position.G1, position.G2, position.G3, position.G4,
+							   position.G5, position.G6, position.G7, position.G8,
+							   position.H1, position.H2, position.H3, position.H4,
+							   position.H5, position.H6, position.H7, position.H8,
+						    };
+	
+	
+	float diffX{};
+	float diffY{};
 
-        std::array<double, 63> euclideans;
-        sf::Vector2f closest = { };
-        
-        //loop through the std::vector of positions,
-        //calculate the euclidean distances and append them in an std::array
-        for(auto pos{ 0 }; pos < positions.size() - 1; pos++){
-                diffX = pow((positions[pos].x - mouseClick.x), 2);
-                diffY = pow((positions[pos].y - mouseClick.y), 2);
-                double sum { diffX + diffY };
+	std::array<double, 63> euclideans;
+	sf::Vector2f closest = { };
+	
+	//loop through the std::vector of positions,
+	//calculate the euclidean distances and append them in an std::array
+	for(auto pos{ 0 }; pos < positions.size() - 1; pos++){
+		diffX = pow((positions[pos].x - mouseClick.x), 2);
+		diffY = pow((positions[pos].y - mouseClick.y), 2);
+		double sum { diffX + diffY };
 
-                double euclidean { sqrt(sum) };
-                euclideans[pos] = euclidean;
-        }
+		double euclidean { sqrt(sum) };
+		euclideans[pos] = euclidean;
+	}
 
 
-        //sort the array and get the smallest euclidean distance
-        double close { };
-        {
-                std::array<double, 63> virtualEuclideans;
-                virtualEuclideans = euclideans;
-                
-                for(auto i { 1 }; i < virtualEuclideans.size(); i++){
-                        for(auto j { 0 }; j < virtualEuclideans.size() - 1; j++){
-                                if(virtualEuclideans[j] > virtualEuclideans[j + 1]){
-                                        double temp = virtualEuclideans[j + 1];
-                                        virtualEuclideans[j + 1] = virtualEuclideans[j];
-                                        virtualEuclideans[j] = temp;
-                                }
-                        }
-                }
+	//sort the array and get the smallest euclidean distance
+	double close { };
+	{
+		std::array<double, 63> virtualEuclideans;
+		virtualEuclideans = euclideans;
+		
+		for(auto i { 1 }; i < virtualEuclideans.size(); i++){
+			for(auto j { 0 }; j < virtualEuclideans.size() - 1; j++){
+				if(virtualEuclideans[j] > virtualEuclideans[j + 1]){
+					double temp = virtualEuclideans[j + 1];
+					virtualEuclideans[j + 1] = virtualEuclideans[j];
+					virtualEuclideans[j] = temp;
+				}
+			}
+		}
 
-                close = virtualEuclideans[0];
-        }
+		close = virtualEuclideans[0];
+	}
 
-        int index;
+	int index;
 
-        for(int j { 0 }; j < euclideans.size(); j++){
-                int idx;
-                if(euclideans[j] == close){
-                        idx = j;
-                }else{
-                        continue;
-                }
-        index = idx;
-        }
+	for(int j { 0 }; j < euclideans.size(); j++){
+		int idx;
+		if(euclideans[j] == close){
+			idx = j;
+		}else{
+			continue;
+		}
+	index = idx;
+	}
 
-        //now here we have the cordinate of the closest render point from the mouse click point
-        closest = {positions[index].x, positions[index].y};
+	//now here we have the cordinate of the closest render point from the mouse click point
+	closest = {positions[index].x, positions[index].y};
 
-        return closest;
+	return closest;
 
 }
 
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
-        sf::Vector2f coordinate = cordinate;
-        sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
-        pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));          //make it see-through/transparent
-        pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});                             //the difference will always be the starting point where to draw the square
-        pieceSquare.setOutlineColor(sf::Color::Blue);
-        pieceSquare.setOutlineThickness(4.f);
+	sf::Vector2f coordinate = cordinate;
+	sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
+	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));          //make it see-through/transparent
+	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});                             //the difference will always be the starting point where to draw the square
+	pieceSquare.setOutlineColor(sf::Color::Blue);
+	pieceSquare.setOutlineThickness(4.f);
 
-        window.draw(pieceSquare);
+	window.draw(pieceSquare);
 
 
 }
 
 void renderPieces(Positions &position, sf::RenderWindow &window){
 
-                // //KING
-                King Bking( position.E8, window, 0 );
-                King Wking( position.E1, window, 1 );
+		// //KING
+		King Bking( position.E8, window, 0 );
+		King Wking( position.E1, window, 1 );
 
 
-                //QUEEN
-                Queen Bqueen( position.D8, window, 0);
-                Queen Wqueen( position.D1, window, 1);
+		//QUEEN
+		Queen Bqueen( position.D8, window, 0);
+		Queen Wqueen( position.D1, window, 1);
 
-                //PAWN
-                Pawn Wpawn1( position.A2, window, 1);
-                Pawn Wpawn2( position.B2, window, 1);
-                Pawn Wpawn3( position.C2, window, 1);
-                Pawn Wpawn4( position.D2, window, 1);
-                Pawn Wpawn5( position.E2, window, 1);
-                Pawn Wpawn6( position.F2, window, 1);
-                Pawn Wpawn7( position.G2, window, 1);
-                Pawn Wpawn8( position.H2, window, 1);
+		//PAWN
+		Pawn Wpawn1( position.A2, window, 1);
+		Pawn Wpawn2( position.B2, window, 1);
+		Pawn Wpawn3( position.C2, window, 1);
+		Pawn Wpawn4( position.D2, window, 1);
+		Pawn Wpawn5( position.E2, window, 1);
+		Pawn Wpawn6( position.F2, window, 1);
+		Pawn Wpawn7( position.G2, window, 1);
+		Pawn Wpawn8( position.H2, window, 1);
 
-                Pawn Bpawn1( position.A7, window, 0);
-                Pawn Bpawn2( position.B7, window, 0);
-                Pawn Bpawn3( position.C7, window, 0);
-                Pawn Bpawn4( position.D7, window, 0);
-                Pawn Bpawn5( position.E7, window, 0);
-                Pawn Bpawn6( position.F7, window, 0);
-                Pawn Bpawn7( position.G7, window, 0);
-                Pawn Bpawn8( position.H7, window, 0);
+		Pawn Bpawn1( position.A7, window, 0);
+		Pawn Bpawn2( position.B7, window, 0);
+		Pawn Bpawn3( position.C7, window, 0);
+		Pawn Bpawn4( position.D7, window, 0);
+		Pawn Bpawn5( position.E7, window, 0);
+		Pawn Bpawn6( position.F7, window, 0);
+		Pawn Bpawn7( position.G7, window, 0);
+		Pawn Bpawn8( position.H7, window, 0);
 
-                //BISHOP
-                Bishop Bbishop1( position.F8, window, 0);
-                Bishop Bbishop2( position.C8, window, 0);
-                Bishop Wbishop1( position.C1, window, 1);
-                Bishop Wbishop2( position.F1, window, 1);
+		//BISHOP
+		Bishop Bbishop1( position.F8, window, 0);
+		Bishop Bbishop2( position.C8, window, 0);
+		Bishop Wbishop1( position.C1, window, 1);
+		Bishop Wbishop2( position.F1, window, 1);
 
-                
-                //KNIGHT
-                Knight Bknight1( position.G8, window, 0);
-                Knight Bknight2( position.B8, window, 0);
-                Knight Wknight1( position.G1, window, 1);
-                Knight Wknight2( position.B1, window, 1);
+		
+		//KNIGHT
+		Knight Bknight1( position.G8, window, 0);
+		Knight Bknight2( position.B8, window, 0);
+		Knight Wknight1( position.G1, window, 1);
+		Knight Wknight2( position.B1, window, 1);
 
-                //ROOK
-                Rook Brook1( position.A8, window, 0);
-                Rook Brook2( position.H8, window, 0);
-                Rook Wrook1( position.A1, window, 1);
-                Rook Wrook2( position.H1, window, 1);
+		//ROOK
+		Rook Brook1( position.A8, window, 0);
+		Rook Brook2( position.H8, window, 0);
+		Rook Wrook1( position.A1, window, 1);
+		Rook Wrook2( position.H1, window, 1);
 
 }
