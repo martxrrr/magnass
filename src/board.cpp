@@ -31,7 +31,8 @@ int main(){
 	Positions position;
 	sf::Vector2f coord;
 
-	bool clicked = false;
+	bool clicked { false };
+	bool inRange { false };
 
 
 	while(window.isOpen()){
@@ -55,9 +56,15 @@ int main(){
 					float mouseX = static_cast<float>(pos.x);
 					float mouseY = static_cast<float>(pos.y);
 
-					sf::Vector2f click_position = {mouseX, mouseY};
+					std::cout << "(" << mouseX << ", " << mouseY << ")" << "\n";
 
-					coord = getSquare(click_position);
+					sf::Vector2f click_position = {mouseX, mouseY};
+					//top left (77, 77) bottom right(664, 664)
+
+					if((mouseX > 77 && mouseX < 664) && (mouseY > 77 && mouseY < 664)){
+						coord = getSquare(click_position);
+						inRange = true;
+					}
 
 				}
 			}
@@ -71,7 +78,7 @@ int main(){
 
 		renderPieces(position, window);
 
-		if(clicked){
+		if(clicked && inRange){
 			highlightSquare(window, coord);
 		}
 
@@ -165,8 +172,8 @@ void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
 	sf::Vector2f coordinate = cordinate;
 	sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));          //make it see-through/transparent
-	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});                             //the difference will always be the starting point where to draw the square
-	pieceSquare.setOutlineColor(sf::Color::Blue);
+	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});    //the difference will always be the starting point where to draw the square
+	pieceSquare.setOutlineColor(sf::Color::Green);
 	pieceSquare.setOutlineThickness(4.f);
 
 	window.draw(pieceSquare);

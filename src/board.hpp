@@ -113,6 +113,7 @@ class Knight{
 								std::cout << "Error loading the image file! " << "\n";
 						}
 						sf::Sprite knightB(knight);
+						knightB.setScale({-1.0f, 1.0f});
 						knightB.setPosition({position});
 
 						window.draw(knightB);
@@ -121,6 +122,7 @@ class Knight{
 								std::cout << "Error loading the image file! " << "\n";
 						}
 						sf::Sprite knightW(knight);
+						knightW.setScale({-1.0f, 1.0f});
 						knightW.setPosition({position});
 
 						window.draw(knightW);
@@ -155,7 +157,7 @@ class Pawn{
 };
 
 
-//coordinates where to render
+//coordinates where to render on each square
 struct Positions{
 		sf::Vector2f A1 = { 81.f, 597.f };
 		sf::Vector2f A2 = { 81.f, 523.f };
@@ -166,14 +168,14 @@ struct Positions{
 		sf::Vector2f A7 = { 81.f, 153.f };
 		sf::Vector2f A8 = { 81.f, 80.f  };
 
-		sf::Vector2f B1 = { 154.f, 597.f };
+		sf::Vector2f B1 = { 223.f, 597.f };
 		sf::Vector2f B2 = { 154.f, 523.f };
 		sf::Vector2f B3 = { 154.f, 450.f };
 		sf::Vector2f B4 = { 154.f, 377.f };
 		sf::Vector2f B5 = { 154.f, 304.f };
 		sf::Vector2f B6 = { 154.f, 231.f };
 		sf::Vector2f B7 = { 154.f, 153.f };
-		sf::Vector2f B8 = { 154.f, 80.f  };
+		sf::Vector2f B8 = { 223.f, 80.f  };
 
 		sf::Vector2f C1 = { 227.f, 597.f };
 		sf::Vector2f C2 = { 227.f, 523.f };
@@ -211,14 +213,14 @@ struct Positions{
 		sf::Vector2f F7 = { 447.f, 153.f };
 		sf::Vector2f F8 = { 451.f, 80.f  };
 
-		sf::Vector2f G1 = { 520.f, 597.f };
+		sf::Vector2f G1 = { 589.f, 597.f };
 		sf::Vector2f G2 = { 520.f, 523.f };
 		sf::Vector2f G3 = { 520.f, 450.f };
 		sf::Vector2f G4 = { 520.f, 377.f };
 		sf::Vector2f G5 = { 520.f, 304.f };
 		sf::Vector2f G6 = { 520.f, 231.f };
 		sf::Vector2f G7 = { 520.f, 153.f };
-		sf::Vector2f G8 = { 524.f, 80.f  };
+		sf::Vector2f G8 = { 589.f, 80.f  };
 
 		sf::Vector2f H1 = { 593.f, 597.f };
 		sf::Vector2f H2 = { 593.f, 523.f };
