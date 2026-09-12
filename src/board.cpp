@@ -1,7 +1,11 @@
 #include <optional>
 #include <cstdint>
+#include <unordered_map>
+#include <string>
+#include <functional>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "board.hpp"
 
@@ -11,12 +15,23 @@ void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
 
 void renderPieces(Positions &position, sf::RenderWindow &window);
 
+std::string getSquareName(const sf::Vector2f& mouseCoord);
+
+struct Vector2fHash{
+	std::size_t operator()(const sf::Vector2f& v) const {
+		std::size_t h1 = std::hash<float>{}(v.x);
+		std::size_t h2 = std::hash<float>{}(v.y);
+
+		return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
+	}
+};
+
 int main(){
 
 	constexpr int width { 740 };
 	constexpr int height { 733 };
 
-	constexpr int x { 600 };
+	constexpr int x { 100 };
 	constexpr int y { 50 };
 
 	sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
@@ -56,7 +71,7 @@ int main(){
 					float mouseX = static_cast<float>(pos.x);
 					float mouseY = static_cast<float>(pos.y);
 
-					std::cout << "(" << mouseX << ", " << mouseY << ")" << "\n";
+					// std::cout << "(" << mouseX << ", " << mouseY << ")" << "\n";
 
 					sf::Vector2f click_position = {mouseX, mouseY};
 					//top left (77, 77) bottom right(664, 664)
@@ -64,6 +79,8 @@ int main(){
 					if((mouseX > 77 && mouseX < 664) && (mouseY > 77 && mouseY < 664)){
 						coord = getSquare(click_position);
 						inRange = true;
+						std::string squareName = getSquareName(coord);
+						std::cout << squareName << "\n";
 					}
 
 				}
@@ -85,7 +102,6 @@ int main(){
 		window.display();
 		
 	}
-
 	
 	return 0;
 }
@@ -164,6 +180,9 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	//now here we have the cordinate of the closest render point from the mouse click point
 	closest = {positions[index].x, positions[index].y};
 
+	//getting the name of that square
+
+
 	return closest;
 
 }
@@ -230,4 +249,56 @@ void renderPieces(Positions &position, sf::RenderWindow &window){
 		Rook Wrook1( position.A1, window, 1);
 		Rook Wrook2( position.H1, window, 1);
 
+}
+
+std::string getSquareName(const sf::Vector2f& mouseCoord){
+	std::unordered_map<sf::Vector2f, std::string, Vector2fHash> coordToMap;
+
+	coordToMap[{ 81.f, 597.f }] = "SQ_A1";  coordToMap[{ 223.f, 597.f }] = "SQ_B1";
+	coordToMap[{ 81.f, 523.f }] = "SQ_A2";  coordToMap[{ 154.f, 523.f }] = "SQ_B2";
+	coordToMap[{ 81.f, 450.f }] = "SQ_A3";  coordToMap[{ 154.f, 450.f }] = "SQ_B3";
+	coordToMap[{ 81.f, 377.f }] = "SQ_A4";  coordToMap[{ 154.f, 377.f }] = "SQ_B4";
+	coordToMap[{ 81.f, 304.f }] = "SQ_A5";  coordToMap[{ 154.f, 304.f }] = "SQ_B5";
+	coordToMap[{ 81.f, 231.f }] = "SQ_A6";  coordToMap[{ 154.f, 231.f }] = "SQ_B6";
+	coordToMap[{ 81.f, 153.f }] = "SQ_A7";  coordToMap[{ 154.f, 153.f }] = "SQ_B7";
+	coordToMap[{ 81.f, 80.f  }] = "SQ_A8";  coordToMap[{ 223.f, 80.f  }] = "SQ_B8";
+
+	coordToMap[{ 227.f, 597.f }] = "SQ_C1";  coordToMap[{ 300.f, 600.f }] = "SQ_D1";
+	coordToMap[{ 227.f, 523.f }] = "SQ_C2";  coordToMap[{ 300.f, 523.f }] = "SQ_D2";
+	coordToMap[{ 227.f, 450.f }] = "SQ_C3";  coordToMap[{ 300.f, 450.f }] = "SQ_D3";
+	coordToMap[{ 227.f, 377.f }] = "SQ_C4";  coordToMap[{ 300.f, 377.f }] = "SQ_D4";
+	coordToMap[{ 227.f, 304.f }] = "SQ_C5";  coordToMap[{ 300.f, 304.f }] = "SQ_D5";
+	coordToMap[{ 227.f, 231.f }] = "SQ_C6";  coordToMap[{ 300.f, 231.f }] = "SQ_D6";
+	coordToMap[{ 227.f, 153.f }] = "SQ_C7";  coordToMap[{ 300.f, 153.f }] = "SQ_D7";
+	coordToMap[{ 227.f, 80.f  }] = "SQ_C8";  coordToMap[{ 300.f, 80.f  }] = "SQ_D8";
+
+
+	coordToMap[{ 374.f, 597.f }] = "SQ_E1";  coordToMap[{ 447.f, 597.f }] = "SQ_F1";
+	coordToMap[{ 374.f, 523.f }] = "SQ_E2";  coordToMap[{ 447.f, 523.f }] = "SQ_F2";
+	coordToMap[{ 374.f, 450.f }] = "SQ_E3";  coordToMap[{ 447.f, 450.f }] = "SQ_F3";
+	coordToMap[{ 374.f, 377.f }] = "SQ_E4";  coordToMap[{ 447.f, 377.f }] = "SQ_F4";
+	coordToMap[{ 374.f, 304.f }] = "SQ_E5";  coordToMap[{ 447.f, 304.f }] = "SQ_F5";
+	coordToMap[{ 374.f, 231.f }] = "SQ_E6";  coordToMap[{ 447.f, 231.f }] = "SQ_F6";
+	coordToMap[{ 374.f, 153.f }] = "SQ_E7";  coordToMap[{ 447.f, 153.f }] = "SQ_F7";
+	coordToMap[{ 374.f, 77.f  }] = "SQ_E8";  coordToMap[{ 451.f, 80.f  }] = "SQ_F8";
+
+
+	coordToMap[{ 589.f, 597.f }] = "SQ_G1";  coordToMap[{ 593.f, 597.f }] = "SQ_H1";
+	coordToMap[{ 520.f, 523.f }] = "SQ_G2";  coordToMap[{ 593.f, 523.f }] = "SQ_H2";
+	coordToMap[{ 520.f, 450.f }] = "SQ_G3";  coordToMap[{ 593.f, 450.f }] = "SQ_H3";
+	coordToMap[{ 520.f, 377.f }] = "SQ_G4";  coordToMap[{ 593.f, 377.f }] = "SQ_H4";
+	coordToMap[{ 520.f, 304.f }] = "SQ_G5";  coordToMap[{ 593.f, 304.f }] = "SQ_H5";
+	coordToMap[{ 520.f, 231.f }] = "SQ_G6";  coordToMap[{ 593.f, 231.f }] = "SQ_H6";
+	coordToMap[{ 520.f, 153.f }] = "SQ_G7";  coordToMap[{ 593.f, 153.f }] = "SQ_H7";
+	coordToMap[{ 589.f, 80.f  }] = "SQ_G8";  coordToMap[{ 597.f, 80.f  }] = "SQ_H8";
+
+	auto value = coordToMap.find(mouseCoord);
+	if(value != coordToMap.end()){
+		// std::cout << "Square ==> " << value->second << std::endl;
+		return value->second;  
+	}else{
+		std::cout << "Out of board bound\n";
+		return "";
+	}
+	
 }
