@@ -154,6 +154,7 @@ int main(){
         std::cout << "There is no queen on d1\n\n";
     }
 
+    
     //OCCUPIED
     uint64_t occupied = whitePieces | blackPieces ;
     std::cout << "Occupied Pieces :\n" << std::bitset<64>(occupied) << "\n";
