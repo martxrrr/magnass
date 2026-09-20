@@ -1,13 +1,8 @@
-#include <optional>
-#include <cstdint>
-#include <unordered_map>
-#include <string>
-#include <functional>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "header.hpp"
+#include "pieces.hpp"
 
 King::King(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t& color){
 		sf::Texture king;
@@ -136,142 +131,6 @@ Knight::Knight(sf::Vector2f& position,  sf::RenderWindow& window, const uint8_t&
 		}
 
 }
-struct Positions{
-		sf::Vector2f A1 = { 81.f, 597.f }; sf::Vector2f B1 = { 223.f, 597.f };
-		sf::Vector2f A2 = { 81.f, 523.f }; sf::Vector2f B2 = { 154.f, 523.f };
-		sf::Vector2f A3 = { 81.f, 450.f }; sf::Vector2f B3 = { 154.f, 450.f };
-		sf::Vector2f A4 = { 81.f, 377.f }; sf::Vector2f B4 = { 154.f, 377.f };
-		sf::Vector2f A5 = { 81.f, 304.f }; sf::Vector2f B5 = { 154.f, 304.f };
-		sf::Vector2f A6 = { 81.f, 231.f }; sf::Vector2f B6 = { 154.f, 231.f };
-		sf::Vector2f A7 = { 81.f, 153.f }; sf::Vector2f B7 = { 154.f, 153.f };
-		sf::Vector2f A8 = { 81.f, 80.f  }; sf::Vector2f B8 = { 223.f, 80.f  };
-
-		sf::Vector2f C1 = { 227.f, 597.f };  sf::Vector2f D1 = { 300.f, 600.f };
-		sf::Vector2f C2 = { 227.f, 523.f };  sf::Vector2f D2 = { 300.f, 523.f };
-		sf::Vector2f C3 = { 227.f, 450.f };  sf::Vector2f D3 = { 300.f, 450.f };
-		sf::Vector2f C4 = { 227.f, 377.f };  sf::Vector2f D4 = { 300.f, 377.f };
-		sf::Vector2f C5 = { 227.f, 304.f };  sf::Vector2f D5 = { 300.f, 304.f };
-		sf::Vector2f C6 = { 227.f, 231.f };  sf::Vector2f D6 = { 300.f, 231.f };
-		sf::Vector2f C7 = { 227.f, 153.f };  sf::Vector2f D7 = { 300.f, 153.f };
-		sf::Vector2f C8 = { 227.f, 80.f  };  sf::Vector2f D8 = { 300.f, 80.f  };
-
-		sf::Vector2f E1 = { 374.f, 597.f };  sf::Vector2f F1 = { 447.f, 597.f };
-		sf::Vector2f E2 = { 374.f, 523.f };  sf::Vector2f F2 = { 447.f, 523.f };
-		sf::Vector2f E3 = { 374.f, 450.f };  sf::Vector2f F3 = { 447.f, 450.f };
-		sf::Vector2f E4 = { 374.f, 377.f };  sf::Vector2f F4 = { 447.f, 377.f };
-		sf::Vector2f E5 = { 374.f, 304.f };  sf::Vector2f F5 = { 447.f, 304.f };
-		sf::Vector2f E6 = { 374.f, 231.f };  sf::Vector2f F6 = { 447.f, 231.f };
-		sf::Vector2f E7 = { 374.f, 153.f };  sf::Vector2f F7 = { 447.f, 153.f };
-		sf::Vector2f E8 = { 374.f, 77.f  };  sf::Vector2f F8 = { 451.f, 80.f  };
-
-
-		sf::Vector2f G1 = { 589.f, 597.f };  sf::Vector2f H1 = { 593.f, 597.f };
-		sf::Vector2f G2 = { 520.f, 523.f };  sf::Vector2f H2 = { 593.f, 523.f };
-		sf::Vector2f G3 = { 520.f, 450.f };  sf::Vector2f H3 = { 593.f, 450.f };
-		sf::Vector2f G4 = { 520.f, 377.f };  sf::Vector2f H4 = { 593.f, 377.f };
-		sf::Vector2f G5 = { 520.f, 304.f };  sf::Vector2f H5 = { 593.f, 304.f };
-		sf::Vector2f G6 = { 520.f, 231.f };  sf::Vector2f H6 = { 593.f, 231.f };
-		sf::Vector2f G7 = { 520.f, 153.f };  sf::Vector2f H7 = { 593.f, 153.f };
-		sf::Vector2f G8 = { 589.f, 80.f  };  sf::Vector2f H8 = { 597.f, 80.f  };
-
-};
-struct Vector2fHash{
-	std::size_t operator()(const sf::Vector2f& v) const {
-		std::size_t h1 = std::hash<float>{}(v.x);
-		std::size_t h2 = std::hash<float>{}(v.y);
-
-		return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
-	}
-};
-
-sf::Vector2f getSquare(sf::Vector2f &mouseClick);
-
-void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
-
-void renderPieces(Positions &position, sf::RenderWindow &window);
-
-std::string getSquareName(const sf::Vector2f& mouseCoord);
-
-int main(){
-
-	constexpr int width { 740 };
-	constexpr int height { 733 };
-
-	constexpr int x { 100 };
-	constexpr int y { 50 };
-
-	sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
-	window.setPosition(sf::Vector2i({x, y}));
-
-	sf::Texture boardTexture;
-	if(!boardTexture.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/boards/chess02.jpg")){
-		return -1;
-	}
-
-	sf::Sprite mainBoard(boardTexture);
-	Positions position;
-	sf::Vector2f coord;
-
-	bool clicked { false };
-	bool inRange { false };
-
-
-	while(window.isOpen()){
-		while(const std::optional event = window.pollEvent()){
-			if(event->is<sf::Event::Closed>()){
-				window.close();
-			}
-			else if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
-				if(keyPressed->scancode == sf::Keyboard::Scancode::Escape){
-					window.close();
-				}
-			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
-				window.close();
-			}
-
-			if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
-				if(mouseClick->button == sf::Mouse::Button::Left){
-					clicked = true;
-					sf::Vector2i pos = sf::Mouse::getPosition(window);
-					float mouseX = static_cast<float>(pos.x);
-					float mouseY = static_cast<float>(pos.y);
-
-					// std::cout << "(" << mouseX << ", " << mouseY << ")" << "\n";
-
-					sf::Vector2f click_position = {mouseX, mouseY};
-					//top left (77, 77) bottom right(664, 664)
-
-					if((mouseX > 77 && mouseX < 664) && (mouseY > 77 && mouseY < 664)){
-						coord = getSquare(click_position);
-						inRange = true;
-						std::string squareName = getSquareName(coord);
-						std::cout << squareName << "\n";
-					}
-
-				}
-			}
-			
-			
-		}
-
-		window.clear(sf::Color::Black);
-
-		window.draw(mainBoard);
-
-		renderPieces(position, window);
-
-		if(clicked && inRange){
-			highlightSquare(window, coord);
-		}
-
-		window.display();
-		
-	}
-	
-	return 0;
-}
-
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	Positions position;
@@ -301,8 +160,6 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	std::array<double, 63> euclideans;
 	sf::Vector2f closest = { };
 	
-	//loop through the std::vector of positions,
-	//calculate the euclidean distances and append them in an std::array
 	for(auto pos{ 0 }; pos < positions.size() - 1; pos++){
 		diffX = pow((positions[pos].x - mouseClick.x), 2);
 		diffY = pow((positions[pos].y - mouseClick.y), 2);
@@ -312,8 +169,6 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 		euclideans[pos] = euclidean;
 	}
 
-
-	//sort the array and get the smallest euclidean distance
 	double close { };
 	{
 		std::array<double, 63> virtualEuclideans;
@@ -344,11 +199,7 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	index = idx;
 	}
 
-	//now here we have the cordinate of the closest render point from the mouse click point
 	closest = {positions[index].x, positions[index].y};
-
-	//getting the name of that square
-
 
 	return closest;
 
@@ -357,66 +208,14 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
 	sf::Vector2f coordinate = cordinate;
 	sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
-	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));          //make it see-through/transparent
-	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});    //the difference will always be the starting point where to draw the square
+	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
+	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});
 	pieceSquare.setOutlineColor(sf::Color::Green);
 	pieceSquare.setOutlineThickness(4.f);
 
 	window.draw(pieceSquare);
-
-
 }
 
-void renderPieces(Positions &position, sf::RenderWindow &window){
-
-		// //KING
-		King Bking( position.E8, window, 0 );
-		King Wking( position.E1, window, 1 );
-
-
-		//QUEEN
-		Queen Bqueen( position.D8, window, 0);
-		Queen Wqueen( position.D1, window, 1);
-
-		//PAWN
-		Pawn Wpawn1( position.A2, window, 1);
-		Pawn Wpawn2( position.B2, window, 1);
-		Pawn Wpawn3( position.C2, window, 1);
-		Pawn Wpawn4( position.D2, window, 1);
-		Pawn Wpawn5( position.E2, window, 1);
-		Pawn Wpawn6( position.F2, window, 1);
-		Pawn Wpawn7( position.G2, window, 1);
-		Pawn Wpawn8( position.H2, window, 1);
-
-		Pawn Bpawn1( position.A7, window, 0);
-		Pawn Bpawn2( position.B7, window, 0);
-		Pawn Bpawn3( position.C7, window, 0);
-		Pawn Bpawn4( position.D7, window, 0);
-		Pawn Bpawn5( position.E7, window, 0);
-		Pawn Bpawn6( position.F7, window, 0);
-		Pawn Bpawn7( position.G7, window, 0);
-		Pawn Bpawn8( position.H7, window, 0);
-
-		//BISHOP
-		Bishop Bbishop1( position.F8, window, 0);
-		Bishop Bbishop2( position.C8, window, 0);
-		Bishop Wbishop1( position.C1, window, 1);
-		Bishop Wbishop2( position.F1, window, 1);
-
-		
-		//KNIGHT
-		Knight Bknight1( position.G8, window, 0);
-		Knight Bknight2( position.B8, window, 0);
-		Knight Wknight1( position.G1, window, 1);
-		Knight Wknight2( position.B1, window, 1);
-
-		//ROOK
-		Rook Brook1( position.A8, window, 0);
-		Rook Brook2( position.H8, window, 0);
-		Rook Wrook1( position.A1, window, 1);
-		Rook Wrook2( position.H1, window, 1);
-
-}
 
 std::string getSquareName(const sf::Vector2f& mouseCoord){
 	std::unordered_map<sf::Vector2f, std::string, Vector2fHash> coordToMap;

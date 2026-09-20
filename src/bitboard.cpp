@@ -3,6 +3,8 @@
 #include <bit>
 #include <bitset>
 
+#include "bitboard.hpp"
+
 
 enum class Square : int {
         SQ_A1 = 0,  SQ_B1 = 1,  SQ_C1 = 2,  SQ_D1 = 3,  SQ_E1 = 4,  SQ_F1 = 5,  SQ_G1 = 6,  SQ_H1 = 7,
@@ -37,17 +39,17 @@ constexpr bool test_bit(uint64_t &bb, Square sq){
 
 
 //get the index of the least significant bit
-inline Square lsb(uint64_t bb){
+Square lsb(uint64_t bb){
     return static_cast<Square>(std::countr_zero(bb));
 }
 
 //count the total set bits
-inline int popcount(uint64_t bb){
+int popcount(uint64_t bb){
     return std::popcount(bb);
 }
 
 //clear the lowest set bit in-place and return its index
-inline Square pop_lsb(uint64_t &bb){
+Square pop_lsb(uint64_t &bb){
     Square sq = lsb(bb);
     bb &= bb  - 1;
     return sq;
@@ -139,93 +141,4 @@ std::istream& operator >> (std::istream& input, Square& sq){
 	}
 	return input;
 
-}
-
-
-int main(){
-	std::cout << "white piecess before Opening\n" << std::bitset<64>(whitePieces) << "\n";
-    
-    uint64_t d1 = square_bb(SQ_D1);
-
-    //CHECKING FOR A SPECIFIC PIECE ON A SPECIFIC SQUARE
-    if(whiteQueen & d1){
-        std::cout << "There is a queen on d1\n\n";
-    }else{
-        std::cout << "There is no queen on d1\n\n";
-    }
-
-    
-    //OCCUPIED
-    uint64_t occupied = whitePieces | blackPieces ;
-    std::cout << "Occupied Pieces :\n" << std::bitset<64>(occupied) << "\n";
-
-    uint64_t empty_squares = ~occupied;
-    std::cout << "Empty Squares :\n" << std::bitset<64>(empty_squares) << "\n";
-
-    
-    //CHECKING IF A MOVE IF LEGAL (just learning basics)
-    //move a queen from d1 -> d2
-    whitePawns = whitePawns << 8;
-    whitePieces =      whitePawns   |
-                       whiteBishops |
-                       whiteKnights | 
-                       whiteRooks   |
-                       whiteQueen   |
-                       whiteKing;
-
-    uint64_t occupiedByWhite = whitePieces;
-    uint64_t dest = square_bb(SQ_D2);
-    if (dest & occupiedByWhite){
-        std::cout << "Illegal move, square already occupied by your piece\n";
-    } else {
-        std::cout << "Legal move D1 -> D2\n";
-        whiteQueen = whiteQueen << 8;
-    }
-    whitePieces =      whitePawns   |
-                       whiteBishops |
-                       whiteKnights | 
-                       whiteRooks   |
-                       whiteQueen   |
-                       whiteKing;
-
-
-	//SIMULATING MOVEMENT OF PIECES
-    std::cout << "white pieces after Opening\n" << std::bitset<64>(whitePieces) << "\n";
-
-    std::cout << "White Pawns before : \n" << std::bitset<64>(whitePawns) << "\n";
-	
-	std::cout << "Black Rooks Before \n" << std::bitset<64>(blackRooks) << "\n";
-	uint64_t e2 = square_bb(SQ_E2);
-
-	std::cout << "E2 pawn mask \n" << std::bitset<64>(e2) << "\n";
-	if(whitePawns & e2){
-			std::cout << "There is a piece on e2 \n";
-	}
-
-	//moving a piece -> clear the source and set the destination
-
-	Square pawn_src;
-	Square pawn_dst;
-	Square rook_src;
-	Square rook_dst;
-
-	std::cout << "Pawn (from) : ";
-	std::cin >> pawn_src;
-	std::cout << "Pawn (to) : ";
-	std::cin >> pawn_dst;
-
-
-	std::cout << "Rook (from) : ";
-	std::cin >> rook_src;
-	std::cout << "Rook (to) : ";
-	std::cin >> rook_dst;
-
-	movePiece(whitePawns, pawn_src, pawn_dst);
-	movePiece(blackRooks, rook_src, rook_dst);
-
-	std::cout << "White Pawns After \n" << std::bitset<64>(whitePawns) << "\n";
-	std::cout << "Black Rooks After \n" << std::bitset<64>(blackRooks) << "\n";
-	
-
-    return 0;
 }
