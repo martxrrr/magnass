@@ -8,6 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "pieces.hpp"
+#include "bitboard.hpp"
 
 void renderPieces(Positions &position, sf::RenderWindow &window);
 
@@ -75,7 +76,27 @@ int main(){
 
 		window.draw(mainBoard);
 
-		renderPieces(position, window);
+		for(int square = 0; square < 64; square++){
+			uint64_t mask = 1ULL << square;
+			if(whitePawns & mask){
+				Draw(window, WHITE_PAWNS, square);
+			}
+			if(whiteKnights & mask){
+				Draw(window, WHITE_KNIGHTS, square);
+			}
+			if(whiteBishops & mask){
+				Draw(window, WHITE_BISHOPS, square);
+			}
+			if(whiteRooks & mask){
+				Draw(window, WHITE_ROOKS, square);
+			}
+			if(whiteQueen & mask){
+				Draw(window, WHITE_QUEEN, square);
+			}
+			if(whiteKing & mask){
+				Draw(window, WHITE_KING, square);
+			}
+		}
 
 		if(clicked && inRange){
 			highlightSquare(window, coord);

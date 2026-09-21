@@ -1,3 +1,4 @@
+#include <array>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -210,12 +211,11 @@ void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate){
 	sf::RectangleShape pieceSquare(sf::Vector2f({67.f, 70.f}));
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
 	pieceSquare.setPosition({coordinate.x, coordinate.y - 4.f});
-	pieceSquare.setOutlineColor(sf::Color::Green);
+	pieceSquare.setOutlineColor(sf::Color::Blue);
 	pieceSquare.setOutlineThickness(4.f);
 
 	window.draw(pieceSquare);
 }
-
 
 std::string getSquareName(const sf::Vector2f& mouseCoord){
 	std::unordered_map<sf::Vector2f, std::string, Vector2fHash> coordToMap;
@@ -238,7 +238,6 @@ std::string getSquareName(const sf::Vector2f& mouseCoord){
 	coordToMap[{ 227.f, 153.f }] = "SQ_C7";  coordToMap[{ 300.f, 153.f }] = "SQ_D7";
 	coordToMap[{ 227.f, 80.f  }] = "SQ_C8";  coordToMap[{ 300.f, 80.f  }] = "SQ_D8";
 
-
 	coordToMap[{ 374.f, 597.f }] = "SQ_E1";  coordToMap[{ 447.f, 597.f }] = "SQ_F1";
 	coordToMap[{ 374.f, 523.f }] = "SQ_E2";  coordToMap[{ 447.f, 523.f }] = "SQ_F2";
 	coordToMap[{ 374.f, 450.f }] = "SQ_E3";  coordToMap[{ 447.f, 450.f }] = "SQ_F3";
@@ -247,7 +246,6 @@ std::string getSquareName(const sf::Vector2f& mouseCoord){
 	coordToMap[{ 374.f, 231.f }] = "SQ_E6";  coordToMap[{ 447.f, 231.f }] = "SQ_F6";
 	coordToMap[{ 374.f, 153.f }] = "SQ_E7";  coordToMap[{ 447.f, 153.f }] = "SQ_F7";
 	coordToMap[{ 374.f, 77.f  }] = "SQ_E8";  coordToMap[{ 451.f, 80.f  }] = "SQ_F8";
-
 
 	coordToMap[{ 589.f, 597.f }] = "SQ_G1";  coordToMap[{ 593.f, 597.f }] = "SQ_H1";
 	coordToMap[{ 520.f, 523.f }] = "SQ_G2";  coordToMap[{ 593.f, 523.f }] = "SQ_H2";
@@ -260,11 +258,181 @@ std::string getSquareName(const sf::Vector2f& mouseCoord){
 
 	auto value = coordToMap.find(mouseCoord);
 	if(value != coordToMap.end()){
-		// std::cout << "Square ==> " << value->second << std::endl;
 		return value->second;  
 	}else{
 		std::cout << "Out of board bound\n";
 		return "";
 	}
 	
+}
+
+//BLACK SPRITES
+
+sf::Sprite bp(){
+	sf::Texture pawn;
+	if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/pawnB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite pawnB(pawn);
+	return pawnB;
+}
+
+sf::Sprite bb(){
+	sf::Texture bishop;
+	if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/bishopB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite bishopB(bishop);
+	return bishopB;
+}
+
+sf::Sprite bkn(){
+	sf::Texture knight;
+	if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/knightB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite knightB(knight);
+	return knightB;
+}
+
+sf::Sprite br(){
+	sf::Texture rook;
+	if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/rookB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite rookB(rook);
+	return rookB;
+}
+
+sf::Sprite bq(){
+	sf::Texture queen;
+	if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/queenB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite queenB(queen);
+	return queenB;
+}
+
+sf::Sprite bk(){
+	sf::Texture king;
+	if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/kingB.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite kingB(king);
+	return kingB;
+}
+
+//WHITE SPRITES
+
+sf::Sprite wp(){
+	sf::Texture pawn;
+	if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/pawnW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite pawnW(pawn);
+	return pawnW;
+}
+
+sf::Sprite wb(){
+	sf::Texture bishop;
+	if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/bishopW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite bishopW(bishop);
+	return bishopW;
+}
+
+sf::Sprite wkn(){
+	sf::Texture knight;
+	if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/knightW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite knightW(knight);
+	return knightW;
+}
+
+sf::Sprite wr(){
+	sf::Texture rook;
+	if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/rookW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite rookW(rook);
+	return rookW;
+}
+
+sf::Sprite wq(){
+	sf::Texture queen;
+	if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/queenW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite queenW(queen);
+	return queenW;
+}
+
+sf::Sprite wk(){
+	sf::Texture king;
+	if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png")){
+		std::cout << "Error loading the image file! " << "\n";
+	}
+	sf::Sprite kingW(king);
+	return kingW;
+}
+
+
+sf::Sprite WHITE_PAWNS = wp();
+sf::Sprite WHITE_BISHOPS = wb();
+sf::Sprite WHITE_KNIGHTS = wkn();
+sf::Sprite WHITE_ROOKS = wr();
+sf::Sprite WHITE_QUEEN = wq();
+sf::Sprite WHITE_KING = wk();
+
+sf::Sprite BLACK_PAWNS = bp();
+sf::Sprite BLACK_BISHOPS = bb();
+sf::Sprite BLACK_KNIGHTS = bkn();
+sf::Sprite BLACK_ROOKS = br();
+sf::Sprite BLACK_QUEEN = bq();
+sf::Sprite BLACK_KING = bk();
+
+
+void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){
+
+	std::array<sf::Vector2f, 64> squareToCoord;
+
+	squareToCoord[0]  =  sf::Vector2f({ 81.f, 597.f  });  squareToCoord[1]  =  sf::Vector2f({ 223.f, 597.f });
+    squareToCoord[8] = sf::Vector2f({ 81.f, 523.f  });  squareToCoord[9] = sf::Vector2f({ 154.f, 523.f });
+    squareToCoord[16] = sf::Vector2f({ 81.f, 450.f  });  squareToCoord[17] = sf::Vector2f({ 154.f, 450.f });
+    squareToCoord[24] = sf::Vector2f({ 81.f, 377.f  });  squareToCoord[25] = sf::Vector2f({ 154.f, 377.f });
+    squareToCoord[32] = sf::Vector2f({ 81.f, 304.f  });  squareToCoord[33] = sf::Vector2f({ 154.f, 304.f });
+    squareToCoord[40] = sf::Vector2f({ 81.f, 231.f  });  squareToCoord[41] = sf::Vector2f({ 154.f, 231.f });
+    squareToCoord[48] = sf::Vector2f({ 81.f, 153.f  });  squareToCoord[49] = sf::Vector2f({ 154.f, 153.f });
+    squareToCoord[56] = sf::Vector2f({ 81.f, 80.f   });  squareToCoord[57] = sf::Vector2f({ 223.f, 80.f  });
+    squareToCoord[2]  =  sf::Vector2f({ 227.f, 597.f });  squareToCoord[3]  =  sf::Vector2f({ 300.f, 600.f });
+    squareToCoord[10] = sf::Vector2f({ 227.f, 523.f });  squareToCoord[11] = sf::Vector2f({ 300.f, 523.f });
+    squareToCoord[18] = sf::Vector2f({ 227.f, 450.f });  squareToCoord[19] = sf::Vector2f({ 300.f, 450.f });
+    squareToCoord[26] = sf::Vector2f({ 227.f, 377.f });  squareToCoord[27] = sf::Vector2f({ 300.f, 377.f });
+    squareToCoord[34] = sf::Vector2f({ 227.f, 304.f });  squareToCoord[35] = sf::Vector2f({ 300.f, 304.f });
+    squareToCoord[42] = sf::Vector2f({ 227.f, 231.f });  squareToCoord[43] = sf::Vector2f({ 300.f, 231.f });
+    squareToCoord[50] = sf::Vector2f({ 227.f, 153.f });  squareToCoord[51] = sf::Vector2f({ 300.f, 153.f });
+    squareToCoord[58] = sf::Vector2f({ 227.f, 80.f  });  squareToCoord[59] = sf::Vector2f({ 300.f, 80.f  });
+    squareToCoord[4]  =  sf::Vector2f({ 374.f, 597.f });  squareToCoord[5]  =  sf::Vector2f({ 447.f, 597.f });
+    squareToCoord[12] = sf::Vector2f({ 374.f, 523.f });  squareToCoord[13] = sf::Vector2f({ 447.f, 523.f });
+    squareToCoord[20] = sf::Vector2f({ 374.f, 450.f });  squareToCoord[21] = sf::Vector2f({ 447.f, 450.f });
+    squareToCoord[28] = sf::Vector2f({ 374.f, 377.f });  squareToCoord[29] = sf::Vector2f({ 447.f, 377.f });
+    squareToCoord[36] = sf::Vector2f({ 374.f, 304.f });  squareToCoord[37] = sf::Vector2f({ 447.f, 304.f });
+    squareToCoord[44] = sf::Vector2f({ 374.f, 231.f });  squareToCoord[45] = sf::Vector2f({ 447.f, 231.f });
+    squareToCoord[52] = sf::Vector2f({ 374.f, 153.f });  squareToCoord[53] = sf::Vector2f({ 447.f, 153.f });
+    squareToCoord[60] = sf::Vector2f({ 374.f, 77.f  });  squareToCoord[61] = sf::Vector2f({ 451.f, 80.f  });
+    squareToCoord[6]  =  sf::Vector2f({ 589.f, 597.f });  squareToCoord[7]  =  sf::Vector2f({ 593.f, 597.f });
+    squareToCoord[14] = sf::Vector2f({ 520.f, 523.f });  squareToCoord[15] = sf::Vector2f({ 593.f, 523.f });
+    squareToCoord[22] = sf::Vector2f({ 520.f, 450.f });  squareToCoord[23] = sf::Vector2f({ 593.f, 450.f });
+    squareToCoord[30] = sf::Vector2f({ 520.f, 377.f });  squareToCoord[31] = sf::Vector2f({ 593.f, 377.f });
+    squareToCoord[38] = sf::Vector2f({ 520.f, 304.f });  squareToCoord[39] = sf::Vector2f({ 593.f, 304.f });
+    squareToCoord[46] = sf::Vector2f({ 520.f, 231.f });  squareToCoord[47] = sf::Vector2f({ 593.f, 231.f });
+    squareToCoord[54] = sf::Vector2f({ 520.f, 153.f });  squareToCoord[55] = sf::Vector2f({ 593.f, 153.f });
+    squareToCoord[62] = sf::Vector2f({ 589.f, 80.f  });  squareToCoord[63] = sf::Vector2f({ 597.f, 80.f  });
+
+	sf::Vector2f coord = squareToCoord[square];
+	sprite.setPosition(coord);
+	window.draw(sprite);
+
 }

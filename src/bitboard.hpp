@@ -33,7 +33,7 @@ extern uint64_t blackBishops;
 extern uint64_t blackQueen  ;
 extern uint64_t blackKing   ;
 
-
+extern uint64_t blackPieces;
 
 void movePiece(uint64_t &type, Square src, Square dst);
 
