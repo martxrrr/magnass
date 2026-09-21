@@ -1,4 +1,5 @@
 #include <array>
+#include <map>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -266,132 +267,50 @@ std::string getSquareName(const sf::Vector2f& mouseCoord){
 	
 }
 
-//BLACK SPRITES
 
-sf::Sprite bp(){
-	sf::Texture pawn;
-	if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/pawnB.png")){
-		std::cout << "Error loading the image file! " << "\n";
+class Pieces{
+	private:
+	std::map<std::string, sf::Texture> pieceTextures;
+
+	public:
+	bool loadTexture(std::string &name, std::string &filename){
+		sf::Texture tex;
+		if(!tex.loadFromFile(filename)){
+			std::cerr << "Failed to load image file!\n";
+			return false;
+		}
+		pieceTextures[name] = std::move(tex);
+		return true;
 	}
-	sf::Sprite pawnB(pawn);
-	return pawnB;
-}
+	sf::Sprite createSprite(const std::string& textureName){
+		auto it = pieceTextures.find(textureName);
+		if(it == pieceTextures.end()){
+			std::cerr << "Sprite not found in the asset manager!\n";
+			return sf::Sprite();
+		}
 
-sf::Sprite bb(){
-	sf::Texture bishop;
-	if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/bishopB.png")){
-		std::cout << "Error loading the image file! " << "\n";
+		sf::Sprite sprite;
+		sprite.setTexture(it->second);
+		return sprite;
 	}
-	sf::Sprite bishopB(bishop);
-	return bishopB;
-}
+};
 
-sf::Sprite bkn(){
-	sf::Texture knight;
-	if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/knightB.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite knightB(knight);
-	return knightB;
-}
-
-sf::Sprite br(){
-	sf::Texture rook;
-	if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/rookB.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite rookB(rook);
-	return rookB;
-}
-
-sf::Sprite bq(){
-	sf::Texture queen;
-	if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/queenB.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite queenB(queen);
-	return queenB;
-}
-
-sf::Sprite bk(){
-	sf::Texture king;
-	if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/black_pieces/kingB.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite kingB(king);
-	return kingB;
-}
-
-//WHITE SPRITES
-
-sf::Sprite wp(){
-	sf::Texture pawn;
-	if(!pawn.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/pawnW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite pawnW(pawn);
-	return pawnW;
-}
-
-sf::Sprite wb(){
-	sf::Texture bishop;
-	if(!bishop.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/bishopW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite bishopW(bishop);
-	return bishopW;
-}
-
-sf::Sprite wkn(){
-	sf::Texture knight;
-	if(!knight.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/knightW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite knightW(knight);
-	return knightW;
-}
-
-sf::Sprite wr(){
-	sf::Texture rook;
-	if(!rook.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/rookW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite rookW(rook);
-	return rookW;
-}
-
-sf::Sprite wq(){
-	sf::Texture queen;
-	if(!queen.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/queenW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite queenW(queen);
-	return queenW;
-}
-
-sf::Sprite wk(){
-	sf::Texture king;
-	if(!king.loadFromFile("/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png")){
-		std::cout << "Error loading the image file! " << "\n";
-	}
-	sf::Sprite kingW(king);
-	return kingW;
-}
+Pieces piece;
+piece.loadTexture("WHITE_PAWNS", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/pawnW.png");
+piece.loadTexture("WHITE_BISHOPS", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/bishopW.png");
+piece.loadTexture("WHITE_KNIGHTS", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/knightW.png");
+piece.loadTexture("WHITE_ROOKS", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/rookW.png");
+piece.loadTexture("WHITE_QUEEN", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/queenW.png");
+piece.loadTexture("WHITE_KING", "/home/martin/Programming/MAIN/C++/magnass/assets/white_pieces/kingW.png");
 
 
-sf::Sprite WHITE_PAWNS = wp();
-sf::Sprite WHITE_BISHOPS = wb();
-sf::Sprite WHITE_KNIGHTS = wkn();
-sf::Sprite WHITE_ROOKS = wr();
-sf::Sprite WHITE_QUEEN = wq();
-sf::Sprite WHITE_KING = wk();
 
-sf::Sprite BLACK_PAWNS = bp();
-sf::Sprite BLACK_BISHOPS = bb();
-sf::Sprite BLACK_KNIGHTS = bkn();
-sf::Sprite BLACK_ROOKS = br();
-sf::Sprite BLACK_QUEEN = bq();
-sf::Sprite BLACK_KING = bk();
+sf::Sprite WHITE_PAWNS = piece.createSprite("WHITE_PAWNS");
+sf::Sprite WHITE_BISHOPS = piece.createSprite("WHITE_BISHOPS");	
+sf::Sprite WHITE_KNIGHTS = piece.createSprite("WHITE_KNIGHTS");	
+sf::Sprite WHITE_ROOKS = piece.createSprite("WHITE_ROOKS");	
+sf::Sprite WHITE_QUEEN = piece.createSprite("WHITE_QUEEN");	
+sf::Sprite WHITE_KING = piece.createSprite("WHITE_KING");	
 
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){

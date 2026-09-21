@@ -76,27 +76,7 @@ int main(){
 
 		window.draw(mainBoard);
 
-		for(int square = 0; square < 64; square++){
-			uint64_t mask = 1ULL << square;
-			if(whitePawns & mask){
-				Draw(window, WHITE_PAWNS, square);
-			}
-			if(whiteKnights & mask){
-				Draw(window, WHITE_KNIGHTS, square);
-			}
-			if(whiteBishops & mask){
-				Draw(window, WHITE_BISHOPS, square);
-			}
-			if(whiteRooks & mask){
-				Draw(window, WHITE_ROOKS, square);
-			}
-			if(whiteQueen & mask){
-				Draw(window, WHITE_QUEEN, square);
-			}
-			if(whiteKing & mask){
-				Draw(window, WHITE_KING, square);
-			}
-		}
+		renderPieces(position, window);
 
 		if(clicked && inRange){
 			highlightSquare(window, coord);
