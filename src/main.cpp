@@ -63,7 +63,9 @@ int main(){
 						coord = getSquare(click_position);
 						inRange = true;
 						std::string squareName = getSquareName(coord);
-						std::cout << squareName << "\n";
+						std::cout << squareName << " => ";
+						int squareNum = getSquareNum(squareName);
+						std::cout << squareNum << "\n";
 					}
 
 				}

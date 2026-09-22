@@ -5,20 +5,6 @@
 
 #include "bitboard.hpp"
 
-
-enum class Square : int {
-        SQ_A1 = 0,  SQ_B1 = 1,  SQ_C1 = 2,  SQ_D1 = 3,  SQ_E1 = 4,  SQ_F1 =5,  SQ_G1 = 6,  SQ_H1 =  7,
-        SQ_A2 = 8,  SQ_B2 = 9,  SQ_C2 = 10, SQ_D2 = 11, SQ_E2 = 12, SQ_F2 = 13, SQ_G2 = 14, SQ_H2 = 15,
-        SQ_A3 = 16, SQ_B3 = 17, SQ_C3 = 18, SQ_D3 = 19, SQ_E3 = 20, SQ_F3 = 21, SQ_G3 = 22, SQ_H3 = 23,
-        SQ_A4 = 24, SQ_B4 = 25, SQ_C4 = 26, SQ_D4 = 27, SQ_E4 = 28, SQ_F4 = 29, SQ_G4 = 30, SQ_H4 = 31,
-        SQ_A5 = 32, SQ_B5 = 33, SQ_C5 = 34, SQ_D5 = 35, SQ_E5 = 36, SQ_F5 = 37, SQ_G5 = 38, SQ_H5 = 39,
-        SQ_A6 = 40, SQ_B6 = 41, SQ_C6 = 42, SQ_D6 = 43, SQ_E6 = 44, SQ_F6 = 45, SQ_G6 = 46, SQ_H6 = 47,
-        SQ_A7 = 48, SQ_B7 = 49, SQ_C7 = 50, SQ_D7 = 51, SQ_E7 = 52, SQ_F7 = 53, SQ_G7 = 54, SQ_H7 = 55,
-        SQ_A8 = 56, SQ_B8 = 57, SQ_C8 = 58, SQ_D8 = 59, SQ_E8 = 60, SQ_F8 = 61, SQ_G8 = 62, SQ_H8 = 63,
-        SQ_NONE = 64
-};
-
-
 /*  HELPER FUNCTIONS  */
 
 constexpr uint64_t square_bb(Square sq){ 
@@ -36,7 +22,6 @@ constexpr void toggle_bit(uint64_t &bb, Square sq) {
 constexpr bool test_bit(uint64_t &bb, Square sq){ 
     return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
 }
-
 
 //get the index of the least significant bit
 Square lsb(uint64_t bb){
@@ -103,50 +88,4 @@ uint64_t blackPieces = blackPawns   |
 void movePiece(uint64_t &type, Square src, Square dst){
 	set_bit(type, dst);
 	clear_bit(type, src);
-}
-
-std::istream& operator >> (std::istream& input, Square& sq){
-	std::string userInput;
-	input >> userInput;
-
-	if(userInput == "SQ_A1") sq = Square::SQ_A1;             else if(userInput == "SQ_H1") sq = Square::SQ_H1;
-	else if(userInput == "SQ_A2") sq = Square::SQ_A2;	     else if(userInput == "SQ_H2") sq = Square::SQ_H2;
-	else if(userInput == "SQ_A3") sq = Square::SQ_A3;	     else if(userInput == "SQ_H3") sq = Square::SQ_H3;
-	else if(userInput == "SQ_A4") sq = Square::SQ_A4;        else if(userInput == "SQ_H4") sq = Square::SQ_H4;
-	else if(userInput == "SQ_A5") sq = Square::SQ_A5;        else if(userInput == "SQ_H5") sq = Square::SQ_H5;
-	else if(userInput == "SQ_A6") sq = Square::SQ_A6;        else if(userInput == "SQ_H6") sq = Square::SQ_H6;
-	else if(userInput == "SQ_A7") sq = Square::SQ_A7;        else if(userInput == "SQ_H7") sq = Square::SQ_H7;
-	else if(userInput == "SQ_A8") sq = Square::SQ_A8;        else if(userInput == "SQ_H8") sq = Square::SQ_H8;
-
-    else if(userInput == "SQ_B1") sq = Square::SQ_B1;        else if(userInput == "SQ_C1") sq = Square::SQ_C1;
-	else if(userInput == "SQ_B2") sq = Square::SQ_B2;	     else if(userInput == "SQ_C2") sq = Square::SQ_C2;
-	else if(userInput == "SQ_B3") sq = Square::SQ_B3;	     else if(userInput == "SQ_C3") sq = Square::SQ_C3;
-    else if(userInput == "SQ_B4") sq = Square::SQ_B4;        else if(userInput == "SQ_C4") sq = Square::SQ_C4;
-    else if(userInput == "SQ_B5") sq = Square::SQ_B5;        else if(userInput == "SQ_C5") sq = Square::SQ_C5;
-    else if(userInput == "SQ_B6") sq = Square::SQ_B6;        else if(userInput == "SQ_C6") sq = Square::SQ_C6;
-    else if(userInput == "SQ_B7") sq = Square::SQ_B7;        else if(userInput == "SQ_C7") sq = Square::SQ_C7;
-    else if(userInput == "SQ_B8") sq = Square::SQ_B8;        else if(userInput == "SQ_C8") sq = Square::SQ_C8;
-
-    else if(userInput == "SQ_D1") sq = Square::SQ_D1;        else if(userInput == "SQ_E1") sq = Square::SQ_E1;
-	else if(userInput == "SQ_D2") sq = Square::SQ_D2;	     else if(userInput == "SQ_E2") sq = Square::SQ_E2;
-	else if(userInput == "SQ_D3") sq = Square::SQ_D3;	     else if(userInput == "SQ_E3") sq = Square::SQ_E3;
-    else if(userInput == "SQ_D4") sq = Square::SQ_D4;        else if(userInput == "SQ_E4") sq = Square::SQ_E4;
-    else if(userInput == "SQ_D5") sq = Square::SQ_D5;        else if(userInput == "SQ_E5") sq = Square::SQ_E5;
-    else if(userInput == "SQ_D6") sq = Square::SQ_D6;        else if(userInput == "SQ_E6") sq = Square::SQ_E6;
-    else if(userInput == "SQ_D7") sq = Square::SQ_D7;        else if(userInput == "SQ_E7") sq = Square::SQ_E7;
-    else if(userInput == "SQ_D8") sq = Square::SQ_D8;        else if(userInput == "SQ_E8") sq = Square::SQ_E8;
-
-    else if(userInput == "SQ_F1") sq = Square::SQ_F1;        else if(userInput == "SQ_G1") sq = Square::SQ_G1;
-	else if(userInput == "SQ_F2") sq = Square::SQ_F2;	     else if(userInput == "SQ_G2") sq = Square::SQ_G2;
-	else if(userInput == "SQ_F3") sq = Square::SQ_F3;	     else if(userInput == "SQ_G3") sq = Square::SQ_G3;
-    else if(userInput == "SQ_F4") sq = Square::SQ_F4;        else if(userInput == "SQ_G4") sq = Square::SQ_G4;
-    else if(userInput == "SQ_F5") sq = Square::SQ_F5;        else if(userInput == "SQ_G5") sq = Square::SQ_G5;
-    else if(userInput == "SQ_F6") sq = Square::SQ_F6;        else if(userInput == "SQ_G6") sq = Square::SQ_G6;
-    else if(userInput == "SQ_F7") sq = Square::SQ_F7;        else if(userInput == "SQ_G7") sq = Square::SQ_G7;
-    else if(userInput == "SQ_F8") sq = Square::SQ_F8;        else if(userInput == "SQ_G8") sq = Square::SQ_G8;
-	else{
-		input.setstate(std::ios::failbit);
-	}
-	return input;
-
 }

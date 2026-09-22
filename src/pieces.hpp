@@ -26,6 +26,8 @@ void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 
 std::string getSquareName(const sf::Vector2f& mouseCoord);
 
+int getSquareNum(std::string &sqname);
+
 struct Vector2fHash{
 	std::size_t operator()(const sf::Vector2f& v) const {
 		std::size_t h1 = std::hash<float>{}(v.x);
