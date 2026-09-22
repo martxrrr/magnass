@@ -55,10 +55,14 @@ Square pop_lsb(uint64_t &bb){
     return sq;
 }
 //WHITE
-uint64_t whitePawns = square_bb(Square::SQ_A2) | square_bb(Square::SQ_B2) |
-					  square_bb(Square::SQ_C2) | square_bb(Square::SQ_D2) |
-                      square_bb(Square::SQ_E2) | square_bb(Square::SQ_F2) | 
-                      square_bb(Square::SQ_G2) | square_bb(Square::SQ_H2) ;
+uint64_t whitePawns = square_bb(Square::SQ_A2) |
+					  square_bb(Square::SQ_C2) |
+                      square_bb(Square::SQ_E2) | 
+                      square_bb(Square::SQ_G2) |
+                      square_bb(Square::SQ_B2) |
+                      square_bb(Square::SQ_D2) |
+                      square_bb(Square::SQ_F2) |
+                      square_bb(Square::SQ_H2) ;
 
 uint64_t whiteKnights = square_bb(Square::SQ_B1) | square_bb(Square::SQ_G1);
 uint64_t whiteRooks   = square_bb(Square::SQ_A1) | square_bb(Square::SQ_H1);
@@ -74,10 +78,14 @@ uint64_t whitePieces = whitePawns   |
                        whiteKing;
 
 //BLACK
-uint64_t blackPawns =   square_bb(Square::SQ_A7) | square_bb(Square::SQ_B7) |
-					    square_bb(Square::SQ_C7) | square_bb(Square::SQ_D7) |
-                        square_bb(Square::SQ_E7) | square_bb(Square::SQ_F7) | 
-                        square_bb(Square::SQ_G7) | square_bb(Square::SQ_H7) ;
+uint64_t blackPawns =   square_bb(Square::SQ_A7) |
+					    square_bb(Square::SQ_C7) |
+                        square_bb(Square::SQ_E7) | 
+                        square_bb(Square::SQ_G7) |
+                        square_bb(Square::SQ_B7) |
+                        square_bb(Square::SQ_D7) |
+                        square_bb(Square::SQ_F7) |
+                        square_bb(Square::SQ_H7) ;
 
 uint64_t blackKnights = square_bb(Square::SQ_B8) | square_bb(Square::SQ_G8);
 uint64_t blackRooks   = square_bb(Square::SQ_A8) | square_bb(Square::SQ_H8);

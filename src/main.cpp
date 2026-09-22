@@ -68,15 +68,31 @@ int main(){
 
 				}
 			}
-			
-			
 		}
 
 		window.clear(sf::Color::Black);
 
 		window.draw(mainBoard);
 
-		renderPieces(position, window);
+		for(int square = 0; square < 64; square++){
+			uint64_t mask = 1ULL << square;
+
+			//RENDER BLACK PIECES
+			if(blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
+			if(blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
+			if(blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
+			if(blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
+			if(blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
+			if(blackKing & mask)    Draw(window, BLACK_KING, square);
+
+			//RENDER WHITE PIECES
+			if(whitePawns & mask)   Draw(window, WHITE_PAWNS, square);
+			if(whiteKnights & mask) Draw(window, WHITE_KNIGHTS, square);
+			if(whiteBishops & mask) Draw(window, WHITE_BISHOPS, square);
+			if(whiteRooks & mask)   Draw(window, WHITE_ROOKS, square);
+			if(whiteQueen & mask)   Draw(window, WHITE_QUEEN, square);
+			if(whiteKing & mask)    Draw(window, WHITE_KING, square);
+		}
 
 		if(clicked && inRange){
 			highlightSquare(window, coord);
@@ -85,57 +101,5 @@ int main(){
 		window.display();
 		
 	}
-	
 	return 0;
-}
-
-void renderPieces(Positions &position, sf::RenderWindow &window){
-
-		// //KING
-		King Bking( position.E8, window, 0 );
-		King Wking( position.E1, window, 1 );
-
-
-		//QUEEN
-		Queen Bqueen( position.D8, window, 0);
-		Queen Wqueen( position.D1, window, 1);
-
-		//PAWN
-		Pawn Wpawn1( position.A2, window, 1);
-		Pawn Wpawn2( position.B2, window, 1);
-		Pawn Wpawn3( position.C2, window, 1);
-		Pawn Wpawn4( position.D2, window, 1);
-		Pawn Wpawn5( position.E2, window, 1);
-		Pawn Wpawn6( position.F2, window, 1);
-		Pawn Wpawn7( position.G2, window, 1);
-		Pawn Wpawn8( position.H2, window, 1);
-
-		Pawn Bpawn1( position.A7, window, 0);
-		Pawn Bpawn2( position.B7, window, 0);
-		Pawn Bpawn3( position.C7, window, 0);
-		Pawn Bpawn4( position.D7, window, 0);
-		Pawn Bpawn5( position.E7, window, 0);
-		Pawn Bpawn6( position.F7, window, 0);
-		Pawn Bpawn7( position.G7, window, 0);
-		Pawn Bpawn8( position.H7, window, 0);
-
-		//BISHOP
-		Bishop Bbishop1( position.F8, window, 0);
-		Bishop Bbishop2( position.C8, window, 0);
-		Bishop Wbishop1( position.C1, window, 1);
-		Bishop Wbishop2( position.F1, window, 1);
-
-		
-		//KNIGHT
-		Knight Bknight1( position.G8, window, 0);
-		Knight Bknight2( position.B8, window, 0);
-		Knight Wknight1( position.G1, window, 1);
-		Knight Wknight2( position.B1, window, 1);
-
-		//ROOK
-		Rook Brook1( position.A8, window, 0);
-		Rook Brook2( position.H8, window, 0);
-		Rook Wrook1( position.A1, window, 1);
-		Rook Wrook2( position.H1, window, 1);
-
 }
