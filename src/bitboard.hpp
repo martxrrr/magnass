@@ -14,11 +14,22 @@ enum class Square : int {
         SQ_NONE = 64
 };
 
-constexpr uint64_t square_bb(Square sq);
-constexpr void set_bit(uint64_t &bb, Square sq);
-constexpr void clear_bit(uint64_t &bb, Square sq);
-constexpr void toggle_bit(uint64_t &bb, Square sq);
-constexpr bool test_bit(uint64_t &bb, Square sq);
+constexpr uint64_t square_bb(Square sq){ 
+    return 1ULL << static_cast<unsigned>(sq);          
+}
+constexpr void set_bit(uint64_t &bb, Square sq){
+    bb |= square_bb(sq);        
+} 
+constexpr void clear_bit(uint64_t &bb, Square sq){
+    bb &= ~square_bb(sq);       
+}
+constexpr void toggle_bit(uint64_t &bb, Square sq) { 
+    bb ^= square_bb(sq);        
+}
+constexpr bool test_bit(uint64_t &bb, Square sq){ 
+    return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
+}
+
 
 Square lsb(uint64_t bb);
 int popcount(uint64_t bb);
@@ -43,5 +54,6 @@ extern uint64_t blackQueen  ;
 extern uint64_t blackKing   ;
 
 extern uint64_t blackPieces;
+extern uint64_t none;
 
 void movePiece(uint64_t &type, Square src, Square dst);

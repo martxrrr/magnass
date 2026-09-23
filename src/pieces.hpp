@@ -4,6 +4,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
+#include "bitboard.hpp"
+
 sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 
 extern sf::Sprite WHITE_PAWNS;
@@ -26,7 +28,11 @@ void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 
 std::string getSquareName(const sf::Vector2f& mouseCoord);
 
-int getSquareNum(std::string &sqname);
+Square getSquareNum(std::string &sqname);
+
+uint64_t getPieceType(const Square& square);
+
+// void movepiece(const Square& src, const Square& dest, const uint64_t &pieceType);
 
 struct Vector2fHash{
 	std::size_t operator()(const sf::Vector2f& v) const {

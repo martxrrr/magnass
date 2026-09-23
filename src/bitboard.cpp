@@ -7,22 +7,6 @@
 
 /*  HELPER FUNCTIONS  */
 
-constexpr uint64_t square_bb(Square sq){ 
-    return 1ULL << static_cast<unsigned>(sq);          
-}
-constexpr void set_bit(uint64_t &bb, Square sq){
-    bb |= square_bb(sq);        
-} 
-constexpr void clear_bit(uint64_t &bb, Square sq){
-    bb &= ~square_bb(sq);       
-}
-constexpr void toggle_bit(uint64_t &bb, Square sq) { 
-    bb ^= square_bb(sq);        
-}
-constexpr bool test_bit(uint64_t &bb, Square sq){ 
-    return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
-}
-
 //get the index of the least significant bit
 Square lsb(uint64_t bb){
     return static_cast<Square>(std::countr_zero(bb));
@@ -84,7 +68,8 @@ uint64_t blackPieces = blackPawns   |
                        blackRooks   |
                        blackQueen   |
                        blackKing;
-					   
+
+uint64_t none = square_bb(Square::SQ_NONE);
 void movePiece(uint64_t &type, Square src, Square dst){
 	set_bit(type, dst);
 	clear_bit(type, src);

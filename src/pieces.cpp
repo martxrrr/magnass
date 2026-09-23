@@ -33,10 +33,10 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	float diffX{};
 	float diffY{};
 
-	std::array<double, 63> euclideans;
+	std::array<double, 64> euclideans;
 	sf::Vector2f closest = { };
 	
-	for(auto pos{ 0 }; pos < positions.size() - 1; pos++){
+	for(auto pos{ 0 }; pos < positions.size(); pos++){
 		diffX = pow((positions[pos].x - mouseClick.x), 2);
 		diffY = pow((positions[pos].y - mouseClick.y), 2);
 		double sum { diffX + diffY };
@@ -47,7 +47,7 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 
 	double close { };
 	{
-		std::array<double, 63> virtualEuclideans;
+		std::array<double, 64> virtualEuclideans;
 		virtualEuclideans = euclideans;
 		
 		for(auto i { 1 }; i < virtualEuclideans.size(); i++){
@@ -252,7 +252,7 @@ class Pieces{
 	}
 };
 
-int getSquareNum(std::string &sqname){
+Square getSquareNum(std::string &sqname){
 	std::unordered_map<std::string, Square> nameToInt;
 
 	nameToInt["SQ_A1"] = Square::SQ_A1;      nameToInt["SQ_H1"] = Square::SQ_H1;
@@ -293,10 +293,10 @@ int getSquareNum(std::string &sqname){
 
 	auto it = nameToInt.find(sqname);
 	if(it != nameToInt.end()){
-		return static_cast<int>(it->second);
+		return it->second;
 	}else{
 		std::cerr << "Error retrieving square number\n";
-		return -1;
+		return Square::SQ_NONE;
 	}
 
 }
@@ -359,3 +359,32 @@ void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){
 	window.draw(sprite);
 	
 }
+
+uint64_t getPieceType(const Square& square){
+	uint64_t sqbitboard = square_bb(square);
+
+	if(sqbitboard & whitePawns)   return whitePawns;
+	if(sqbitboard & whiteKnights) return whiteKnights;
+	if(sqbitboard & whiteRooks)   return whiteRooks;
+	if(sqbitboard & whiteBishops) return whiteBishops;
+	if(sqbitboard & whiteQueen)   return whiteQueen;
+	if(sqbitboard & whiteKing)    return whiteKing;
+
+	if(sqbitboard & blackPawns)   return blackPawns;
+	if(sqbitboard & blackKnights) return blackKnights;
+	if(sqbitboard & blackRooks)   return blackRooks;
+	if(sqbitboard & blackBishops) return blackBishops;
+	if(sqbitboard & blackQueen)   return blackQueen;
+	if(sqbitboard & blackKing)    return blackKing;
+
+	else return none;
+}
+
+// void movepiece(const Square& src, const Square& dest, const uint64_t &pieceType){
+// 	//check whether src is an empty square
+// 	if(pieceType != none){
+// 		movePiece(pieceType, src, dest);
+// 	}else{
+// 		std::cout << "Empty piece selected";
+// 	}
+// }

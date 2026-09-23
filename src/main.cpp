@@ -63,9 +63,11 @@ int main(){
 						coord = getSquare(click_position);
 						inRange = true;
 						std::string squareName = getSquareName(coord);
-						std::cout << squareName << " => ";
-						int squareNum = getSquareNum(squareName);
-						std::cout << squareNum << "\n";
+						std::cout << squareName << "\n";
+						Square squareNum = getSquareNum(squareName);
+
+						uint64_t piecetyp = getPieceType(squareNum);
+						// movepiece(source, destination, piecetyp);
 					}
 
 				}
