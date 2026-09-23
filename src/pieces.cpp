@@ -49,27 +49,13 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	{
 		std::array<double, 64> virtualEuclideans;
 		virtualEuclideans = euclideans;
-		
-		for(auto i { 1 }; i < virtualEuclideans.size(); i++){
-			for(auto j { 0 }; j < virtualEuclideans.size() - 1; j++){
-				if(virtualEuclideans[j] > virtualEuclideans[j + 1]){
-					double temp = virtualEuclideans[j + 1];
-					virtualEuclideans[j + 1] = virtualEuclideans[j];
-					virtualEuclideans[j] = temp;
-				}
-			}
-		}
+		std::sort(virtualEuclideans.begin(), virtualEuclideans.end());
 		close = virtualEuclideans[0];
 	}
 	int index;
-	for(int j { 0 }; j < euclideans.size(); j++){
-		int idx;
-		if(euclideans[j] == close){
-			idx = j;
-		}else{
-			continue;
-		}
-	index = idx;
+	auto it = std::find(euclideans.begin(), euclideans.end(), close);
+	if(it != euclideans.end()){
+		index = std::distance(euclideans.begin(), it);
 	}
 	closest = {positions[index].x, positions[index].y};
 	return closest;
