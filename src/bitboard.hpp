@@ -15,22 +15,20 @@ enum class Square : int {
 };
 
 constexpr uint64_t square_bb(Square sq){ 
-    return 1ULL << static_cast<unsigned>(sq);          
+        return 1ULL << static_cast<unsigned>(sq);          
 }
 constexpr void set_bit(uint64_t &bb, Square sq){
-    bb |= square_bb(sq);        
+        bb |= square_bb(sq);        
 } 
 constexpr void clear_bit(uint64_t &bb, Square sq){
-    bb &= ~square_bb(sq);       
+        bb &= ~square_bb(sq);       
 }
 constexpr void toggle_bit(uint64_t &bb, Square sq) { 
-    bb ^= square_bb(sq);        
+        bb ^= square_bb(sq);        
 }
 constexpr bool test_bit(uint64_t &bb, Square sq){ 
-    return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
+        return ( bb >> static_cast<unsigned>(sq) ) & 1ULL; 
 }
-
-
 Square lsb(uint64_t bb);
 int popcount(uint64_t bb);
 Square pop_lsb(uint64_t &bb);

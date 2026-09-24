@@ -35,6 +35,8 @@ int main(){
 	bool clicked { false };
 	bool inRange { false };
 
+	std::vector<Square> enumVec;
+
 
 	while(window.isOpen()){
 		while(const std::optional event = window.pollEvent()){
@@ -63,11 +65,23 @@ int main(){
 						coord = getSquare(click_position);
 						inRange = true;
 						std::string squareName = getSquareName(coord);
-						std::cout << squareName << "\n";
-						Square squareNum = getSquareNum(squareName);
+						// std::cout << squareName << "\n";
+						Square squareNum = getSquareNum(squareName); //we need to save 2 of these
+
+						enumVec.emplace_back(squareNum);
+						Square source;
+						Square destination;
+
+						if(enumVec.size() == 2){
+							source = enumVec[0];
+							destination = enumVec[1];
+							std::cout << static_cast<int>(source) << "\n";
+							std::cout << static_cast<int>(destination) << "\n";
+							enumVec.clear();
+						}
 
 						uint64_t piecetyp = getPieceType(squareNum);
-						// movepiece(source, destination, piecetyp);
+						movepiece(source, destination, piecetyp);
 					}
 
 				}

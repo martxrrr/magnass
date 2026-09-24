@@ -366,11 +366,11 @@ uint64_t getPieceType(const Square& square){
 	else return none;
 }
 
-// void movepiece(const Square& src, const Square& dest, const uint64_t &pieceType){
-// 	//check whether src is an empty square
-// 	if(pieceType != none){
-// 		movePiece(pieceType, src, dest);
-// 	}else{
-// 		std::cout << "Empty piece selected";
-// 	}
-// }
+void movepiece(const Square& src, const Square& dest, uint64_t &pieceType){
+	//check whether src is an empty square
+	if(pieceType != none){
+		movePiece(pieceType, src, dest);
+	}else{
+		std::cout << "Empty piece selected";
+	}
+}

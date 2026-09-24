@@ -32,7 +32,7 @@ Square getSquareNum(std::string &sqname);
 
 uint64_t getPieceType(const Square& square);
 
-// void movepiece(const Square& src, const Square& dest, const uint64_t &pieceType);
+void movepiece(const Square& src, const Square& dest, uint64_t &pieceType);
 
 struct Vector2fHash{
 	std::size_t operator()(const sf::Vector2f& v) const {
