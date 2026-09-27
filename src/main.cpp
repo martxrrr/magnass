@@ -1,8 +1,7 @@
 #include <optional>
 #include <cstdint>
 #include <unordered_map>
-#include <string>
-#include <functional>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -29,6 +28,7 @@ int main(){
 	}
 
 	sf::Sprite mainBoard(boardTexture);
+
 	Positions position;
 	sf::Vector2f coord;
 
@@ -37,21 +37,13 @@ int main(){
 
 	std::vector<Square> enumVec;
 
-
 	while(window.isOpen()){
 		while(const std::optional event = window.pollEvent()){
-			if(event->is<sf::Event::Closed>()){
-				window.close();
-			}
-			else if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
+			if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
 				if(keyPressed->scancode == sf::Keyboard::Scancode::Escape){
 					window.close();
 				}
 			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
-				window.close();
-			}
-
 			if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
 				if(mouseClick->button == sf::Mouse::Button::Left){
 					clicked = true;
@@ -65,23 +57,26 @@ int main(){
 						coord = getSquare(click_position);
 						inRange = true;
 						std::string squareName = getSquareName(coord);
-						Square squareNum = getSquareNum(squareName); //we need to save 2 of these
+						Square squareNum = getSquareNum(squareName);
 
 						enumVec.emplace_back(squareNum);
 						Square source;
 						Square destination;
 
-						if((enumVec.size() == 2) && (square_bb(enumVec[0]) != none)){
+						if(enumVec.size() == 2){
 							source = enumVec[0];
 							destination = enumVec[1];
-							std::cout << static_cast<int>(source) << " , ";
-							std::cout << static_cast<int>(destination) << "\n";
-							enumVec.clear();
+							if(getPieceType(source) == none){
+								enumVec.clear();
+							}else{
+								std::cout << "(" << static_cast<int>(source) << ", ";
+								std::cout << static_cast<int>(destination) << ")\n";
+								uint64_t piecetyp = getPieceType(source);
+								movePiece(piecetyp, source, destination);
+								enumVec.clear();
+							}
 						}
-						uint64_t piecetyp = getPieceType(squareNum);
-						movepiece(source, destination, piecetyp);
 					}
-
 				}
 			}
 		}

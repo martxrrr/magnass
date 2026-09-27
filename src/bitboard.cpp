@@ -70,6 +70,7 @@ uint64_t blackPieces = blackPawns   |
                        blackKing;
 
 uint64_t none = square_bb(Square::SQ_NONE);
+
 void movePiece(uint64_t &type, Square src, Square dst){
 	set_bit(type, dst);
 	clear_bit(type, src);
