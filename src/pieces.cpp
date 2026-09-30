@@ -113,10 +113,8 @@ std::string getSquareName(const sf::Vector2f& mouseCoord){
 	coordToMap[{ 520.f, 80.f  }] = "SQ_G8";  coordToMap[{ 597.f, 80.f  }] = "SQ_H8";
 
 	auto value = coordToMap.find(mouseCoord);
-	if(value != coordToMap.end()){
-		return value->second;
-	}else{
-		std::cerr << "Out of board bound\n";
+	if(value != coordToMap.end()) return value->second;
+	else{
 		return "";
 	}
 }

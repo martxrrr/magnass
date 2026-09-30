@@ -1,7 +1,8 @@
 #include <optional>
 #include <cstdint>
-#include <unordered_map>
 #include <iostream>
+#include <bitset>
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -69,9 +70,10 @@ int main(){
 							if(getPieceType(source) == none){
 								enumVec.clear();
 							}else{
-								std::cout << "(" << static_cast<int>(source) << ", ";
-								std::cout << static_cast<int>(destination) << ")\n";
+								// std::cout << "(" << static_cast<int>(source) << ", ";
+								// std::cout << static_cast<int>(destination) << ")\n";
 								uint64_t piecetyp = getPieceType(source);
+								std::cout << "Before : " << std::bitset<64>(piecetyp) << "\n";
 								movePiece(piecetyp, source, destination);
 								enumVec.clear();
 							}
