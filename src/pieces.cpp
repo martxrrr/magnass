@@ -1,6 +1,7 @@
 #include <array>
 #include <map>
 #include <iostream>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -363,4 +364,21 @@ uint64_t getPieceType(const Square& square){
 	if(sqbitboard & blackKing)    return blackKing;
 
 	else return none;
+}
+
+void binary_board(const std::string &bits){
+	std::vector<char> bitslist;
+	for(char c : bits){
+		bitslist.emplace_back(c);
+		if(bitslist.size() == 8){
+			std::reverse(bitslist.begin(), bitslist.end());
+			for(char d : bitslist){
+				std::cout << d ;
+			}
+			std::cout << "\n";
+			bitslist.clear();
+		}else{
+			continue;
+		}
+	}
 }

@@ -23,6 +23,8 @@ void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 
+void binary_board(const std::string &bits);
+
 std::string getSquareName(const sf::Vector2f& mouseCoord);
 
 Square getSquareNum(std::string &sqname);

@@ -70,11 +70,10 @@ int main(){
 							if(getPieceType(source) == none){
 								enumVec.clear();
 							}else{
-								// std::cout << "(" << static_cast<int>(source) << ", ";
-								// std::cout << static_cast<int>(destination) << ")\n";
 								uint64_t piecetyp = getPieceType(source);
-								std::cout << "Before : " << std::bitset<64>(piecetyp) << "\n";
 								movePiece(piecetyp, source, destination);
+								std::string bits2 = std::bitset<64>(piecetyp).to_string(); 
+								binary_board(bits2);
 								enumVec.clear();
 							}
 						}
