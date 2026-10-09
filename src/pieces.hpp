@@ -5,25 +5,32 @@
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 
-extern sf::Sprite WHITE_PAWNS;
-extern sf::Sprite WHITE_BISHOPS;
-extern sf::Sprite WHITE_KNIGHTS;
-extern sf::Sprite WHITE_ROOKS;
-extern sf::Sprite WHITE_QUEEN;
-extern sf::Sprite WHITE_KING;
-
-extern sf::Sprite BLACK_PAWNS;
-extern sf::Sprite BLACK_BISHOPS;
-extern sf::Sprite BLACK_KNIGHTS;
-extern sf::Sprite BLACK_ROOKS;
-extern sf::Sprite BLACK_QUEEN;
-extern sf::Sprite BLACK_KING;
 
 void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 
 void binary_board(const std::string &bits);
+
+struct boardPosition{
+	uint64_t whitePawns;
+	uint64_t whiteKnights;
+	uint64_t whiteRooks  ;
+	uint64_t whiteBishops;
+	uint64_t whiteQueen  ;
+	uint64_t whiteKing   ;
+	uint64_t whitePieces;
+	uint64_t blackPawns;
+	uint64_t blackKnights;
+	uint64_t blackRooks  ;
+	uint64_t blackBishops;
+	uint64_t blackQueen  ;
+	uint64_t blackKing   ;
+	uint64_t blackPieces;
+	uint64_t none;
+};
+
+void renderer(const boardPosition& position, sf::RenderWindow& window);
 
 std::string getSquareName(const sf::Vector2f& mouseCoord);
 

@@ -367,6 +367,7 @@ uint64_t getPieceType(const Square& square){
 }
 
 void binary_board(const std::string &bits){
+	std::cout << "=============================\n";
 	std::vector<char> bitslist;
 	for(char c : bits){
 		bitslist.emplace_back(c);
@@ -380,5 +381,27 @@ void binary_board(const std::string &bits){
 		}else{
 			continue;
 		}
+	}
+}
+
+void renderer(const boardPosition& position, sf::RenderWindow& window){
+	for(int square = 0; square < 64; square++){
+		uint64_t mask = 1ULL << square;
+
+		//RENDER WHITE PIECES
+		if(position.whitePawns & mask)   Draw(window, WHITE_PAWNS, square);
+		if(position.whiteKnights & mask) Draw(window, WHITE_KNIGHTS, square);
+		if(position.whiteBishops & mask) Draw(window, WHITE_BISHOPS, square);
+		if(position.whiteRooks & mask)   Draw(window, WHITE_ROOKS, square);
+		if(position.whiteQueen & mask)   Draw(window, WHITE_QUEEN, square);
+		if(position.whiteKing & mask)    Draw(window, WHITE_KING, square);
+
+		//RENDER BLACK PIECES
+		// if(position.blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
+		// if(position.blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
+		// if(position.blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
+		// if(position.blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
+		// if(position.blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
+		// if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
 	}
 }

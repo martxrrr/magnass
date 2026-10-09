@@ -10,8 +10,6 @@
 #include "pieces.hpp"
 #include "bitboard.hpp"
 
-void renderPieces(Positions &position, sf::RenderWindow &window);
-
 int main(){
 
 	constexpr int width { 740 };
@@ -35,6 +33,8 @@ int main(){
 
 	bool clicked { false };
 	bool inRange { false };
+
+	boardPosition board;
 
 	std::vector<Square> enumVec;
 
@@ -86,25 +86,7 @@ int main(){
 
 		window.draw(mainBoard);
 
-		for(int square = 0; square < 64; square++){
-			uint64_t mask = 1ULL << square;
-
-			//RENDER BLACK PIECES
-			if(blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
-			if(blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
-			if(blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
-			if(blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
-			if(blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
-			if(blackKing & mask)    Draw(window, BLACK_KING, square);
-
-			//RENDER WHITE PIECES
-			if(whitePawns & mask)   Draw(window, WHITE_PAWNS, square);
-			if(whiteKnights & mask) Draw(window, WHITE_KNIGHTS, square);
-			if(whiteBishops & mask) Draw(window, WHITE_BISHOPS, square);
-			if(whiteRooks & mask)   Draw(window, WHITE_ROOKS, square);
-			if(whiteQueen & mask)   Draw(window, WHITE_QUEEN, square);
-			if(whiteKing & mask)    Draw(window, WHITE_KING, square);
-		}
+		renderer(board, window);
 
 		if(clicked && inRange){
 			highlightSquare(window, coord);
