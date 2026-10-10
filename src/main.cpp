@@ -34,8 +34,6 @@ int main(){
 	bool clicked { false };
 	bool inRange { false };
 
-	boardPosition board;
-
 	std::vector<Square> enumVec;
 
 	while(window.isOpen()){
@@ -70,7 +68,7 @@ int main(){
 							if(getPieceType(source) == none){
 								enumVec.clear();
 							}else{
-								uint64_t piecetyp = getPieceType(source);
+								uint64_t& piecetyp = getPieceType(source);
 								movePiece(piecetyp, source, destination);
 								std::string bits2 = std::bitset<64>(piecetyp).to_string(); 
 								binary_board(bits2);
@@ -86,14 +84,13 @@ int main(){
 
 		window.draw(mainBoard);
 
-		renderer(board, window);
+		renderer(window);
 
 		if(clicked && inRange){
 			highlightSquare(window, coord);
 		}
 
 		window.display();
-		
 	}
 	return 0;
 }

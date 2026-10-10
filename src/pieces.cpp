@@ -346,7 +346,7 @@ void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){
 	
 }
 
-uint64_t getPieceType(const Square& square){
+uint64_t& getPieceType(const Square& square){
 	uint64_t sqbitboard = square_bb(square);
 
 	if(sqbitboard & whitePawns)   return whitePawns;
@@ -384,7 +384,7 @@ void binary_board(const std::string &bits){
 	}
 }
 
-void renderer(const boardPosition& position, sf::RenderWindow& window){
+void renderer(sf::RenderWindow& window){
 	for(int square = 0; square < 64; square++){
 		uint64_t mask = 1ULL << square;
 
@@ -397,11 +397,11 @@ void renderer(const boardPosition& position, sf::RenderWindow& window){
 		if(position.whiteKing & mask)    Draw(window, WHITE_KING, square);
 
 		//RENDER BLACK PIECES
-		// if(position.blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
-		// if(position.blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
-		// if(position.blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
-		// if(position.blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
-		// if(position.blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
-		// if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
+		if(position.blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
+		if(position.blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
+		if(position.blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
+		if(position.blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
+		if(position.blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
+		if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
 	}
 }

@@ -54,4 +54,24 @@ extern uint64_t blackKing   ;
 extern uint64_t blackPieces;
 extern uint64_t none;
 
-void movePiece(uint64_t &type, Square src, Square dst);
+void movePiece(uint64_t &type, Square &src, Square &dst);
+
+struct boardPosition{
+	uint64_t &whitePawns;
+	uint64_t &whiteKnights;
+	uint64_t &whiteBishops;
+	uint64_t &whiteRooks  ;
+	uint64_t &whiteQueen  ;
+	uint64_t &whiteKing   ;
+	uint64_t &whitePieces;
+	uint64_t &blackPawns;
+	uint64_t &blackKnights;
+	uint64_t &blackBishops;
+	uint64_t &blackRooks  ;
+	uint64_t &blackQueen  ;
+	uint64_t &blackKing   ;
+	uint64_t &blackPieces;
+	uint64_t &none;
+};
+
+extern boardPosition position;
