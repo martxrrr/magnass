@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-// extern uint64_t arr_knight_attacks[64];
+extern uint64_t arr_knight_attacks[64];
 
 void knight_attacks();
 
