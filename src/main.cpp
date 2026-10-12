@@ -9,6 +9,7 @@
 
 #include "pieces.hpp"
 #include "bitboard.hpp"
+#include "engine.hpp"
 
 int main(){
 
@@ -35,6 +36,7 @@ int main(){
 	bool inRange { false };
 
 	std::vector<Square> enumVec;
+	knight_attacks();
 
 	while(window.isOpen()){
 		while(const std::optional event = window.pollEvent()){
@@ -70,8 +72,10 @@ int main(){
 							}else{
 								uint64_t& piecetyp = getPieceType(source);
 								movePiece(piecetyp, source, destination);
-								std::string bits2 = std::bitset<64>(piecetyp).to_string(); 
-								binary_board(bits2);
+								uint64_t knightAttacks = get_knight_attacks(destination);
+								std::string bits = std::bitset<64>(knightAttacks).to_string(); 
+								binary_board(bits);
+
 								enumVec.clear();
 							}
 						}
