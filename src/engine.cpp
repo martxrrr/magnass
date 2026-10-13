@@ -39,7 +39,7 @@ uint64_t gen_knight_moves(const int& curr_square){
 uint64_t arr_knight_attacks[64];
 
 void knight_attacks(){
-    for(int sq = 0; sq < 64; ++sq){
+    for(int sq = 0; sq < 64; sq++){
         arr_knight_attacks[sq] = gen_knight_moves(sq);
     }
 }

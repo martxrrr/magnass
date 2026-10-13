@@ -75,7 +75,7 @@ int main(){
 								uint64_t knightAttacks = get_knight_attacks(destination);
 								std::string bits = std::bitset<64>(knightAttacks).to_string(); 
 								binary_board(bits);
-
+								
 								enumVec.clear();
 							}
 						}
