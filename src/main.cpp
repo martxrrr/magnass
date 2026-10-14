@@ -55,8 +55,8 @@ int main(){
 					sf::Vector2f click_position = {mouseX, mouseY};
 
 					if((mouseX > 77 && mouseX < 664) && (mouseY > 77 && mouseY < 664)){
-						coord = getSquare(click_position);
 						inRange = true;
+						coord = getSquare(click_position);
 						std::string squareName = getSquareName(coord);
 						Square squareNum = getSquareNum(squareName);
 
