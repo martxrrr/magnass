@@ -1,9 +1,11 @@
 Chess engine in progress
 <br>
 <hr>
-Built with:
-    **C++**
-    **SFML 3** - Third Party Graphics Library
+##Built with:
+
+    - 1. `C++`
+    - 2. `SFML 3` - Third Party Graphics Library
 
 <hr>
-Developed and Tested on **Arch Linux**
+<br>
+Developed and Tested on Arch Linux
