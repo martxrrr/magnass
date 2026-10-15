@@ -6,17 +6,17 @@
 
 /*  HELPER FUNCTIONS  */
 
-//get the index of the least significant bit
+// get the index of the least significant bit
 Square lsb(uint64_t bb){
     return static_cast<Square>(std::countr_zero(bb));
 }
 
 //count the total set bits
-int popcount(uint64_t bb){
+int bits_count(uint64_t bb){
     return std::popcount(bb);
 }
 
-//clear the lowest set bit in-place and return its index
+// clear the lowest set bit in-place and return its index
 Square pop_lsb(uint64_t &bb){
     Square sq = lsb(bb);
     bb &= bb  - 1;
