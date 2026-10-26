@@ -25,6 +25,8 @@ extern sf::Sprite BLACK_ROOKS;
 extern sf::Sprite BLACK_QUEEN;
 extern sf::Sprite BLACK_KING;
 
+constexpr int SQUARES = 8;
+
 void renderer(sf::RenderWindow& window);
 
 std::string getSquareName(const sf::Vector2f& mouseCoord);
@@ -41,6 +43,9 @@ struct Vector2fHash{
 		return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
 	}
 };
+
+
+int sq_id(int &row, int& col);
 
 struct Positions{
 

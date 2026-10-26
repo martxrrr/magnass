@@ -76,31 +76,33 @@ inline uint64_t blackPieces = blackPawns   |
 
 inline uint64_t none = square_bb(Square::SQ_NONE);
 
-bool WHITE = true;
-bool BLACK = false;
+int WHITE = 1;
+int BLACK = 0;
+int LOCK = 1;
 
-void move(bool &piecetype, bool &lock){
-	if(lock == true && piecetype == lock){
-		lock ^= lock;
+void move(int &piecetype, int &lock){
+	if(lock == 1 && piecetype == WHITE){
+		lock = 1 - lock;
 	}
-	if(lock == false && piecetype == lock){
-		lock = !lock;
+	else if(lock == 0 && piecetype == BLACK){
+		lock = 1 - lock;
 	}
 }
 
 void movePiece(uint64_t &type, Square &src, Square &dst){
-    bool lock = true;
-    if(type && whitePieces){
-        move(WHITE, lock);
+    int sq = static_cast<int>(src);
+    if((whitePieces & (1ULL << sq)) && LOCK == 1){
+        std::cout << "White piece clicked!\n";
         clear_bit(type, src);
         set_bit(type, dst);
+        move(WHITE, LOCK);
     }
-    if(type && blackPieces){
-        move(BLACK, lock);
+    if((blackPieces & (1ULL << sq)) && LOCK == 0){
+        std::cout << "Black piece clicked!\n";
         clear_bit(type, src);
         set_bit(type, dst);
+        move(BLACK, LOCK);
     }
-	
 }
 
 boardPosition position{

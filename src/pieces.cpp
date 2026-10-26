@@ -405,3 +405,7 @@ void renderer(sf::RenderWindow& window){
 		if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
 	}
 }
+
+int sq_id(int &row, int& col){
+	return row * SQUARES + col;
+}
