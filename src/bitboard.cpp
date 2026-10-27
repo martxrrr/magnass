@@ -92,13 +92,13 @@ void move(int &piecetype, int &lock){
 void movePiece(uint64_t &type, Square &src, Square &dst){
     int sq = static_cast<int>(src);
     if((whitePieces & (1ULL << sq)) && LOCK == 1){
-        std::cout << "White piece clicked!\n";
+        // std::cout << "White piece clicked!\n";
         clear_bit(type, src);
         set_bit(type, dst);
         move(WHITE, LOCK);
     }
     if((blackPieces & (1ULL << sq)) && LOCK == 0){
-        std::cout << "Black piece clicked!\n";
+        // std::cout << "Black piece clicked!\n";
         clear_bit(type, src);
         set_bit(type, dst);
         move(BLACK, LOCK);

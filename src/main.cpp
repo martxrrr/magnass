@@ -11,23 +11,29 @@
 #include "bitboard.hpp"
 #include "engine.hpp"
 
-int main(){
-	constexpr int width { 740 };
-	constexpr int height { 733 };
-	constexpr int x { 100 };
-	constexpr int y { 50 };
 
-	sf::RenderWindow window(sf::VideoMode({width, height}), "MAGNASS", sf::Style::Titlebar | sf::Style::Close);
-	window.setPosition(sf::Vector2i({x, y}));
+int main(){
+	sf::RenderWindow window(
+							sf::VideoMode({static_cast<unsigned int>(WIDTH), 
+							static_cast<unsigned int>(HEIGHT)}), 
+							"MAGNASS", sf::Style::Titlebar | 
+							sf::Style::Close);
+
+	window.setPosition(sf::Vector2i({X, Y}));
 
 	sf::Texture boardTexture;
-	if(!boardTexture.loadFromFile("assets/boards/chess02.jpg")){
+	if(!boardTexture.loadFromFile("assets/boards/boardC.png")){
 		return -1;
 	}
 
     sf::Sprite mainBoard(boardTexture);
 	Positions position;
 	sf::Vector2f coord;
+	int sqid;
+
+	sf::Vector2f target{656.f, 656.f};
+	auto size = sf::Vector2f(boardTexture.getSize());
+	mainBoard.setScale({target.x / size.x, target.y / size.y});
 
 	bool clicked { false };
 	bool inRange { false };
@@ -49,15 +55,22 @@ int main(){
 					float mouseX = static_cast<float>(pos.x);
 					float mouseY = static_cast<float>(pos.y);
 
-					// std::cout << "X : " << mouseX << " Y : " << mouseY << std::endl;
+					int click_x = pos.x;
+					int click_y = pos.y;
+
+					int col = click_x / SQ_LEN;
+					int row = click_y / SQ_LEN;
+					sqid = sq_id(row, col);
+
+					std::cout << "X : " << mouseX << " Y : " << mouseY << std::endl;
 
 					sf::Vector2f click_position = {mouseX, mouseY};
 
-					if((mouseX > 76 && mouseX < 664) && (mouseY > 76 && mouseY < 664)){
+					if((mouseX > 50 && mouseX < 685) && (mouseY > 45 && mouseY < 680)){
 						inRange = true;
-						coord = getSquare(click_position);
-						std::string squareName = getSquareName(coord);
-						Square squareNum = getSquareNum(squareName);
+						// coord = getSquare(click_position); //returns coordinates of that square
+						// std::string squareName = getSquareName(coord);
+						Square squareNum = static_cast<Square>(sqid);
 
 						enumVec.emplace_back(squareNum);
 						Square source;
@@ -90,7 +103,7 @@ int main(){
 		renderer(window);
 
 		if(clicked && inRange){
-			highlightSquare(window, coord);
+			highlightSquare(window, sqid);
 		}
 
 		window.display();

@@ -5,7 +5,7 @@
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 
-void highlightSquare(sf::RenderWindow &window, sf::Vector2f &cordinate);
+void highlightSquare(sf::RenderWindow &window, const int& sqid);
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 
@@ -25,7 +25,16 @@ extern sf::Sprite BLACK_ROOKS;
 extern sf::Sprite BLACK_QUEEN;
 extern sf::Sprite BLACK_KING;
 
-constexpr int SQUARES = 8;
+
+extern int WIDTH;
+extern int HEIGHT;
+extern int X;
+extern int Y;
+extern int SQUARES;
+extern int BOARD_PX;
+extern int SQ_LEN;
+extern int board_x;
+extern int board_y;
 
 void renderer(sf::RenderWindow& window);
 
