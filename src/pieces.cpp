@@ -14,11 +14,9 @@ int WIDTH { 656 };
 int HEIGHT { 656 };
 int X { 100 };
 int Y { 50 };
-int SQUARES = 8;
-int BOARD_PX = 640;
-int SQ_LEN = (BOARD_PX / SQUARES);
-int board_x = 0;
-int board_y = 0;
+float SQUARES = 8.f;
+float BOARD_PX = 656.f;
+float sq_size = BOARD_PX / SQUARES;
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	Positions position;
@@ -73,20 +71,16 @@ sf::Vector2f getSquare(sf::Vector2f &mouseClick){
 	return closest;
 }
 
-void highlightSquare(sf::RenderWindow &window, const int& sqid){
-	int row = sqid / SQUARES;
-	int col = sqid % SQUARES;
+void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
+	float sq_x =  4.f + col * sq_size;
+	float sq_y =  5.f + row * sq_size;
 
-	float sq_x = board_x + col * SQ_LEN;   // top-left of the square
-	float sq_y = board_y + row * SQ_LEN;
-
-	//=========================================
-	// sf::Vector2f coordinate = cordinate;
-	sf::RectangleShape pieceSquare(sf::Vector2f({82.f, 82.f})); //size
+	sf::RectangleShape pieceSquare;
+	pieceSquare.setSize({sq_size - 4.f, sq_size - 4.f});
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
-	pieceSquare.setPosition({sq_x, sq_y}); //here
+	pieceSquare.setPosition({sq_x, sq_y});
 	pieceSquare.setOutlineColor(sf::Color::Blue);
-	pieceSquare.setOutlineThickness(4.f);
+	pieceSquare.setOutlineThickness(3.f);
 
 	window.draw(pieceSquare);
 }

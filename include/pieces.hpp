@@ -3,14 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "bitboard.hpp"
 
-sf::Vector2f getSquare(sf::Vector2f &mouseClick);
-
-void highlightSquare(sf::RenderWindow &window, const int& sqid);
-
-void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
-
-void binary_board(const std::string &bits);
-
 extern sf::Sprite WHITE_PAWNS;
 extern sf::Sprite WHITE_BISHOPS;
 extern sf::Sprite WHITE_KNIGHTS;
@@ -30,11 +22,18 @@ extern int WIDTH;
 extern int HEIGHT;
 extern int X;
 extern int Y;
-extern int SQUARES;
-extern int BOARD_PX;
-extern int SQ_LEN;
-extern int board_x;
-extern int board_y;
+extern float SQUARES;
+extern float BOARD_PX;
+
+extern float sq_size;
+
+sf::Vector2f getSquare(sf::Vector2f &mouseClick);
+
+void highlightSquare(sf::RenderWindow &window, const int& row, const int&col);
+
+void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
+
+void binary_board(const std::string &bits);
 
 void renderer(sf::RenderWindow& window);
 
