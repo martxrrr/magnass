@@ -18,57 +18,8 @@ float SQUARES = 8.f;
 float BOARD_PX = 656.f;
 float sq_size = BOARD_PX / SQUARES;
 
-sf::Vector2f getSquare(sf::Vector2f &mouseClick){
-	Positions position;
-	const std::vector<sf::Vector2f> positions = {   
-							   position.A1, position.A2, position.A3, position.A4,
-							   position.A5, position.A6, position.A7, position.A8,
-							   position.B1, position.B2, position.B3, position.B4,
-							   position.B5, position.B6, position.B7, position.B8,
-							   position.C1, position.C2, position.C3, position.C4,
-							   position.C5, position.C6, position.C7, position.C8,
-							   position.D1, position.D2, position.D3, position.D4,
-							   position.D5, position.D6, position.D7, position.D8,
-							   position.E1, position.E2, position.E3, position.E4,
-							   position.E5, position.E6, position.E7, position.E8,
-							   position.F1, position.F2, position.F3, position.F4,
-							   position.F5, position.F6, position.F7, position.F8,
-							   position.G1, position.G2, position.G3, position.G4,
-							   position.G5, position.G6, position.G7, position.G8,
-							   position.H1, position.H2, position.H3, position.H4,
-							   position.H5, position.H6, position.H7, position.H8,
-						    };
-	
-	
-	float diffX{};
-	float diffY{};
-
-	std::array<double, 64> euclideans;
-	sf::Vector2f closest = { };
-	
-	for(auto pos{ 0 }; pos < positions.size(); pos++){
-		diffX = pow((positions[pos].x - mouseClick.x), 2);
-		diffY = pow((positions[pos].y - mouseClick.y), 2);
-		double sum { diffX + diffY };
-
-		double euclidean { sqrt(sum) };
-		euclideans[pos] = euclidean;
-	}
-
-	double close { };
-	{
-		std::array<double, 64> virtualEuclideans;
-		virtualEuclideans = euclideans;
-		std::sort(virtualEuclideans.begin(), virtualEuclideans.end());
-		close = virtualEuclideans[0];
-	}
-	int index;
-	auto it = std::find(euclideans.begin(), euclideans.end(), close);
-	if(it != euclideans.end()){
-		index = std::distance(euclideans.begin(), it);
-	}
-	closest = {positions[index].x, positions[index].y};
-	return closest;
+int sq_id(int &row, int& col){
+	return row * SQUARES + col;
 }
 
 void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
@@ -76,6 +27,7 @@ void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
 	float sq_y =  5.f + row * sq_size;
 
 	sf::RectangleShape pieceSquare;
+	
 	pieceSquare.setSize({sq_size - 4.f, sq_size - 4.f});
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
 	pieceSquare.setPosition({sq_x, sq_y});
@@ -315,44 +267,17 @@ sf::Sprite WHITE_QUEEN = piece.wq();
 sf::Sprite WHITE_KING = piece.wk();
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){
+	int row = square / 8;
+	int col = square % 8;
 
-	std::array<sf::Vector2f, 64> squareToCoord;
+	float offset_x = 8.f;
+	float offset_y = 6.f;
 
-	squareToCoord[0]  =  sf::Vector2f({ 81.f, 597.f  });  squareToCoord[1]  =  sf::Vector2f({ 154.f, 597.f });
-	squareToCoord[8] = sf::Vector2f({ 81.f, 523.f  });  squareToCoord[9] = sf::Vector2f({ 154.f, 523.f });
-	squareToCoord[16] = sf::Vector2f({ 81.f, 450.f  });  squareToCoord[17] = sf::Vector2f({ 154.f, 450.f });
-	squareToCoord[24] = sf::Vector2f({ 81.f, 377.f  });  squareToCoord[25] = sf::Vector2f({ 154.f, 377.f });
-	squareToCoord[32] = sf::Vector2f({ 81.f, 304.f  });  squareToCoord[33] = sf::Vector2f({ 154.f, 304.f });
-	squareToCoord[40] = sf::Vector2f({ 81.f, 231.f  });  squareToCoord[41] = sf::Vector2f({ 154.f, 231.f });
-	squareToCoord[48] = sf::Vector2f({ 81.f, 153.f  });  squareToCoord[49] = sf::Vector2f({ 154.f, 153.f });
-	squareToCoord[56] = sf::Vector2f({ 81.f, 80.f   });  squareToCoord[57] = sf::Vector2f({ 154.f, 80.f  });
-	squareToCoord[2]  =  sf::Vector2f({ 227.f, 597.f });  squareToCoord[3]  =  sf::Vector2f({ 300.f, 600.f });
-	squareToCoord[10] = sf::Vector2f({ 227.f, 523.f });  squareToCoord[11] = sf::Vector2f({ 300.f, 523.f });
-	squareToCoord[18] = sf::Vector2f({ 227.f, 450.f });  squareToCoord[19] = sf::Vector2f({ 300.f, 450.f });
-	squareToCoord[26] = sf::Vector2f({ 227.f, 377.f });  squareToCoord[27] = sf::Vector2f({ 300.f, 377.f });
-	squareToCoord[34] = sf::Vector2f({ 227.f, 304.f });  squareToCoord[35] = sf::Vector2f({ 300.f, 304.f });
-	squareToCoord[42] = sf::Vector2f({ 227.f, 231.f });  squareToCoord[43] = sf::Vector2f({ 300.f, 231.f });
-	squareToCoord[50] = sf::Vector2f({ 227.f, 153.f });  squareToCoord[51] = sf::Vector2f({ 300.f, 153.f });
-	squareToCoord[58] = sf::Vector2f({ 227.f, 80.f  });  squareToCoord[59] = sf::Vector2f({ 300.f, 80.f  });
-	squareToCoord[4]  =  sf::Vector2f({ 374.f, 597.f });  squareToCoord[5]  =  sf::Vector2f({ 447.f, 597.f });
-	squareToCoord[12] = sf::Vector2f({ 374.f, 523.f });  squareToCoord[13] = sf::Vector2f({ 447.f, 523.f });
-	squareToCoord[20] = sf::Vector2f({ 374.f, 450.f });  squareToCoord[21] = sf::Vector2f({ 447.f, 450.f });
-	squareToCoord[28] = sf::Vector2f({ 374.f, 377.f });  squareToCoord[29] = sf::Vector2f({ 447.f, 377.f });
-	squareToCoord[36] = sf::Vector2f({ 374.f, 304.f });  squareToCoord[37] = sf::Vector2f({ 447.f, 304.f });
-	squareToCoord[44] = sf::Vector2f({ 374.f, 231.f });  squareToCoord[45] = sf::Vector2f({ 447.f, 231.f });
-	squareToCoord[52] = sf::Vector2f({ 374.f, 153.f });  squareToCoord[53] = sf::Vector2f({ 447.f, 153.f });
-	squareToCoord[60] = sf::Vector2f({ 374.f, 77.f  });  squareToCoord[61] = sf::Vector2f({ 451.f, 80.f  });
-	squareToCoord[6]  =  sf::Vector2f({ 520.f, 597.f });  squareToCoord[7]  =  sf::Vector2f({ 593.f, 597.f });
-	squareToCoord[14] = sf::Vector2f({ 520.f, 523.f });  squareToCoord[15] = sf::Vector2f({ 593.f, 523.f });
-	squareToCoord[22] = sf::Vector2f({ 520.f, 450.f });  squareToCoord[23] = sf::Vector2f({ 593.f, 450.f });
-	squareToCoord[30] = sf::Vector2f({ 520.f, 377.f });  squareToCoord[31] = sf::Vector2f({ 593.f, 377.f });
-	squareToCoord[38] = sf::Vector2f({ 520.f, 304.f });  squareToCoord[39] = sf::Vector2f({ 593.f, 304.f });
-	squareToCoord[46] = sf::Vector2f({ 520.f, 231.f });  squareToCoord[47] = sf::Vector2f({ 593.f, 231.f });
-	squareToCoord[54] = sf::Vector2f({ 520.f, 153.f });  squareToCoord[55] = sf::Vector2f({ 593.f, 153.f });
-	squareToCoord[62] = sf::Vector2f({ 520.f, 80.f  });  squareToCoord[63] = sf::Vector2f({ 597.f, 80.f  });
+	float sp_x =  offset_x + col * sq_size;
+	float sp_y =  offset_y + row * sq_size;
 
-	sf::Vector2f coord = squareToCoord[square];
-	sprite.setPosition(coord);
+	sf::Vector2f coord2{sp_x, sp_y};
+	sprite.setPosition(coord2);
 	window.draw(sprite);
 	
 }
@@ -399,6 +324,14 @@ void renderer(sf::RenderWindow& window){
 	for(int square = 0; square < 64; square++){
 		uint64_t mask = 1ULL << square;
 
+		//RENDER BLACK PIECES
+		if(position.blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
+		if(position.blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
+		if(position.blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
+		if(position.blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
+		if(position.blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
+		if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
+
 		//RENDER WHITE PIECES
 		if(position.whitePawns & mask)   Draw(window, WHITE_PAWNS, square);
 		if(position.whiteKnights & mask) Draw(window, WHITE_KNIGHTS, square);
@@ -407,16 +340,5 @@ void renderer(sf::RenderWindow& window){
 		if(position.whiteQueen & mask)   Draw(window, WHITE_QUEEN, square);
 		if(position.whiteKing & mask)    Draw(window, WHITE_KING, square);
 
-		//RENDER BLACK PIECES
-		if(position.blackPawns & mask)   Draw(window, BLACK_PAWNS, square);
-		if(position.blackKnights & mask) Draw(window, BLACK_KNIGHTS, square);
-		if(position.blackBishops & mask) Draw(window, BLACK_BISHOPS, square);
-		if(position.blackRooks & mask)   Draw(window, BLACK_ROOKS, square);
-		if(position.blackQueen & mask)   Draw(window, BLACK_QUEEN, square);
-		if(position.blackKing & mask)    Draw(window, BLACK_KING, square);
 	}
-}
-
-int sq_id(int &row, int& col){
-	return row * SQUARES + col;
 }
