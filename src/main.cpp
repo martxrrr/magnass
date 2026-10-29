@@ -22,30 +22,21 @@ int main(){
 	window.setPosition(sf::Vector2i({X, Y}));
 
 	sf::Texture boardTexture;
-	if(!boardTexture.loadFromFile("assets/boards/boardC.png")){
+	if(!boardTexture.loadFromFile("assets/boards/boardA.png")){
 		return -1;
 	}
 
     sf::Sprite mainBoard(boardTexture);
 	mainBoard.setPosition({0.f, 0.f});
 
-	Positions position;
-	sf::Vector2f coord;
 	int row;
 	int col;
 
 	sf::Vector2f target{656.f, 656.f};
 	auto size = sf::Vector2f(boardTexture.getSize());
 	mainBoard.setScale({target.x / size.x, target.y / size.y});
-
-	auto bounds = mainBoard.getGlobalBounds();
-	float position_x = bounds.position.x;
-	float position_y = bounds.position.y;
-	float width = bounds.size.x;
-	float height = bounds.size.y;
 	
 	bool clicked { false };
-	bool inRange { false };
 
 	std::vector<Square> enumVec;
 	knight_attacks();
@@ -61,23 +52,12 @@ int main(){
 				if(mouseClick->button == sf::Mouse::Button::Left){
 					clicked = true;
 					sf::Vector2i pos = sf::Mouse::getPosition(window);
-					// float mouseX = static_cast<float>(pos.x);
-					// float mouseY = static_cast<float>(pos.y);
 
-					int click_x = pos.x;
-					int click_y = pos.y;
-
-					col = click_x / sq_size;
-					row = click_y / sq_size;
+					col = pos.x / sq_size;
+					int rw = (pos.y / sq_size);
+					row = 7 - rw;
 					int sqid = sq_id(row, col);
 
-					// std::cout << "X : " << click_x << " Y : " << click_y << std::endl;
-
-					// sf::Vector2f click_position = {mouseX, mouseY};
-
-					inRange = true;
-					// coord = getSquare(click_position); //returns coordinates of that square
-					// std::string squareName = getSquareName(coord);
 					Square squareNum = static_cast<Square>(sqid);
 
 					enumVec.emplace_back(squareNum);
@@ -87,7 +67,7 @@ int main(){
 					if(enumVec.size() == 2){
 						source = enumVec[0];
 						destination = enumVec[1];
-						if(getPieceType(source) == none){
+						if(getPieceType(source) == none && source == destination){
 							enumVec.clear();
 						}else{
 							uint64_t& piecetyp = getPieceType(source);
@@ -109,7 +89,7 @@ int main(){
 
 		renderer(window);
 
-		if(clicked && inRange){
+		if(clicked){
 			highlightSquare(window, row, col);
 		}
 

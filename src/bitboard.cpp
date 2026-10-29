@@ -103,6 +103,7 @@ void movePiece(uint64_t &type, Square &src, Square &dst){
         set_bit(type, dst);
         move(BLACK, LOCK);
     }
+    // std::cout << (LOCK == 1 ? "white's turn" : "black's turn") << std::endl;
 }
 
 boardPosition position{

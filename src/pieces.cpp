@@ -24,63 +24,17 @@ int sq_id(int &row, int& col){
 
 void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
 	float sq_x =  4.f + col * sq_size;
-	float sq_y =  5.f + row * sq_size;
+	float sq_y =  5.f + (7 - row) * sq_size;
 
 	sf::RectangleShape pieceSquare;
 	
 	pieceSquare.setSize({sq_size - 4.f, sq_size - 4.f});
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
 	pieceSquare.setPosition({sq_x, sq_y});
-	pieceSquare.setOutlineColor(sf::Color::Blue);
+	pieceSquare.setOutlineColor(sf::Color::Yellow);
 	pieceSquare.setOutlineThickness(3.f);
 
 	window.draw(pieceSquare);
-}
-
-std::string getSquareName(const sf::Vector2f& mouseCoord){
-	std::unordered_map<sf::Vector2f, std::string, Vector2fHash> coordToMap;
-
-	coordToMap[{ 81.f, 597.f }] = "SQ_A1";  coordToMap[{ 154.f, 597.f }] = "SQ_B1";
-	coordToMap[{ 81.f, 523.f }] = "SQ_A2";  coordToMap[{ 154.f, 523.f }] = "SQ_B2";
-	coordToMap[{ 81.f, 450.f }] = "SQ_A3";  coordToMap[{ 154.f, 450.f }] = "SQ_B3";
-	coordToMap[{ 81.f, 377.f }] = "SQ_A4";  coordToMap[{ 154.f, 377.f }] = "SQ_B4";
-	coordToMap[{ 81.f, 304.f }] = "SQ_A5";  coordToMap[{ 154.f, 304.f }] = "SQ_B5";
-	coordToMap[{ 81.f, 231.f }] = "SQ_A6";  coordToMap[{ 154.f, 231.f }] = "SQ_B6";
-	coordToMap[{ 81.f, 153.f }] = "SQ_A7";  coordToMap[{ 154.f, 153.f }] = "SQ_B7";
-	coordToMap[{ 81.f, 80.f  }] = "SQ_A8";  coordToMap[{ 154.f, 80.f  }] = "SQ_B8";
-
-	coordToMap[{ 227.f, 597.f }] = "SQ_C1";  coordToMap[{ 300.f, 600.f }] = "SQ_D1";
-	coordToMap[{ 227.f, 523.f }] = "SQ_C2";  coordToMap[{ 300.f, 523.f }] = "SQ_D2";
-	coordToMap[{ 227.f, 450.f }] = "SQ_C3";  coordToMap[{ 300.f, 450.f }] = "SQ_D3";
-	coordToMap[{ 227.f, 377.f }] = "SQ_C4";  coordToMap[{ 300.f, 377.f }] = "SQ_D4";
-	coordToMap[{ 227.f, 304.f }] = "SQ_C5";  coordToMap[{ 300.f, 304.f }] = "SQ_D5";
-	coordToMap[{ 227.f, 231.f }] = "SQ_C6";  coordToMap[{ 300.f, 231.f }] = "SQ_D6";
-	coordToMap[{ 227.f, 153.f }] = "SQ_C7";  coordToMap[{ 300.f, 153.f }] = "SQ_D7";
-	coordToMap[{ 227.f, 80.f  }] = "SQ_C8";  coordToMap[{ 300.f, 80.f  }] = "SQ_D8";
-
-	coordToMap[{ 374.f, 597.f }] = "SQ_E1";  coordToMap[{ 447.f, 597.f }] = "SQ_F1";
-	coordToMap[{ 374.f, 523.f }] = "SQ_E2";  coordToMap[{ 447.f, 523.f }] = "SQ_F2";
-	coordToMap[{ 374.f, 450.f }] = "SQ_E3";  coordToMap[{ 447.f, 450.f }] = "SQ_F3";
-	coordToMap[{ 374.f, 377.f }] = "SQ_E4";  coordToMap[{ 447.f, 377.f }] = "SQ_F4";
-	coordToMap[{ 374.f, 304.f }] = "SQ_E5";  coordToMap[{ 447.f, 304.f }] = "SQ_F5";
-	coordToMap[{ 374.f, 231.f }] = "SQ_E6";  coordToMap[{ 447.f, 231.f }] = "SQ_F6";
-	coordToMap[{ 374.f, 153.f }] = "SQ_E7";  coordToMap[{ 447.f, 153.f }] = "SQ_F7";
-	coordToMap[{ 374.f, 77.f  }] = "SQ_E8";  coordToMap[{ 451.f, 80.f  }] = "SQ_F8";
-
-	coordToMap[{ 520.f, 597.f }] = "SQ_G1";  coordToMap[{ 593.f, 597.f }] = "SQ_H1";
-	coordToMap[{ 520.f, 523.f }] = "SQ_G2";  coordToMap[{ 593.f, 523.f }] = "SQ_H2";
-	coordToMap[{ 520.f, 450.f }] = "SQ_G3";  coordToMap[{ 593.f, 450.f }] = "SQ_H3";
-	coordToMap[{ 520.f, 377.f }] = "SQ_G4";  coordToMap[{ 593.f, 377.f }] = "SQ_H4";
-	coordToMap[{ 520.f, 304.f }] = "SQ_G5";  coordToMap[{ 593.f, 304.f }] = "SQ_H5";
-	coordToMap[{ 520.f, 231.f }] = "SQ_G6";  coordToMap[{ 593.f, 231.f }] = "SQ_H6";
-	coordToMap[{ 520.f, 153.f }] = "SQ_G7";  coordToMap[{ 593.f, 153.f }] = "SQ_H7";
-	coordToMap[{ 520.f, 80.f  }] = "SQ_G8";  coordToMap[{ 597.f, 80.f  }] = "SQ_H8";
-
-	auto value = coordToMap.find(mouseCoord);
-	if(value != coordToMap.end()) return value->second;
-	else{
-		return "";
-	}
 }
 
 class Pieces{
@@ -201,55 +155,6 @@ class Pieces{
 	}
 };
 
-Square getSquareNum(std::string &sqname){
-	std::unordered_map<std::string, Square> nameToInt;
-
-	nameToInt["SQ_A1"] = Square::SQ_A1;      nameToInt["SQ_H1"] = Square::SQ_H1;
-	nameToInt["SQ_A2"] = Square::SQ_A2;	     nameToInt["SQ_H2"] = Square::SQ_H2;
-	nameToInt["SQ_A3"] = Square::SQ_A3;	     nameToInt["SQ_H3"] = Square::SQ_H3;
-	nameToInt["SQ_A4"] = Square::SQ_A4;      nameToInt["SQ_H4"] = Square::SQ_H4;
-	nameToInt["SQ_A5"] = Square::SQ_A5;      nameToInt["SQ_H5"] = Square::SQ_H5;
-	nameToInt["SQ_A6"] = Square::SQ_A6;      nameToInt["SQ_H6"] = Square::SQ_H6;
-	nameToInt["SQ_A7"] = Square::SQ_A7;      nameToInt["SQ_H7"] = Square::SQ_H7;
-	nameToInt["SQ_A8"] = Square::SQ_A8;      nameToInt["SQ_H8"] = Square::SQ_H8;
-
-	nameToInt["SQ_B1"] = Square::SQ_B1;      nameToInt["SQ_C1"] = Square::SQ_C1;
-	nameToInt["SQ_B2"] = Square::SQ_B2;	     nameToInt["SQ_C2"] = Square::SQ_C2;
-	nameToInt["SQ_B3"] = Square::SQ_B3;	     nameToInt["SQ_C3"] = Square::SQ_C3;
-	nameToInt["SQ_B4"] = Square::SQ_B4;      nameToInt["SQ_C4"] = Square::SQ_C4;
-	nameToInt["SQ_B5"] = Square::SQ_B5;      nameToInt["SQ_C5"] = Square::SQ_C5;
-	nameToInt["SQ_B6"] = Square::SQ_B6;      nameToInt["SQ_C6"] = Square::SQ_C6;
-	nameToInt["SQ_B7"] = Square::SQ_B7;      nameToInt["SQ_C7"] = Square::SQ_C7;
-	nameToInt["SQ_B8"] = Square::SQ_B8;      nameToInt["SQ_C8"] = Square::SQ_C8;
-	
-	nameToInt["SQ_D1"] = Square::SQ_D1;      nameToInt["SQ_E1"] = Square::SQ_E1;
-	nameToInt["SQ_D2"] = Square::SQ_D2;	     nameToInt["SQ_E2"] = Square::SQ_E2;
-	nameToInt["SQ_D3"] = Square::SQ_D3;	     nameToInt["SQ_E3"] = Square::SQ_E3;
-	nameToInt["SQ_D4"] = Square::SQ_D4;      nameToInt["SQ_E4"] = Square::SQ_E4;
-	nameToInt["SQ_D5"] = Square::SQ_D5;      nameToInt["SQ_E5"] = Square::SQ_E5;
-	nameToInt["SQ_D6"] = Square::SQ_D6;      nameToInt["SQ_E6"] = Square::SQ_E6;
-	nameToInt["SQ_D7"] = Square::SQ_D7;      nameToInt["SQ_E7"] = Square::SQ_E7;
-	nameToInt["SQ_D8"] = Square::SQ_D8;      nameToInt["SQ_E8"] = Square::SQ_E8;
-	
-	nameToInt["SQ_F1"] = Square::SQ_F1;      nameToInt["SQ_G1"] = Square::SQ_G1;
-	nameToInt["SQ_F2"] = Square::SQ_F2;	     nameToInt["SQ_G2"] = Square::SQ_G2;
-	nameToInt["SQ_F3"] = Square::SQ_F3;	     nameToInt["SQ_G3"] = Square::SQ_G3;
-	nameToInt["SQ_F4"] = Square::SQ_F4;      nameToInt["SQ_G4"] = Square::SQ_G4;
-	nameToInt["SQ_F5"] = Square::SQ_F5;      nameToInt["SQ_G5"] = Square::SQ_G5;
-	nameToInt["SQ_F6"] = Square::SQ_F6;      nameToInt["SQ_G6"] = Square::SQ_G6;
-	nameToInt["SQ_F7"] = Square::SQ_F7;      nameToInt["SQ_G7"] = Square::SQ_G7;
-	nameToInt["SQ_F8"] = Square::SQ_F8;      nameToInt["SQ_G8"] = Square::SQ_G8;
-
-	auto it = nameToInt.find(sqname);
-	if(it != nameToInt.end()){
-		return it->second;
-	}else{
-		std::cerr << "Error retrieving square number\n";
-		return Square::SQ_NONE;
-	}
-
-}
-
 Pieces piece;
 
 sf::Sprite BLACK_PAWNS = piece.bp();
@@ -267,7 +172,7 @@ sf::Sprite WHITE_QUEEN = piece.wq();
 sf::Sprite WHITE_KING = piece.wk();
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square){
-	int row = square / 8;
+	int row = 7 - (square / 8);
 	int col = square % 8;
 
 	float offset_x = 8.f;
