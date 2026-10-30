@@ -5,7 +5,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/System/Vector2.hpp>
 
 #include "pieces.hpp"
 #include "bitboard.hpp"
@@ -22,7 +21,13 @@ int sq_id(int &row, int& col){
 	return row * SQUARES + col;
 }
 
-void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
+void highlightSquare(sf::RenderWindow &window, 
+					 const int& row, 
+					 const int& col, 
+					 const int& r, 
+					 const int&g, 
+					 const int& b)
+{
 	float sq_x =  4.f + col * sq_size;
 	float sq_y =  5.f + (7 - row) * sq_size;
 
@@ -31,7 +36,7 @@ void highlightSquare(sf::RenderWindow &window, const int& row, const int& col){
 	pieceSquare.setSize({sq_size - 4.f, sq_size - 4.f});
 	pieceSquare.setFillColor(sf::Color(255, 255, 255, 0));
 	pieceSquare.setPosition({sq_x, sq_y});
-	pieceSquare.setOutlineColor(sf::Color::Yellow);
+	pieceSquare.setOutlineColor(sf::Color(r, g, b));
 	pieceSquare.setOutlineThickness(3.f);
 
 	window.draw(pieceSquare);

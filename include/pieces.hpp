@@ -29,7 +29,12 @@ extern float sq_size;
 
 sf::Vector2f getSquare(sf::Vector2f &mouseClick);
 
-void highlightSquare(sf::RenderWindow &window, const int& row, const int&col);
+void highlightSquare(sf::RenderWindow &window, 
+					 const int& row, 
+					 const int& col, 
+					 const int& r, 
+					 const int&g, 
+					 const int& b);
 
 void Draw(sf::RenderWindow& window, sf::Sprite& sprite, int square);
 

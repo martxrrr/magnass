@@ -41,6 +41,8 @@ int main(){
 	std::vector<Square> enumVec;
 	knight_attacks();
 
+	uint64_t attacked_squares = 0;
+
 	while(window.isOpen()){
 		while(const std::optional event = window.pollEvent()){
 			if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
@@ -71,10 +73,9 @@ int main(){
 							enumVec.clear();
 						}else{
 							uint64_t& piecetyp = getPieceType(source);
-							std::cout << get_piece_name(source) << std::endl;
 							movePiece(piecetyp, source, destination);
-							uint64_t knightAttacks = get_knight_attacks(destination);
-							std::string bits = std::bitset<64>(whitePieces).to_string(); 
+							attacked_squares = get_knight_attacks(destination);
+							std::string bits = std::bitset<64>(attacked_squares).to_string(); 
 							binary_board(bits);
 							
 							enumVec.clear();
@@ -91,8 +92,14 @@ int main(){
 		renderer(window);
 
 		if(clicked){
-			highlightSquare(window, row, col);
+			highlightSquare(window, 
+							row, 
+							col,
+							230, 
+							245, 
+							66);
 		}
+		highlight_attacked_squares(window, attacked_squares);
 
 		window.display();
 	}
