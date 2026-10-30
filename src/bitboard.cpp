@@ -22,6 +22,7 @@ Square pop_lsb(uint64_t &bb){
     bb &= bb  - 1;
     return sq;
 }
+
 //WHITE
 inline uint64_t whitePawns = square_bb(Square::SQ_A2) |
 					         square_bb(Square::SQ_C2) |
@@ -40,13 +41,15 @@ inline uint64_t whiteBishops = square_bb(Square::SQ_C1) |
                                square_bb(Square::SQ_F1) ;
 inline uint64_t whiteQueen   = square_bb(Square::SQ_D1) ;
 inline uint64_t whiteKing    = square_bb(Square::SQ_E1) ;
-
 inline uint64_t whitePieces = whitePawns   |
                               whiteBishops |
                               whiteKnights | 
                               whiteRooks   |
                               whiteQueen   |
                               whiteKing;
+
+
+
 
 //BLACK
 inline uint64_t blackPawns =   square_bb(Square::SQ_A7) |
@@ -66,7 +69,6 @@ inline uint64_t blackBishops = square_bb(Square::SQ_C8) |
                                square_bb(Square::SQ_F8) ;
 inline uint64_t blackQueen   = square_bb(Square::SQ_D8) ;
 inline uint64_t blackKing    = square_bb(Square::SQ_E8) ;
-
 inline uint64_t blackPieces = blackPawns   |
                               blackBishops |
                               blackKnights | 
@@ -92,18 +94,19 @@ void move(int &piecetype, int &lock){
 void movePiece(uint64_t &type, Square &src, Square &dst){
     int sq = static_cast<int>(src);
     if((whitePieces & (1ULL << sq)) && LOCK == 1){
-        // std::cout << "White piece clicked!\n";
         clear_bit(type, src);
+        clear_bit(whitePieces, src);
+        set_bit(whitePieces, dst);
         set_bit(type, dst);
         move(WHITE, LOCK);
     }
     if((blackPieces & (1ULL << sq)) && LOCK == 0){
-        // std::cout << "Black piece clicked!\n";
         clear_bit(type, src);
+        clear_bit(blackPieces, src);
         set_bit(type, dst);
+        set_bit(blackPieces, dst);
         move(BLACK, LOCK);
     }
-    // std::cout << (LOCK == 1 ? "white's turn" : "black's turn") << std::endl;
 }
 
 boardPosition position{

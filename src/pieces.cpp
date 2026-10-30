@@ -207,6 +207,26 @@ uint64_t& getPieceType(const Square& square){
 	else return none;
 }
 
+std::string get_piece_name(const Square& square){
+	uint64_t sqbitboard = square_bb(square);
+
+	if(sqbitboard & whitePawns)   return "whitePawns";
+	if(sqbitboard & whiteKnights) return "whiteKnights";
+	if(sqbitboard & whiteRooks)   return "whiteRooks";
+	if(sqbitboard & whiteBishops) return "whiteBishops";
+	if(sqbitboard & whiteQueen)   return "whiteQueen";
+	if(sqbitboard & whiteKing)    return "whiteKing";
+
+	if(sqbitboard & blackPawns)   return "blackPawns";
+	if(sqbitboard & blackKnights) return "blackKnights";
+	if(sqbitboard & blackRooks)   return "blackRooks";
+	if(sqbitboard & blackBishops) return "blackBishops";
+	if(sqbitboard & blackQueen)   return "blackQueen";
+	if(sqbitboard & blackKing)    return "blackKing";
+
+	else return "";
+}
+
 void binary_board(const std::string &bits){
 	std::cout << "=============================\n";
 	std::vector<char> bitslist;

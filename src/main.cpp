@@ -71,10 +71,11 @@ int main(){
 							enumVec.clear();
 						}else{
 							uint64_t& piecetyp = getPieceType(source);
+							std::cout << get_piece_name(source) << std::endl;
 							movePiece(piecetyp, source, destination);
 							uint64_t knightAttacks = get_knight_attacks(destination);
-							// std::string bits = std::bitset<64>(knightAttacks).to_string(); 
-							// binary_board(bits);
+							std::string bits = std::bitset<64>(whitePieces).to_string(); 
+							binary_board(bits);
 							
 							enumVec.clear();
 						}

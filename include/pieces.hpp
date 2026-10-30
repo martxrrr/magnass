@@ -40,3 +40,5 @@ void renderer(sf::RenderWindow& window);
 uint64_t& getPieceType(const Square& square);
 
 int sq_id(int &row, int& col);
+
+std::string get_piece_name(const Square& square);
