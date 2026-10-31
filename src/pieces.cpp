@@ -2,6 +2,7 @@
 #include <map>
 #include <iostream>
 #include <algorithm>
+#include <bitset>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -240,7 +241,7 @@ void binary_board(const std::string &bits){
 		if(bitslist.size() == 8){
 			std::reverse(bitslist.begin(), bitslist.end());
 			for(char d : bitslist){
-				std::cout << d ;
+				std::cout << d;
 			}
 			std::cout << "\n";
 			bitslist.clear();
