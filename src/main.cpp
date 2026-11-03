@@ -11,7 +11,6 @@
 #include "bitboard.hpp"
 #include "engine.hpp"
 
-
 int main(){
 	sf::RenderWindow window(
 							sf::VideoMode({static_cast<unsigned int>(WIDTH), 
@@ -29,19 +28,12 @@ int main(){
     sf::Sprite mainBoard(boardTexture);
 	mainBoard.setPosition({0.f, 0.f});
 
-	int row;
-	int col;
-
 	sf::Vector2f target{656.f, 656.f};
 	auto size = sf::Vector2f(boardTexture.getSize());
 	mainBoard.setScale({target.x / size.x, target.y / size.y});
 	
-	bool clicked { false };
-
-	std::vector<Square> enumVec;
 	knight_attacks();
-
-	uint64_t attacked_squares = 0;
+	Params args;
 
 	while(window.isOpen()){
 		while(const std::optional event = window.pollEvent()){
@@ -52,35 +44,7 @@ int main(){
 			}
 			if(const auto* mouseClick = event->getIf<sf::Event::MouseButtonPressed>()){
 				if(mouseClick->button == sf::Mouse::Button::Left){
-					clicked = true;
-					sf::Vector2i pos = sf::Mouse::getPosition(window);
-
-					col = pos.x / sq_size;
-					int rw = (pos.y / sq_size);
-					row = 7 - rw;
-					int sqid = sq_id(row, col);
-
-					Square squareNum = static_cast<Square>(sqid);
-
-					enumVec.emplace_back(squareNum);
-					Square source;
-					Square destination;
-
-					if(enumVec.size() == 2){
-						source = enumVec[0];
-						destination = enumVec[1];
-						if(getPieceType(source) == none && source == destination){
-							enumVec.clear();
-						}else{
-							uint64_t& piecetyp = getPieceType(source);
-							movePiece(piecetyp, source, destination);
-							attacked_squares = get_knight_attacks(destination);
-							std::string bits = std::bitset<64>(attacked_squares).to_string(); 
-							binary_board(bits);
-							
-							enumVec.clear();
-						}
-					}
+					mini_main(args, window);
 				}
 			}
 		}
@@ -91,15 +55,10 @@ int main(){
 
 		renderer(window);
 
-		if(clicked){
-			highlightSquare(window, 
-							row, 
-							col,
-							230, 
-							245, 
-							66);
+		if(args.clicked){
+			highlightSquare(window, args.row, args.col,230, 245, 66);
 		}
-		highlight_attacked_squares(window, attacked_squares);
+		// highlight_attacked_squares(window, args.attacked_squares);
 
 		window.display();
 	}

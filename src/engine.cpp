@@ -2,12 +2,13 @@
 #include <bitset>
 #include <vector>
 #include <algorithm>
-#include "bitboard.hpp"
-#include "engine.hpp"
-#include "pieces.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+
+#include "bitboard.hpp"
+#include "engine.hpp"
+#include "pieces.hpp"
 
 int square_int(const int &rank, const int &file){
     return (rank * 8) + file;
@@ -66,33 +67,15 @@ void highlight_attacked_squares(sf::RenderWindow &window, const uint64_t &attack
             int idx = i;
             int row = idx / 8;
             int col = idx % 8;
-            // int row = temp_col;
-            // int col = temp_row;
             highlightSquare(window, row, col, 245, 72, 66);
         }
     }
 }
 
-// void highlight_attacked_squares(sf::RenderWindow &window, const uint64_t &attacks){
-//     std::string attacked = std::bitset<64>(attacks).to_string();
-//     std::vector<char> bitslist;
-// 	for(char c : attacked){
-// 		bitslist.emplace_back(c);
-// 		if(bitslist.size() == 8){
-// 			std::reverse(bitslist.begin(), bitslist.end());
-// 			for(int i = 0; i < bitslist.size(); ++i){
-//                 int num = attacked[i] - '0';
-//                 if(num == 1){
-//                     int idx = i;
-//                     int row = idx / 8;
-//                     int col = idx % 8;
-
-//                     highlightSquare(window, row, col, 245, 72, 66);
-//                 }
-//             }
-// 			bitslist.clear();
-// 		}else{
-// 			continue;
-// 		}
-// 	}
-// }
+//pseudo legal moves refer to moves legal due to rules of movement of the piece
+//rather than general rules of chess like pieces pinned to the king can't move
+//check whether destination is part of attacked squares
+bool check_pseudo_legal(const Square &dest, const uint64_t &attacks){
+    uint64_t dst = square_bb(dest);
+    return (dst & attacks ? true : false);
+}

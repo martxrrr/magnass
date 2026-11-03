@@ -213,25 +213,6 @@ uint64_t& getPieceType(const Square& square){
 	else return none;
 }
 
-std::string get_piece_name(const Square& square){
-	uint64_t sqbitboard = square_bb(square);
-
-	if(sqbitboard & whitePawns)   return "whitePawns";
-	if(sqbitboard & whiteKnights) return "whiteKnights";
-	if(sqbitboard & whiteRooks)   return "whiteRooks";
-	if(sqbitboard & whiteBishops) return "whiteBishops";
-	if(sqbitboard & whiteQueen)   return "whiteQueen";
-	if(sqbitboard & whiteKing)    return "whiteKing";
-
-	if(sqbitboard & blackPawns)   return "blackPawns";
-	if(sqbitboard & blackKnights) return "blackKnights";
-	if(sqbitboard & blackRooks)   return "blackRooks";
-	if(sqbitboard & blackBishops) return "blackBishops";
-	if(sqbitboard & blackQueen)   return "blackQueen";
-	if(sqbitboard & blackKing)    return "blackKing";
-
-	else return "";
-}
 
 void binary_board(const std::string &bits){
 	std::cout << "=============================\n";
@@ -271,5 +252,43 @@ void renderer(sf::RenderWindow& window){
 		if(position.whiteQueen & mask)   Draw(window, WHITE_QUEEN, square);
 		if(position.whiteKing & mask)    Draw(window, WHITE_KING, square);
 
+	}
+}
+
+void mini_main(Params& args, sf::RenderWindow& window){
+	args.clicked = true;
+	sf::Vector2i pos = sf::Mouse::getPosition(window);
+
+	args.col = pos.x / sq_size;
+	int rw = (pos.y / sq_size);
+	args.row = 7 - rw;
+	int sqid = sq_id(args.row, args.col);
+
+	Square squareNum = static_cast<Square>(sqid);
+
+	args.enumVec.emplace_back(squareNum);
+	Square source;
+	Square destination;
+
+	if(args.enumVec.size() == 2){
+		source = args.enumVec[0];
+		destination = args.enumVec[1];
+		if(getPieceType(source) == none && source == destination){
+			args.enumVec.clear();
+		}else{
+			uint64_t& piecetyp = getPieceType(source);
+			if(piecetyp & (whiteKnights | blackKnights)){
+				args.attacked_squares = get_knight_attacks(destination); 
+				if(check_pseudo_legal(source, args.attacked_squares)){
+					movePiece(piecetyp, source, destination);
+					args.enumVec.clear();
+				}else{
+					args.enumVec.clear();
+				}
+			}else{
+				movePiece(piecetyp, source, destination);
+				args.enumVec.clear();
+			}
+		}
 	}
 }

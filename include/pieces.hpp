@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "bitboard.hpp"
+#include "engine.hpp"
 
 extern sf::Sprite WHITE_PAWNS;
 extern sf::Sprite WHITE_BISHOPS;
@@ -46,4 +47,12 @@ uint64_t& getPieceType(const Square& square);
 
 int sq_id(int &row, int& col);
 
-std::string get_piece_name(const Square& square);
+typedef struct Params{
+	bool clicked = false;
+	int row;
+	int col;
+	uint64_t attacked_squares = 0;
+	std::vector<Square> enumVec;
+}Params;
+
+void mini_main(Params& args, sf::RenderWindow& window);

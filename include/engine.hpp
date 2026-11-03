@@ -9,3 +9,5 @@ void knight_attacks();
 uint64_t get_knight_attacks(const Square& square);
 
 void highlight_attacked_squares(sf::RenderWindow &window, const uint64_t &attacks);
+
+bool check_pseudo_legal(const Square &dest, const uint64_t &attacks);

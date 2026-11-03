@@ -99,6 +99,7 @@ void movePiece(uint64_t &type, Square &src, Square &dst){
         set_bit(whitePieces, dst);
         set_bit(type, dst);
         move(WHITE, LOCK);
+        std::cout << "black's turn\n";
     }
     if((blackPieces & (1ULL << sq)) && LOCK == 0){
         clear_bit(type, src);
@@ -106,6 +107,7 @@ void movePiece(uint64_t &type, Square &src, Square &dst){
         set_bit(type, dst);
         set_bit(blackPieces, dst);
         move(BLACK, LOCK);
+        std::cout << "white's turn\n";
     }
 }
 
