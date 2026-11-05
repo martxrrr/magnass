@@ -255,6 +255,69 @@ void renderer(sf::RenderWindow& window){
 	}
 }
 
+// void make_move(const Square& source, const Square& destination){
+// 	uint64_t& piecetyp = getPieceType(source);
+// 	//KNIGHT
+// 	if(piecetyp & whiteKnights){
+// 		args.attacked_squares = get_knight_attacks(destination); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// 	if(piecetyp & blackKnights){
+// 		args.attacked_squares = get_knight_attacks(destination); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// 	//KING
+// 	if(piecetyp & whiteKing){
+// 		args.attacked_squares = get_king_attacks(destination); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// 	if(piecetyp & blackKing){
+// 		args.attacked_squares = get_king_attacks(destination); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// 	//ROOK
+// 	if(piecetyp & whiteRooks){
+// 		uint64_t occupancy = whitePieces | blackPieces;
+// 		args.attacked_squares = gen_rook_moves(destination, occupancy); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// 	if(piecetyp & blackRooks){
+// 		uint64_t occupancy = whitePieces | blackPieces;
+// 		args.attacked_squares = gen_rook_moves(destination); 
+// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
+// 			movePiece(piecetyp, source, destination);
+// 			args.enumVec.clear();
+// 		}else{
+// 			args.enumVec.clear();
+// 		}
+// 	}
+// }
+
 void mini_main(Params& args, sf::RenderWindow& window){
 	args.clicked = true;
 	sf::Vector2i pos = sf::Mouse::getPosition(window);
@@ -273,13 +336,13 @@ void mini_main(Params& args, sf::RenderWindow& window){
 	if(args.enumVec.size() == 2){
 		source = args.enumVec[0];
 		destination = args.enumVec[1];
-		if(getPieceType(source) == none && source == destination){
+		if(getPieceType(source) == none || source == destination){
 			args.enumVec.clear();
 		}else{
 			uint64_t& piecetyp = getPieceType(source);
 			if(piecetyp & (whiteKnights | blackKnights)){
 				args.attacked_squares = get_knight_attacks(destination); 
-				if(check_pseudo_legal(source, args.attacked_squares)){
+				if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
 					movePiece(piecetyp, source, destination);
 					args.enumVec.clear();
 				}else{

@@ -2,6 +2,7 @@
 #include <bitset>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -14,9 +15,21 @@ int square_int(const int &rank, const int &file){
     return (rank * 8) + file;
 }
 
-bool check_pseudo_legal(const Square &dest, const uint64_t &attacks){
-    uint64_t dst = square_bb(dest);
-    return (dst & attacks ? true : false);
+//take into consideration only the piece rules movement and friendly pieces
+//a move is legal when the destination is part of the attacks
+//and the destination does not contain a friendly piece
+bool check_pseudo_legal(const Square &dest, const uint64_t &attacks, const uint64_t& friendly_pieces){
+    std::cout << "friendly pieces : " << std::bitset<64>(friendly_pieces) << "\n";
+    int dst = static_cast<int>(dest);
+    std::cout << "destinati piece : " << std::bitset<64>(square_bb(dest)) << "\n";
+    bool attacked = (1ULL << dst) & attacks;
+    bool friendly = (friendly_pieces & (1ULL << dst)) != 0;
+    bool legal = (attacks) && (friendly);
+    std::cout << ( attacked ? "attacked  " : "not attacked  ") 
+              << (friendly ? "friendly  " : "not friendly  ")  
+              << (legal ? "legal" : "illegal") 
+              << std::endl;
+    return (legal ? true : false);
 }
 
 uint64_t arr_knight_attacks[64];
@@ -139,8 +152,14 @@ uint64_t get_king_attacks(const Square& square){
 ================================
 advance one square
 add it to the attacks
-check whether it is occupied
+check whether it is occupied by a friendly piece
 if not continue, if yes, break
+returns all the attacks of a rook and stops where there is an occupied square
+whether by a friendly piece or an enemy piece
+so you can use the returned bitboard and filter out the friendly pieces using
+bitwise '&' and even calculate captures
+
+so the occupancy bitboard is for any occupied squares
 */
 
 uint64_t gen_rook_moves(const int& curr_square, const uint64_t &occupied){

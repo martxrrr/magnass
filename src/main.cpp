@@ -33,6 +33,7 @@ int main(){
 	mainBoard.setScale({target.x / size.x, target.y / size.y});
 	
 	knight_attacks();
+	king_attacks();
 	Params args;
 
 	while(window.isOpen()){
