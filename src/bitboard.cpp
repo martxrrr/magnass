@@ -91,7 +91,7 @@ void move(int &piecetype, int &lock){
 	}
 }
 
-void movePiece(uint64_t &type, Square &src, Square &dst){
+void movePiece(uint64_t &type, const Square &src, const Square &dst){
     int sq = static_cast<int>(src);
     if((whitePieces & (1ULL << sq)) && LOCK == 1){
         clear_bit(type, src);

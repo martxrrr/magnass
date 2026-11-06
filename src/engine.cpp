@@ -15,20 +15,14 @@ int square_int(const int &rank, const int &file){
     return (rank * 8) + file;
 }
 
-//take into consideration only the piece rules movement and friendly pieces
-//a move is legal when the destination is part of the attacks
-//and the destination does not contain a friendly piece
-bool check_pseudo_legal(const Square &dest, const uint64_t &attacks, const uint64_t& friendly_pieces){
-    std::cout << "friendly pieces : " << std::bitset<64>(friendly_pieces) << "\n";
-    int dst = static_cast<int>(dest);
-    std::cout << "destinati piece : " << std::bitset<64>(square_bb(dest)) << "\n";
-    bool attacked = (1ULL << dst) & attacks;
-    bool friendly = (friendly_pieces & (1ULL << dst)) != 0;
-    bool legal = (attacks) && (friendly);
-    std::cout << ( attacked ? "attacked  " : "not attacked  ") 
-              << (friendly ? "friendly  " : "not friendly  ")  
-              << (legal ? "legal" : "illegal") 
-              << std::endl;
+bool check_pseudo_legal(const Square &src, 
+                        const Square& dst, 
+                        const uint64_t &attacks, 
+                        const uint64_t& friendly_pieces)
+{
+    bool attacked = (square_bb(src)) & attacks;
+    bool friendly = (friendly_pieces & (square_bb(dst))) != 0;
+    bool legal = (attacked) && (!friendly);
     return (legal ? true : false);
 }
 
@@ -238,7 +232,7 @@ uint64_t gen_bishop_moves(const int& curr_square, const uint64_t &occupied){
 a combination of a rook and a bishop
 */
 
-uint64_t gen_queen_attacks(const int& curr_square, 
+uint64_t gen_queen_moves(const int& curr_square, 
                            const uint64_t &occupied)
 {
     return gen_bishop_moves(curr_square, occupied) | 

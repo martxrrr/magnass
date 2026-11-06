@@ -255,68 +255,128 @@ void renderer(sf::RenderWindow& window){
 	}
 }
 
-// void make_move(const Square& source, const Square& destination){
-// 	uint64_t& piecetyp = getPieceType(source);
-// 	//KNIGHT
-// 	if(piecetyp & whiteKnights){
-// 		args.attacked_squares = get_knight_attacks(destination); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// 	if(piecetyp & blackKnights){
-// 		args.attacked_squares = get_knight_attacks(destination); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// 	//KING
-// 	if(piecetyp & whiteKing){
-// 		args.attacked_squares = get_king_attacks(destination); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// 	if(piecetyp & blackKing){
-// 		args.attacked_squares = get_king_attacks(destination); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// 	//ROOK
-// 	if(piecetyp & whiteRooks){
-// 		uint64_t occupancy = whitePieces | blackPieces;
-// 		args.attacked_squares = gen_rook_moves(destination, occupancy); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// 	if(piecetyp & blackRooks){
-// 		uint64_t occupancy = whitePieces | blackPieces;
-// 		args.attacked_squares = gen_rook_moves(destination); 
-// 		if(check_pseudo_legal(source, args.attacked_squares, blackPieces)){
-// 			movePiece(piecetyp, source, destination);
-// 			args.enumVec.clear();
-// 		}else{
-// 			args.enumVec.clear();
-// 		}
-// 	}
-// }
+void make_move(const Square& src, const Square& dst, Params& args){
+	uint64_t& piecetyp = getPieceType(src);
+	int dest = static_cast<int>(dst);
+
+	//PAWNS
+	if(piecetyp & (whitePawns) || piecetyp & (blackPawns)){
+		movePiece(piecetyp, src, dst);
+		args.enumVec.clear();
+	}
+	//KNIGHT
+	if(piecetyp & whiteKnights){
+		args.attacked_squares = get_knight_attacks(dst); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, whitePieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	if(piecetyp & blackKnights){
+		args.attacked_squares = get_knight_attacks(dst); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, blackPieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	// KING
+	if(piecetyp & whiteKing){
+		args.attacked_squares = get_king_attacks(dst); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, whitePieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	if(piecetyp & blackKing){
+		args.attacked_squares = get_king_attacks(dst); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, blackPieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	//ROOK
+	if(piecetyp & whiteRooks){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_rook_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, whitePieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	if(piecetyp & blackRooks){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_rook_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, blackPieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	//BISHOP
+	if(piecetyp & whiteBishops){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_bishop_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, whitePieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	if(piecetyp & blackBishops){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_bishop_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, blackPieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	//QUEEN
+	if(piecetyp & whiteQueen){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_queen_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, whitePieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	if(piecetyp & blackQueen){
+		uint64_t occupancy = whitePieces | blackPieces;
+		args.attacked_squares = gen_queen_moves(dest, occupancy); 
+		bool legal = check_pseudo_legal(src, dst, args.attacked_squares, blackPieces);
+		if(legal){
+			movePiece(piecetyp, src, dst);
+			args.enumVec.clear();
+		}else{
+			args.enumVec.clear();
+		}
+	}
+	
+}
 
 void mini_main(Params& args, sf::RenderWindow& window){
 	args.clicked = true;
@@ -330,28 +390,16 @@ void mini_main(Params& args, sf::RenderWindow& window){
 	Square squareNum = static_cast<Square>(sqid);
 
 	args.enumVec.emplace_back(squareNum);
-	Square source;
-	Square destination;
+	Square src;
+	Square dst;
 
 	if(args.enumVec.size() == 2){
-		source = args.enumVec[0];
-		destination = args.enumVec[1];
-		if(getPieceType(source) == none || source == destination){
+		src = args.enumVec[0];
+		dst = args.enumVec[1];
+		if(getPieceType(src) == none || src == dst){
 			args.enumVec.clear();
 		}else{
-			uint64_t& piecetyp = getPieceType(source);
-			if(piecetyp & (whiteKnights | blackKnights)){
-				args.attacked_squares = get_knight_attacks(destination); 
-				if(check_pseudo_legal(source, args.attacked_squares, whitePieces)){
-					movePiece(piecetyp, source, destination);
-					args.enumVec.clear();
-				}else{
-					args.enumVec.clear();
-				}
-			}else{
-				movePiece(piecetyp, source, destination);
-				args.enumVec.clear();
-			}
+			make_move(src, dst, args);
 		}
 	}
 }
